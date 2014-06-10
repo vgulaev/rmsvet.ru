@@ -1,6 +1,12 @@
 body {
 	margin: 0;
 }
+div {
+	font-family: sans-serif;
+	display: block;
+	border: 1px solid;
+	float: left;
+}
 .logo {
 	font-size: 28pt;
 	font-weight: bold;
