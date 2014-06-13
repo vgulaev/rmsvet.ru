@@ -7,7 +7,14 @@
 	<link rel="stylesheet" href="libs/bootstrap-3.1.1-dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/debug.css">
 	<script src="libs/bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
-
+	<link rel="stylesheet" href="libs/jquery-ui-1.10.4.custom/css/ui-lightness/jquery-ui-1.10.4.custom.min.css">
+	<script src="libs/jquery-ui-1.10.4.custom/js/jquery-ui-1.10.4.custom.min.js"></script>
+	<script src="js/index.js"></script>
+	<script type="text/template" id = "myt">
+	<div>
+	uno du tre
+	</div>
+	</script>
 </head>
 <body>
 	<header>
@@ -42,7 +49,7 @@
 								<option>Фурнитура</option>
 							</select>
 						</span>
-						<input type="text" class="form-control" placeholder="Что ищем?">
+						<input id="ss" type="text" class="form-control" data-provide="typeahead" placeholder="Что ищем?">
 						<span class="input-group-btn">
 							<button class="btn btn-default" type="button">Go!</button>
 						</span>
