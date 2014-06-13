@@ -1,3 +1,9 @@
+import os
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import checkrestart
+
 def application(environ, start_response):
     status = '200 OK'
     output = 'Hello World my friend!'
@@ -14,7 +20,9 @@ def application(environ, start_response):
     #statistic.calls += 1
     #print "calls: " + str(statistic.calls)
     #return [output]
-    return ret
+    #return ret
+    
+    return [checkrestart.upp()]
 
     #return [output]
 if __name__ == '__main__':
