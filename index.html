@@ -1,18 +1,57 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link type="text/css" href="css/main.css" rel="stylesheet">
-    </head>
+<head>
+	<meta charset="utf-8">
+	<link type="text/css" href="css/main.css" rel="stylesheet">
+	<script type="text/javascript" src = "js/jquery/jquery-2.1.1.min.js"></script>
+	<link rel="stylesheet" href="libs/bootstrap-3.1.1-dist/css/bootstrap.min.css">
+	<script src="libs/bootstrap-3.1.1-dist/js/bootstrap.min.js"></script>
+
+</head>
 <body>
-<div>
-<div class="logo">
-rmsvet
-</div>
-<div>
-<a href="">Первая ссылка</a>
-<a href="">Вторая ссылка</a>
-</div>
-</div>
+	<header>
+		<div class="tbh">
+			<div id = "row1" class="tb-r">
+				<div id = "cell-1-1" class="tb-c">
+					<span id = "mainlogo">
+						rmsvet
+					</span>
+				</div>
+				<div id = "cell-1-2" class="tb-c cmt">
+					1-2
+				</div>
+				<div id = "cell-1-3" class="tb-c cmt">
+					1-3
+				</div>
+				<div id = "cell-1-4" class="tb-c cmt">
+					1-4
+				</div>
+			</div>
+			<div id = "row2" class="tb-r">
+				<div id = "cell-2-1" class="tb-c cmt">2-1</div>
+				<div id = "cell-2-2" class="tb-c">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<select id = "category-select" style="border: 0px; background-color: #eee">
+								<option>Все</option>
+								<option>Лампочки</option>
+								<option>Фурнитура</option>
+							</select>
+						</span>
+						<input type="text" class="form-control" placeholder="Товар">
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button">Go!</button>
+						</span>
+					</div>
+				</div>
+				<div id = "cell-2-3" class="tb-c cmt">
+					2-3
+				</div>
+				<div id = "cell-2-4" class="tb-c cmt">
+					2-4
+				</div>
+			</div>
+		</div>
+	</header>
 </body>
 </html>

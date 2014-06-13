@@ -1,13 +1,23 @@
-body {
-	margin: 0;
-}
-div {
-	font-family: sans-serif;
-	display: block;
-	border: 1px solid;
-	float: left;
-}
-.logo {
+#mainlogo {
 	font-size: 28pt;
 	font-weight: bold;
+	float: left;
+}
+.tbh{
+	display: table;
+	width: 100%;
+}
+.tb-r{
+	display: table-row;
+}
+.tb-c {
+	display: table-cell;
+}
+/*center middle text*/
+.cmt{
+	text-align: center;
+	vertical-align: middle;
+}
+#cell-1-3, #cell-1-4{
+	width: 100px;
 }
