@@ -28,6 +28,7 @@ def application(environ, start_response):
     ret = ["%s: %s\n" % (key, value)
            for key, value in environ.iteritems()]
     
+    checkrestart.upp()
     print "Hello"
     #return [checkrestart.upp() + "ff"]
     return [html]
@@ -35,5 +36,9 @@ def application(environ, start_response):
 #
 if __name__ == '__main__':
     from paste import httpserver
+    from paste.exceptions import errormiddleware
+    from paste import evalexception
+    #app = errormiddleware.ErrorMiddleware(application, debug=True)
+    app = evalexception.EvalException(application)
     #httpserver.serve(AuthDigestHandler(dump_environ, realm, authfunc), host='127.0.0.1', port='8080')
-    httpserver.serve(application, host='127.0.0.1', port='8080')
+    httpserver.serve(app, host='127.0.0.1', port='8080')
