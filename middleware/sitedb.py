@@ -17,7 +17,7 @@ def loadmysqlcredential():
 
 class dbrecord(object):
     direct_assign = ["type", "maxlength", "precision", "val", "__fields__"]
-    def __init__(self, val = "", fld_type = None):
+    def __init__(self, val = "", fld_type = None, owner = None):
         #self.__db__ = ""
         if not hasattr(self, "__fields__"):
             self.__fields__ = []
@@ -26,6 +26,7 @@ class dbrecord(object):
             self.type = field_type.reference
         else:
             if type(fld_type) == unicode:
+                self.owner = owner
                 if fld_type.find(u"char") > -1:
                     self.type = field_type.char
                     m = re.search(r"\(([A-Za-z0-9_]+)\)", fld_type)
@@ -110,6 +111,8 @@ class dbworker:
         class retclass(dbrecord):
             def __init__(self):
                 dbrecord.__init__(self)
+                for (e,t) in zip(self.__fields__, self.__fields_type__):
+                    self.__dict__[e] = dbrecord(fld_type = t, owner = self)
         #retclass.__init__()
         retclass.__db__ = self;
         retclass.__fields__ = []
@@ -120,6 +123,6 @@ class dbworker:
             retclass.__fields__ += [row[0]]
             retclass.__fields_type__ += [row[1]]
             dbr = dbrecord(fld_type = row[1])
-            setattr(retclass, row[0], dbr)
+            #setattr(retclass, row[0], dbr)
             row =  self.cursor.fetchone()
         return retclass
