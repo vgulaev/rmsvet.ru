@@ -16,8 +16,9 @@ def loadmysqlcredential():
     return r
 
 class dbrecord(object):
-    direct_assign = ["type", "maxlength", "precision", "val", "__fields__"]
-    def __init__(self, val = "", fld_type = None, owner = None):
+    direct_assign = ["type", "maxlength", "precision", "val", "__fields__",
+                     "__name__", "__owner__"]
+    def __init__(self, val = "", fld_type = None, owner = None, name = ""):
         #self.__db__ = ""
         if not hasattr(self, "__fields__"):
             self.__fields__ = []
@@ -26,7 +27,8 @@ class dbrecord(object):
             self.type = field_type.reference
         else:
             if type(fld_type) == unicode:
-                self.owner = owner
+                self.__owner__ = owner
+                self.__name__ = name
                 if fld_type.find(u"char") > -1:
                     self.type = field_type.char
                     m = re.search(r"\(([A-Za-z0-9_]+)\)", fld_type)
@@ -67,6 +69,10 @@ class dbrecord(object):
         #print sql
         self.__db__.cursor.execute(sql)
         self.__db__.db.commit()
+    def drop(self):
+        sql = "DROP TABLE IF EXISTS {tn}".format(tn = self.__tablename__)
+        self.__db__.cursor.execute(sql)
+        print sql
     def fl_for_dup_key(self):
         l = [e + " = " + self[e].str_to_db() for (e, t) in zip(self.__fields__, self.__fields_type__) if e != "id"]
         return ",".join(l)
@@ -112,7 +118,7 @@ class dbworker:
             def __init__(self):
                 dbrecord.__init__(self)
                 for (e,t) in zip(self.__fields__, self.__fields_type__):
-                    self.__dict__[e] = dbrecord(fld_type = t, owner = self)
+                    self.__dict__[e] = dbrecord(fld_type = t, owner = self, name = e)
         #retclass.__init__()
         retclass.__db__ = self;
         retclass.__fields__ = []
