@@ -1,5 +1,13 @@
 import MySQLdb
+import re
+from web.db import __repr__
 
+class field_type:
+    reference = 0
+    decimal = 1
+    char = 2
+    null = 3
+    
 def loadmysqlcredential():
     passwd = ""
     r = {   "host" : 'localhost',
@@ -7,46 +15,77 @@ def loadmysqlcredential():
             "passwd" : passwd}
     return r
 
-def fl_to_str(v, t):
-    if (t.find("decimal") > -1):
-        res = "1.33"
-    else:
-        res = "'{v}'".format(v = str(v))
-    return res
-
-class dbfield:
-    def __init__(self, val = "", t = ""):
-        self.val = val
-    def __str__(self):
-        return self.val
-    __repr__ = __str__
-
 class dbrecord(object):
-    def __init__(self):
-        __db__ = ""
-        __fields__ = []
-        __fields_type__ = []
+    direct_assign = ["type", "maxlength", "precision", "val", "__fields__"]
+    def __init__(self, val = "", fld_type = None):
+        #self.__db__ = ""
+        if not hasattr(self, "__fields__"):
+            self.__fields__ = []
+        #self.__fields_type__ = []
+        if (fld_type == None):
+            self.type = field_type.reference
+        else:
+            if type(fld_type) == unicode:
+                if fld_type.find(u"char") > -1:
+                    self.type = field_type.char
+                    m = re.search(r"\(([A-Za-z0-9_]+)\)", fld_type)
+                    self.maxlength = int(m.group(1))
+                    self.val = ""
+                elif fld_type.find(u"decimal") > -1:
+                    self.type = field_type.decimal
+                    m = re.search(r"\(([A-Za-z0-9_(,)]+)\)", fld_type)
+                    len_and_pre = (m.group(1)).split(",")                    
+                    self.precision = int(len_and_pre[1])
+                    self.val = 0
+    def char_to_str(self):
+        return self.val[:self.maxlength]
+    def dec_to_str(self):
+        return str(round(self.val, self.precision))
+        #return str(round(self.val))
+    def __str__(self):
+        res = object.__str__(self)
+        if self.type == field_type.char:
+            res = self.char_to_str()
+        elif self.type == field_type.decimal:
+            res = self.dec_to_str()
+        return res
+    def str_to_db(self):
+        res = str(self)
+        if (self.type == field_type.char):
+            res = "'{s}'".format(s = res)
+        return res
+    #__repr__ = __str__
     def __getitem__(self, key):
         return getattr(self, key)
     def write(self):
         sql = "INSERT INTO {tn} ({keys}) VALUES ({values})";
         keys = ",".join(self.__fields__ )
-        values = ",".join(fl_to_str(self[e], t) for (e, t) in zip(self.__fields__, self.__fields_type__))
+        values = ",".join(self[e].str_to_db() for (e, t) in zip(self.__fields__, self.__fields_type__))
         sql = sql.format(tn = self.__tablename__, keys = keys, values = values)
         sql += " ON DUPLICATE KEY UPDATE {eq}".format(eq = self.fl_for_dup_key())
-        print sql
-        #self.__db__.cursor.execute(sql)
-        #self.__db__.db.commit()
+        #print sql
+        self.__db__.cursor.execute(sql)
+        self.__db__.db.commit()
     def fl_for_dup_key(self):
-        l = [e + " = " + fl_to_str(self[e], t) for (e, t) in zip(self.__fields__, self.__fields_type__) if e != "id"]
+        l = [e + " = " + self[e].str_to_db() for (e, t) in zip(self.__fields__, self.__fields_type__) if e != "id"]
         return ",".join(l)
+    def __getattr___(self, name):
+        #print "try get"
+        return object.__getattribute__(self, name)
+        #return self.__dict__[name]
+    __getattribute__ = __getattr___
     def __setattr__(self, name, val):
-        if hasattr(self, name):
-            if isinstance(self[name], dbfield):
-                self.__dict__[name] = dbfield(val)
+        #self.__dict__[name] = val
+        if isinstance(val, dbrecord):
+            self.__dict__[name] = val
         else:
-            self.__dict__[name] = dbfield(val)
-
+            #direct_assign = ((name == "type") or (name == "maxlength"))
+            if name in dbrecord.direct_assign:
+                self.__dict__[name] = val
+            elif name in self.__fields__:
+                self[name].val = val
+        #print "try set"""
+    #__repr__ = __str__
 class dbworker:
     def __init__(self):
         cred = loadmysqlcredential()
@@ -66,18 +105,21 @@ class dbworker:
         sql = "show columns from {tn}".format(tn = table_name)
         self.cursor.execute(sql)
         
+        retclass = dbrecord()
+        #print retclass.__dict__
         class retclass(dbrecord):
-            def __set__(self, obj, val):
-                print "Oh"
+            def __init__(self):
+                dbrecord.__init__(self)
+        #retclass.__init__()
         retclass.__db__ = self;
         retclass.__fields__ = []
         retclass.__fields_type__ = []
         retclass.__tablename__ = table_name
-        #retclass.__set__(self, obj, val) = dbrecord.__set__
         row = self.cursor.fetchone()
         while row is not None:
             retclass.__fields__ += [row[0]]
             retclass.__fields_type__ += [row[1]]
-            setattr(retclass, row[0], dbfield())
+            dbr = dbrecord(fld_type = row[1])
+            setattr(retclass, row[0], dbr)
             row =  self.cursor.fetchone()
         return retclass
