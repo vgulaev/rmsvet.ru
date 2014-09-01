@@ -1,21 +1,21 @@
+# -*- coding: utf-8 -*-
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-import checkrestart
-from paste.wsgilib import dump_environ
-from paste.auth.digest import digest_password, AuthDigestHandler
+#import checkrestart
+import wsservers as ws
+import sitedb
 import paste.reloader
-
 paste.reloader.install()
 paste.reloader.watch_file("checkrestart.py")
 paste.reloader.watch_file("index.html")
+paste.reloader.watch_file("sitedb.py")
+paste.reloader.watch_file("wsservers.py")
 
-html = open("index.html", "r").read()
-"""
-<!DOCTYPE html>
-
-"""
+def response_from_file(filename):
+    t = open(filename, "r")
+    return t.read()
 
 def application(environ, start_response):
     status = '200 OK'
@@ -28,9 +28,36 @@ def application(environ, start_response):
     ret = ["%s: %s\n" % (key, value)
            for key, value in environ.iteritems()]
     
-    checkrestart.upp()
-    print "Hello"
-    #return [checkrestart.upp() + "ff"]
+    
+    url = environ["PATH_INFO"]
+    if url == "/":
+        html = response_from_file("index.html")
+    elif url == "/libs/jquery/jquery-2.1.1.js":
+        #html = response_from_file("libs/jquery/jquery-2.1.1.js")
+        html = response_from_file("libs/jquery/jquery-2.1.1.min.js")
+        #html = "(){}"
+    elif url == "/my.js":
+        html = response_from_file("my.js")
+    elif url == "/ws/autocomplate":
+        #html = str(ret)
+        import cgi
+        post_env = environ.copy()
+        post_env['QUERY_STRING'] = ''
+        post = cgi.FieldStorage(
+                                fp=environ['wsgi.input'],
+                                environ=post_env,
+                                keep_blank_values=True
+                                )
+        #html = str(post)
+        #html = post["table"]
+        
+        tb = post.getvalue("table")
+        ft = post.getvalue("filter")
+
+        html = ws.auto_complate(tb, ft)
+    else:
+        html = url
+
     return [html]
 
 #

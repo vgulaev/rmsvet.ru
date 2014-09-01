@@ -1,5 +1,7 @@
+# -*- coding: utf-8 -*-
 import MySQLdb
 import re
+import uuid
 from web.db import __repr__
 
 class field_type:
@@ -60,7 +62,16 @@ class dbrecord(object):
     #__repr__ = __str__
     def __getitem__(self, key):
         return getattr(self, key)
+    def new_id(self):
+        self.val = str(uuid.uuid1())
+    def is_null(self):
+        res = False
+        if (self.val == 0 or self.val == ""):
+            res = True
+        return res
     def write(self):
+        if self.id.is_null():
+            self.id.new_id()
         sql = "INSERT INTO {tn} ({keys}) VALUES ({values})";
         keys = ",".join(self.__fields__ )
         values = ",".join(self[e].str_to_db() for (e, t) in zip(self.__fields__, self.__fields_type__))
@@ -99,15 +110,17 @@ class dbworker:
         self.db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], db = "vg_site_db", charset = 'utf8')
         self.cursor = self.db.cursor()
     def create_table(self):
-        sql = """
-        CREATE TABLE goods (
+        sql = [
+        """
+        CREATE TABLE IF NOT EXISTS goods (
         id CHAR(36) PRIMARY KEY,
-        caption CHAR(100),
+        caption CHAR(100) COLLATE utf8_general_ci,
         price DECIMAL(8,2)
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
-        """
-        self.cursor.execute(sql)
-        self.db.commit()
+        """]
+        for e in sql:
+            self.cursor.execute(e)
+            self.db.commit()
     def class_from_table(self, table_name):
         sql = "show columns from {tn}".format(tn = table_name)
         self.cursor.execute(sql)
