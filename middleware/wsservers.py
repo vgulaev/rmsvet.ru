@@ -17,7 +17,7 @@ def auto_complate(tbname, filter):
         likes = ["caption like '%" + e + "%'" for e in likes if e <> ""]
         sql += " and ".join(likes)
     sql += "\n limit 7;" 
-    print sql
+    #print sql
     common.ldb.cursor.execute(sql)
     gd = []
     row = common.ldb.cursor.fetchone()

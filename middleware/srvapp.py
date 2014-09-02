@@ -3,9 +3,8 @@ import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-#import checkrestart
-import wsservers as ws
-import sitedb
+import cgi
+
 import paste.reloader
 paste.reloader.install()
 paste.reloader.watch_file("checkrestart.py")
@@ -13,9 +12,10 @@ paste.reloader.watch_file("index.html")
 paste.reloader.watch_file("sitedb.py")
 paste.reloader.watch_file("wsservers.py")
 
-def response_from_file(filename):
-    t = open(filename, "r")
-    return t.read()
+#own libs
+import wsservers as ws
+import common
+import staticcontentgenerator as scg
 
 def application(environ, start_response):
     status = '200 OK'
@@ -28,19 +28,23 @@ def application(environ, start_response):
     ret = ["%s: %s\n" % (key, value)
            for key, value in environ.iteritems()]
     
-    
     url = environ["PATH_INFO"]
-    if url == "/":
-        html = response_from_file("index.html")
+    #print url
+    #print "smal:", url[0:6]
+    if url[0:6] == "/html/":
+        html = common.read_file_to_str(url[1:])
+    elif url[0:9] == "/catalog/":
+        html = scg.goods_main_view(url)
+    elif url == "/":
+        html = common.read_file_to_str("index.html")
     elif url == "/libs/jquery/jquery-2.1.1.js":
         #html = response_from_file("libs/jquery/jquery-2.1.1.js")
-        html = response_from_file("libs/jquery/jquery-2.1.1.min.js")
+        html = common.read_file_to_str("libs/jquery/jquery-2.1.1.min.js")
         #html = "(){}"
-    elif url == "/my.js":
-        html = response_from_file("my.js")
+    elif url == "/js/my.js":
+        html = common.read_file_to_str("js/my.js")
     elif url == "/ws/autocomplate":
         #html = str(ret)
-        import cgi
         post_env = environ.copy()
         post_env['QUERY_STRING'] = ''
         post = cgi.FieldStorage(
@@ -48,8 +52,6 @@ def application(environ, start_response):
                                 environ=post_env,
                                 keep_blank_values=True
                                 )
-        #html = str(post)
-        #html = post["table"]
         
         tb = post.getvalue("table")
         ft = post.getvalue("filter")
@@ -57,6 +59,7 @@ def application(environ, start_response):
         html = ws.auto_complate(tb, ft)
     else:
         html = url
+        #html = url[0:6]
 
     return [html]
 
