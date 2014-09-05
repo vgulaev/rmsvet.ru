@@ -18,14 +18,12 @@ import wsservers as ws
 import common
 import staticcontentgenerator as scg
 
-def application(environ, start_response):
+def standart_response(start_response, ct):
     status = '200 OK'
-    output = 'Hello World my friend!'
-
-    headers = [('Content-type', 'text/html, charset=UTF-8')]
-
+    headers = [('Content-type', ct + ', charset=UTF-8')]
     start_response(status, headers)
 
+def application(environ, start_response):
     ret = ["%s: %s\n" % (key, value)
            for key, value in environ.iteritems()]
     
@@ -34,21 +32,30 @@ def application(environ, start_response):
     #print url
     #print "smal:", url[0:6]
     if url[0:6] == "/html/":
+        standart_response(start_response, "text/html");
         html = common.read_file_to_str(url[1:])
     elif url[0:4] == "/js/":
+        standart_response(start_response, "text/javascript");
+        html = common.read_file_to_str(url[1:])
+    elif url[0:5] == "/css/":
+        standart_response(start_response, "text/css");
         html = common.read_file_to_str(url[1:])
     elif url[0:9] == "/catalog/":
+        standart_response(start_response, "text/html");
         html = scg.goods_main_view(url)
     elif url == "/":
+        standart_response(start_response, "text/html");
         html = common.read_file_to_str("index.html")
     elif url == "/libs/jquery/jquery-2.1.1.js":
-        #html = response_from_file("libs/jquery/jquery-2.1.1.js")
+        standart_response(start_response, "text/javascript");
         html = common.read_file_to_str("libs/jquery/jquery-2.1.1.min.js")
         #html = "(){}"
     elif url == "/cart":
+        standart_response(start_response, "text/html");
         html = common.read_file_to_str("html/cart.html")
     elif url == "/ws/autocomplate":
         #html = str(ret)
+        standart_response(start_response, "application/json");
         post_env = environ.copy()
         post_env['QUERY_STRING'] = ''
         post = cgi.FieldStorage(
@@ -62,6 +69,7 @@ def application(environ, start_response):
 
         html = ws.auto_complate(tb, ft)
     else:
+        standart_response(start_response, "text/html");
         html = environ['wsgi.charset']
         #html = url[0:6]
 
