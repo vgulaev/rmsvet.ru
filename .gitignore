@@ -1,5 +1,6 @@
 *.pyc
 .project
+*.png
 .pydevproject
 .settings/
 libs

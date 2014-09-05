@@ -25,13 +25,14 @@ function add_to_cart( id ) {
 }
 function make_element_for_main_page( obj ) {
     var rowhtml = [
-    "<div>",
+    "<div class = \"left100 width430 mart10\">",
     "<a href=\"/catalog/goods/" + obj.id + "\">",
         "<div>",
-            "<span id = \"caption\">" + obj.caption.substring(0, 20) + "</span>",
+            //"<span id = \"caption\">" + obj.caption.substring(0, 20) + "</span><span>" + obj.caption.substring(20) + "</span>",
+            "<span id = \"caption\">" + obj.caption + "</span>",
         "</div>",
         "<div>",
-            "<span>₽ </span><span id = \"price\">" + obj.price + "</span>", 
+            "<span>₽ &nbsp;</span><span id = \"price\">" + obj.price + "</span>", 
         "</div>",
         "</a>",
     "</div>",
@@ -68,11 +69,35 @@ function my() {
         );
 };
 
+function fint_view() {
+    var e = $("#core");
+    var toppx = Math.round($(window).height() - $("#SearchStr").height())/2;
+    var left = Math.round(($(window).width() - 520)/2);
+    e.css({position: "absolute",left: left + "px", top: toppx + "px"})
+};
+$( window ).resize( function () {
+    if ($("#SearchStr").val() == "")
+        fint_view();
+});
 $( function () {
     $("#SearchStr").on("input", function () {
             my();
-            $("#output").html( $("#SearchStr").val() );
+            if ($("#SearchStr").val() == "") {
+                fint_view();
+                $("#secondline").hide();
+                $("#output").hide();
+                //$("#core").css({position: "inherit"});
+            }
+            else {
+                $("#core").css({position: "inherit"});
+                $("#secondline").show();
+                $("#output").show();
+            };
+            //$("#output").html( $("#SearchStr").val() );
         })
     class_cart_label.create();
+
+    fint_view();
+    $("#SearchStr").focus();
 }
 );

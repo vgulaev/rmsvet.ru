@@ -1,19 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>index</title>
 		<meta name="author" content="Valentin" />
 		<script src="/libs/jquery/jquery-2.1.1.js"></script>
 		<script src="/js/my.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/main.css">
 	</head>
 	<body>
-	<a href="/html/helloword.html">Тест макет</a>
-	<a id = "cart_label" href="/cart"><span>Корзина</span><span id = "cart_label_count"></span></a>
-	<br>
-	<span>Найти товар:</span><input id = "SearchStr">
-	<p id = "output"></p>
-	<p>Привет!!!</p>
+	<div id = "core">
+		<span class = "fc">Ваш запрос:</span><input id = "SearchStr">
+	</div>
+	<div id = "secondline" style="display: none;">
+		<span>
+		<span class = "bt left100 right20">Поиск товаров</span><span class = "bt left20">Действия на сайте</span><span class = "bt left20"><a id = "cart_label" href="/cart"><span>Товаров в корзине &nbsp;</span><span id = "cart_label_count"></span></a></span>
+		</span>
+	</div>
+	<div id = "output" class="main" style="display: none;">
+		
+	</div>
 	</body>
 </html>
 

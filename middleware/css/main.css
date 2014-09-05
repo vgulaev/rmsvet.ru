@@ -1,0 +1,36 @@
+div {
+	display: block;
+}
+span {
+	display: inline-block;
+}
+.left100 {
+	margin-left: 90px;
+}
+.left20 {
+	margin-left: 20px;
+}
+.right20 {
+	margin-right: 20px;
+}
+#SearchStr {
+	width: 40%;
+	min-width: 430px;
+	font-size: 14px;
+}
+.fc {
+	width: 90px;
+}
+.bt {
+	margin-top: 15px; 
+	margin-bottom:  15px;
+}
+.main {
+	border-top: solid 1px;
+}
+.width430 {
+	width: 430px;
+}
+.mart10 {
+	margin-top: 10px;
+}
