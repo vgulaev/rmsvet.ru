@@ -35,6 +35,8 @@ def application(environ, start_response):
     #print "smal:", url[0:6]
     if url[0:6] == "/html/":
         html = common.read_file_to_str(url[1:])
+    elif url[0:4] == "/js/":
+        html = common.read_file_to_str(url[1:])
     elif url[0:9] == "/catalog/":
         html = scg.goods_main_view(url)
     elif url == "/":
@@ -43,8 +45,6 @@ def application(environ, start_response):
         #html = response_from_file("libs/jquery/jquery-2.1.1.js")
         html = common.read_file_to_str("libs/jquery/jquery-2.1.1.min.js")
         #html = "(){}"
-    elif url == "/js/my.js":
-        html = common.read_file_to_str("js/my.js")
     elif url == "/cart":
         html = common.read_file_to_str("html/cart.html")
     elif url == "/ws/autocomplate":
