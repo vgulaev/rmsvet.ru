@@ -8,15 +8,16 @@
 		<script src="/js/my.js"></script>
 	</head>
 	<body>
-	<div>
-		<a href="/catalog/goods/">
+	<div id = "{gd.id}">
+		<a href="/">Главная</a>
+		<a id = "cart_label" href="/cart"><span>Корзина</span><span id = "cart_label_count"></span></a>
 		<div>
-			<span id = "caption">Жесткий диск DELL 1T</span>
+			<span id = "caption">{gd.caption}</span>
 		</div>
 		<div>
-			<span>₽ </span><span id = "price">6100.00</span>	
+			<span>₽ </span><span id = "price">{gd.price}</span>	
 		</div>
-		</a>
+		<button onclick="add_to_cart('{gd.id}')">В корзину</button>
 	</div>
 	</body>
 </html>

@@ -80,6 +80,20 @@ class dbrecord(object):
         #print sql
         self.__db__.cursor.execute(sql)
         self.__db__.db.commit()
+    def find(self, *args, **kwargs):
+        res = False
+        sql = "SELECT * FROM {tn}"
+        sql = sql.format(tn = self.__tablename__)
+        if len(kwargs) > 0:
+            sql += " where ";
+            sql += " and ".join(e + " = " + kwargs[e] for e in kwargs)
+            self.__db__.cursor.execute(sql)
+            row = self.__db__.cursor.fetchone()
+            if row is not None:
+                for (i, e) in enumerate(self.__fields__):
+                    setattr(self, e, row[i])
+                res = True
+        return res
     def drop(self):
         sql = "DROP TABLE IF EXISTS {tn}".format(tn = self.__tablename__)
         self.__db__.cursor.execute(sql)

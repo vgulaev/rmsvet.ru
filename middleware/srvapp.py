@@ -11,6 +11,7 @@ paste.reloader.watch_file("checkrestart.py")
 paste.reloader.watch_file("index.html")
 paste.reloader.watch_file("sitedb.py")
 paste.reloader.watch_file("wsservers.py")
+paste.reloader.watch_file("staticcontentgenerator.py")
 
 #own libs
 import wsservers as ws
@@ -28,6 +29,7 @@ def application(environ, start_response):
     ret = ["%s: %s\n" % (key, value)
            for key, value in environ.iteritems()]
     
+    environ['wsgi.charset'] = 'utf-8'
     url = environ["PATH_INFO"]
     #print url
     #print "smal:", url[0:6]
@@ -43,6 +45,8 @@ def application(environ, start_response):
         #html = "(){}"
     elif url == "/js/my.js":
         html = common.read_file_to_str("js/my.js")
+    elif url == "/cart":
+        html = common.read_file_to_str("html/cart.html")
     elif url == "/ws/autocomplate":
         #html = str(ret)
         post_env = environ.copy()
@@ -58,10 +62,10 @@ def application(environ, start_response):
 
         html = ws.auto_complate(tb, ft)
     else:
-        html = url
+        html = environ['wsgi.charset']
         #html = url[0:6]
 
-    return [html]
+    return [common._U(html)]
 
 #
 if __name__ == '__main__':
@@ -70,5 +74,6 @@ if __name__ == '__main__':
     from paste import evalexception
     #app = errormiddleware.ErrorMiddleware(application, debug=True)
     app = evalexception.EvalException(application)
+    #app = application
     #httpserver.serve(AuthDigestHandler(dump_environ, realm, authfunc), host='127.0.0.1', port='8080')
     httpserver.serve(app, host='127.0.0.1', port='8080')

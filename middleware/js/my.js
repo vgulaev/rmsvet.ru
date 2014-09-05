@@ -1,3 +1,30 @@
+class_cart_label = {
+    create: function () {
+        this.html_element = $("#cart_label")[0];
+        this.cart_label_count = $(this.html_element).find("#cart_label_count");
+        this.count = localStorage["cart.count"]
+        if (this.count == undefined) {
+            this.count = 0;
+        };
+        this.cart_label_count.html(this.count);
+    },
+    add_item : function ( id ) {
+        var clc = $(this).find("#cart_label_count");
+        localStorage["cart.count"] = this.count;
+        localStorage["cart." + this.count + ".id"] = id;
+        localStorage["cart." + this.count + ".count"] = 1;
+        localStorage["cart." + this.count + ".caption"] = $("#" + id).find("#caption").html();
+        this.count++;
+        this.cart_label_count.html(this.count);
+    }
+}
+
+function add_to_cart( id ) {
+    //class_cart.id = "fdfdf";
+    //var c = new class_cart_label();
+    //c.add_item();
+    class_cart_label.add_item( id );
+}
 function make_element_for_main_page( obj ) {
     var rowhtml = [
     "<div>",
@@ -48,5 +75,6 @@ $( function () {
             my();
             $("#output").html( $("#SearchStr").val() );
         })
+    class_cart_label.create();
 }
 );
