@@ -12,8 +12,8 @@ class_cart_label = {
         var clc = $(this).find("#cart_label_count");
         localStorage["cart." + this.count + ".id"] = id;
         localStorage["cart." + this.count + ".count"] = 1;
-        localStorage["cart." + this.count + ".caption"] = $("#" + id).find("#caption").html();
-        localStorage["cart." + this.count + ".price"] = $("#" + id).find("#price").html();
+        localStorage["cart." + this.count + ".caption"] = $("#caption").html();
+        localStorage["cart." + this.count + ".price"] = $("#price").html();
         this.count++;
         localStorage["cart.count"] = this.count;
         this.cart_label_count.html(this.count);
@@ -68,36 +68,3 @@ function my() {
     }
         );
 };
-
-function fint_view() {
-    var e = $("#core");
-    var toppx = Math.round($(window).height() - $("#SearchStr").height())/2;
-    var left = Math.round(($(window).width() - 520)/2);
-    e.css({position: "absolute",left: left + "px", top: toppx + "px"})
-};
-$( window ).resize( function () {
-    if ($("#SearchStr").val() == "")
-        fint_view();
-});
-$( function () {
-    $("#SearchStr").on("input", function () {
-            my();
-            if ($("#SearchStr").val() == "") {
-                fint_view();
-                $("#secondline").hide();
-                $("#output").hide();
-                //$("#core").css({position: "inherit"});
-            }
-            else {
-                $("#core").css({position: "inherit"});
-                $("#secondline").show();
-                $("#output").show();
-            };
-            //$("#output").html( $("#SearchStr").val() );
-        })
-    class_cart_label.create();
-
-    fint_view();
-    $("#SearchStr").focus();
-}
-);

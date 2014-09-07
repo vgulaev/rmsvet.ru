@@ -34,3 +34,14 @@ span {
 .mart10 {
 	margin-top: 10px;
 }
+a:link {
+	color: #0000d0;
+}
+a:visited {
+	color: #0000d0;	
+}
+
+#price {
+	color: rgb(177, 39, 4); /*green;*/
+	font-weight: bold;
+}

@@ -45,7 +45,7 @@ class dbrecord(object):
     def char_to_str(self):
         return self.val[:self.maxlength]
     def dec_to_str(self):
-        return str(round(self.val, self.precision))
+        return "{0:.2f}".format(self.val)
         #return str(round(self.val))
     def __str__(self):
         res = object.__str__(self)

@@ -1,0 +1,11 @@
+#col2 {
+	vertical-align: top;
+	width: 450px;
+}
+h1 {
+	font-size: 21px;
+}
+
+.width850 {
+	min-width: 850px;
+}

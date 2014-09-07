@@ -29,8 +29,6 @@ def application(environ, start_response):
     
     environ['wsgi.charset'] = 'utf-8'
     url = environ["PATH_INFO"]
-    #print url
-    #print "smal:", url[0:6]
     if url[0:6] == "/html/":
         standart_response(start_response, "text/html");
         html = common.read_file_to_str(url[1:])
@@ -40,6 +38,7 @@ def application(environ, start_response):
     elif url[0:5] == "/css/":
         standart_response(start_response, "text/css");
         html = common.read_file_to_str(url[1:])
+        #html = common.read_file_to_str(url[1:])
     elif url[0:9] == "/catalog/":
         standart_response(start_response, "text/html");
         html = scg.goods_main_view(url)
@@ -68,12 +67,21 @@ def application(environ, start_response):
         ft = post.getvalue("filter")
 
         html = ws.auto_complate(tb, ft)
-    else:
-        standart_response(start_response, "text/html");
-        html = environ['wsgi.charset']
+    #else:
+        #standart_response(start_response, "text/html");
+        #html = "environ['wsgi.charset']"
         #html = url[0:6]
 
-    return [common._U(html)]
+    if url[0:5] == "/png/":
+        status = '200 OK'
+        headers = [('Content-type', 'image/png')]
+        start_response(status, headers)
+        #ret = file(url[1:])
+        ret = open(url[1:], "rb").read()
+    else:
+        ret = [common._U(html)]
+    
+    return ret
 
 #
 if __name__ == '__main__':

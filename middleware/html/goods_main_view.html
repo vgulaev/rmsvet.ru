@@ -6,18 +6,28 @@
 		<meta name="author" content="Valentin" />
 		<script src="/libs/jquery/jquery-2.1.1.js"></script>
 		<script src="/js/my.js"></script>
+		<script src="/js/fastsearch.js"></script>
+		<link rel="stylesheet" type="text/css" href="/css/main.css">
+		<link rel="stylesheet" type="text/css" href="/css/goods.css">
 	</head>
 	<body>
-	<div id = "{gd.id}">
-		<a href="/">Главная</a>
-		<a id = "cart_label" href="/cart"><span>Корзина</span><span id = "cart_label_count"></span></a>
-		<div>
-			<span id = "caption">{gd.caption}</span>
-		</div>
-		<div>
-			<span>₽ </span><span id = "price">{gd.price}</span>	
-		</div>
-		<button onclick="add_to_cart('{gd.id}')">В корзину</button>
+	<div id = "core">
+		<span class = "fc">Ваш запрос:</span><input id = "SearchStr">
+	</div>
+	<div id = "secondline">
+		<span>
+		<span class = "bt left100 right20">Информация о товаре</span><span class = "bt left20">Действия на сайте</span><span class = "bt left20"><a id = "cart_label" href="/cart"><span>Товаров в корзине &nbsp;</span><span id = "cart_label_count"></span></a></span>
+		</span>
+	</div>
+	<div id = "output" class="main width850">
+		<span id = "col1" class = "left100">
+			<img id = "{gd.id}" src="/png/nophoto.png">
+		</span>
+		<span id = "col2">
+		<div><h1 id = "caption">{gd.caption}</h1></div>
+		<div><span>Цена: &nbsp;</span><span>₽ </span><span id = "price">{gd.price}</span></div>
+		</span>
+		<span id = "col3"><button onclick="add_to_cart('{gd.id}')">В корзину</button></span>
 	</div>
 	</body>
 </html>
