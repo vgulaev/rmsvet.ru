@@ -74,12 +74,16 @@ class dbrecord(object):
         if self.id.is_null():
             self.id.new_id()
         sql = "INSERT INTO {tn} ({keys}) VALUES ({values})";
-        keys = ",".join(self.__fields__ )
-        values = ",".join(self[e].str_to_db() for (e, t) in zip(self.__fields__, self.__fields_type__))
+        keys = ", ".join(self.__fields__ )
+        values = ", ".join("%({e})s".format(e = e) for e in self.__fields__)
         sql = sql.format(tn = self.__tablename__, keys = keys, values = values)
         sql += " ON DUPLICATE KEY UPDATE {eq}".format(eq = self.fl_for_dup_key())
+        ds = dict()
+        for e in self.__fields__:
+            ds[str(e)] = self[e].val
         #print sql
-        self.__db__.cursor.execute(sql)
+        #print ds
+        self.__db__.cursor.execute(sql, ds)
         self.__db__.db.commit()
     def find(self, *args, **kwargs):
         res = False
@@ -100,8 +104,8 @@ class dbrecord(object):
         self.__db__.cursor.execute(sql)
         print sql
     def fl_for_dup_key(self):
-        l = [e + " = " + self[e].str_to_db() for (e, t) in zip(self.__fields__, self.__fields_type__) if e != "id"]
-        return ",".join(l)
+        l = [e + " = " + "%({e})s".format(e = e) for e in self.__fields__ if e != "id"]
+        return ", ".join(l)
     def __getattr___(self, name):
         #print "try get"
         return object.__getattribute__(self, name)

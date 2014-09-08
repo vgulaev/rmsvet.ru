@@ -18,7 +18,7 @@ def load_from_1c():
             pr = sheet.cell(i,3).value;
             if not((pr == "*") or (pr == "-") or (pr == "")):
                 newgood = common.googs_sql()
-                newgood.caption = unicode(MySQLdb.escape_string(sheet.cell(i,1).value))
+                newgood.caption = sheet.cell(i,1).value
                 if isinstance(pr, unicode):
                     newgood.price = float(pr.replace(unichr(160), u"").replace(",", "."))
                 else:

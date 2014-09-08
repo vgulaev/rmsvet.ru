@@ -12,6 +12,7 @@ paste.reloader.watch_file("checkrestart.py")
 paste.reloader.watch_file("sitedb.py")
 paste.reloader.watch_file("wsservers.py")
 paste.reloader.watch_file("staticcontentgenerator.py")
+paste.reloader.watch_file("sett.py")
 
 #own libs
 import wsservers as ws
