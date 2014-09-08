@@ -128,7 +128,7 @@ class dbworker:
         """
         CREATE TABLE IF NOT EXISTS goods (
         id CHAR(36) PRIMARY KEY,
-        caption CHAR(100) COLLATE utf8_general_ci,
+        caption CHAR(250) COLLATE utf8_general_ci,
         price DECIMAL(8,2)
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
         """]
