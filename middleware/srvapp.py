@@ -17,6 +17,7 @@ paste.reloader.watch_file("staticcontentgenerator.py")
 import wsservers as ws
 import common
 import staticcontentgenerator as scg
+import sett
 
 def standart_response(start_response, ct):
     status = '200 OK'
@@ -92,4 +93,4 @@ if __name__ == '__main__':
     app = evalexception.EvalException(application)
     #app = application
     #httpserver.serve(AuthDigestHandler(dump_environ, realm, authfunc), host='127.0.0.1', port='8080')
-    httpserver.serve(app, host='127.0.0.1', port='8080')
+    httpserver.serve(app, host = sett.host, port = sett.port)
