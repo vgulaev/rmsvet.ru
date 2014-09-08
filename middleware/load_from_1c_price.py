@@ -11,9 +11,10 @@ def load_from_1c():
     sheet = rb.sheet_by_index(0)
 
     newgood = common.googs_sql()
-
+    pos = 0
     for i in range(sheet.nrows - 1):
-        if (sheet.cell(i,2).value == "руб"):
+        if (sheet.cell(i,2).value == "СЂСѓР±"):
+            pos = pos + 1
             pr = sheet.cell(i,3).value;
             if not((pr == "*") or (pr == "-") or (pr == "")):
                 newgood = common.googs_sql()
@@ -32,5 +33,6 @@ def load_from_1c():
                 #print sheet.cell(i,1).value
                 #print sheet.cell(i,3).value
             #break
+    print "Loading {p} complate".format(p = pos)
 
 load_from_1c()
