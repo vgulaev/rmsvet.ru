@@ -2,6 +2,7 @@
 import MySQLdb
 import re
 import uuid
+import sett
 
 class field_type:
     reference = 0
@@ -11,9 +12,10 @@ class field_type:
     
 def loadmysqlcredential():
     passwd = ""
+    #if sett.server_dep == ""
     r = {   "host" : 'localhost',
             "user" : 'root',
-            "passwd" : passwd}
+            "passwd" : sett.mysql_pass}
     return r
 
 class dbrecord(object):
