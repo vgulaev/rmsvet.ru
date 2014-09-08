@@ -13,7 +13,7 @@ def load_from_1c():
     newgood = common.googs_sql()
     pos = 0
     for i in range(sheet.nrows - 1):
-        if (sheet.cell(i,2).value == "руб"):
+        if (sheet.cell(i,2).value == u"руб"):
             pos = pos + 1
             pr = sheet.cell(i,3).value;
             if not((pr == "*") or (pr == "-") or (pr == "")):
