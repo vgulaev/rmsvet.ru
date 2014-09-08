@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+cd /usr/share/nginx/rmsvet.ru/middleware
+python srvapp.py >/dev/null 2>&1 & #
+echo "start complete"

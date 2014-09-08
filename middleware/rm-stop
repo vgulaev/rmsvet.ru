@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+PID=$(ps aux | grep -e pytho* | grep -v gre* | awk '{print $2}')
+echo $PID
+kill $PID
+echo "stop complete"
