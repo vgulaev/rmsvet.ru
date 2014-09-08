@@ -2,7 +2,6 @@
 import MySQLdb
 import re
 import uuid
-from web.db import __repr__
 
 class field_type:
     reference = 0
