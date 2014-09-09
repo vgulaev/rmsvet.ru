@@ -36,7 +36,7 @@ def load_from_1c():
                 addfld = common.additionalfields_sql()
                 addfld.caption = "__caption__"
                 addfld.price_id = str(newprice.id)
-                addfld.value = str(newprice.caption)
+                addfld.value = unicode(newprice.caption)
                 addfld.write()
 
                 addfld = common.additionalfields_sql()
