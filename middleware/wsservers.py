@@ -18,7 +18,7 @@ def auto_complate(tbname, filter):
         sql += " and ".join(likes)
     sql += "\n limit 7;" 
     #print sql
-    common.ldb.cursor.execute(sql)
+    common.ldb.execute(sql)
     gd = []
     row = common.ldb.cursor.fetchone()
     while row is not None:

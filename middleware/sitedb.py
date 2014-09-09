@@ -124,10 +124,18 @@ class dbrecord(object):
         #print "try set"""
     #__repr__ = __str__
 class dbworker:
-    def __init__(self):
+    def connect(self):
         cred = loadmysqlcredential()
         self.db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], db = "vg_site_db", charset = 'utf8')
         self.cursor = self.db.cursor()
+    def __init__(self):
+        self.connect()
+    def execute(self, sql, dic = None):
+        try:
+            self.cursor.execute(sql, dic)
+        except (MySQLdb.OperationalError):
+            self.connect()
+            self.cursor.execute(sql, dic)
     def create_table(self):
         sql = [
         """
