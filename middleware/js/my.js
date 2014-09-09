@@ -23,6 +23,16 @@ class_cart_label = {
 function add_to_cart( id ) {
     class_cart_label.add_item( id );
 }
+function currency_sym( cur ) {
+    if (cur == "USD"){
+        res = "$"
+    }
+    else {
+        res = "₽"
+    }
+    return res;
+}
+
 function make_element_for_main_page( obj ) {
     var rowhtml = [
     "<div class = \"left100 width430 mart10\">",
@@ -32,7 +42,7 @@ function make_element_for_main_page( obj ) {
             "<span id = \"caption\">" + obj.caption + "</span>",
         "</div>",
         "<div>",
-            "<span>₽ &nbsp;</span><span id = \"price\">" + obj.price + "</span>", 
+            "<span>" + currency_sym(obj.currency) + " &nbsp;</span><span id = \"price\">" + obj.price + "</span>", 
         "</div>",
         "</a>",
     "</div>",

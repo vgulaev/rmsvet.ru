@@ -10,3 +10,4 @@ helloword.py
 sett.py
 *.xls
 *.XLS
+ocs*.json

@@ -9,7 +9,7 @@ def debug_my_code(filter):
     return json.dumps(res)
 
 def auto_complate(tbname, filter):
-    sql = "SELECT id, caption, price FROM vg_site_db.prices"
+    sql = "SELECT id, caption, price, currency FROM vg_site_db.prices"
     #return debug_my_code(filter)
     if len(filter) > 0:
         sql += "\n where \n"
@@ -24,7 +24,8 @@ def auto_complate(tbname, filter):
     while row is not None:
         gd += [{ "id": row[0],
                 "caption": row[1],
-                "price" : str(row[2])
+                "price" : str(row[2]),
+                "currency" : str(row[3])
                 }]
         row = common.ldb.cursor.fetchone()
     res = {"goods" : gd}

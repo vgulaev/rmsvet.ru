@@ -21,3 +21,5 @@ ldb = sitedb.dbworker()
 
 prices_sql = ldb.class_from_table("prices")
 additionalfields_sql = ldb.class_from_table("additionalfields")
+partners_sql = ldb.class_from_table("partners")
+currency_sql = ldb.class_from_table("currency")

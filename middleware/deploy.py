@@ -26,3 +26,9 @@ except:
     t = sitedb.dbworker()
     t.create_table()
     print "DB preparation complate"
+    
+    import common as cm
+
+    p = cm.partners_sql()
+    p.caption = "OCS"
+    p.write()

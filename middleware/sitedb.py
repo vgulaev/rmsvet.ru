@@ -50,14 +50,21 @@ class dbrecord(object):
     def char_to_str(self):
         return self.val[:self.maxlength]
     def dec_to_str(self):
-        return "{0:.2f}".format(self.val)
+        return u"{0:.2f}".format(self.val)
         #return str(round(self.val))
     def __str__(self):
-        res = object.__str__(self)
+        #res = object.__str__(self)
         if self.type == field_type.char:
             res = self.char_to_str()
         elif self.type == field_type.decimal:
             res = self.dec_to_str()
+        else:
+            res = object.__str__(self)
+        #return res
+        #res = str(self.val)
+        #print type(res)
+        #if isinstance(res, unicode):
+            #res = res.encode('utf-8')
         return res
     def str_to_db(self):
         res = str(self)
@@ -95,9 +102,14 @@ class dbrecord(object):
         sql = sql.format(tn = self.__tablename__)
         if len(kwargs) > 0:
             sql += " where ";
-            sql += " and ".join(e + " = " + kwargs[e] for e in kwargs)
+            sql += " and ".join("{e} = %({e})s".format( e = e ) for e in kwargs)
+            ds = dict()
+            for e in kwargs:
+                ds[str(e)] = kwargs[e] 
+            #print sql
+            #kwargs[e]
             ##self.__db__.cursor.execute(sql)
-            self.__db__.execute(sql)
+            self.__db__.execute(sql, ds)
             row = self.__db__.cursor.fetchone()
             if row is not None:
                 for (i, e) in enumerate(self.__fields__):
@@ -142,7 +154,25 @@ class dbworker:
             self.connect()
             self.cursor.execute(sql, dic)
     def create_table(self):
-        sql = ["""
+        sql = [
+        #Это справочсник контрагентов
+        """
+        CREATE TABLE IF NOT EXISTS partners (
+        id CHAR(36) PRIMARY KEY,
+        caption CHAR(250) COLLATE utf8_general_ci
+        ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
+        """,
+        #Это справочсник валют
+        """
+        CREATE TABLE IF NOT EXISTS currency (
+        id CHAR(36) PRIMARY KEY,
+        caption CHAR(25) COLLATE utf8_general_ci,
+        partner CHAR(36),
+        rate DECIMAL(10, 4)
+        ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
+        """,
+        #Это справочсник дополнительных полей (возможно __поле__ - типо как в Питоне системное поле, для массового индекса)
+        """
         CREATE TABLE IF NOT EXISTS additionalfields (
         id CHAR(36) PRIMARY KEY,
         caption CHAR(250) COLLATE utf8_general_ci,
@@ -150,12 +180,14 @@ class dbworker:
         value CHAR(250)
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
         """,
+        #Это справочсник цен
         """
         CREATE TABLE IF NOT EXISTS prices (
         id CHAR(36) PRIMARY KEY,
         caption CHAR(250) COLLATE utf8_general_ci,
         good CHAR(36),
         price DECIMAL(14,2),
+        currency CHAR(36),
         price_date DATETIME,
         sync_tag CHAR(10),
         organization CHAR(36)
