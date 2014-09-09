@@ -8,7 +8,8 @@ class field_type:
     reference = 0
     decimal = 1
     char = 2
-    null = 3
+    datetime = 3
+    null = 4
     
 def loadmysqlcredential():
     passwd = ""
@@ -43,6 +44,9 @@ class dbrecord(object):
                     len_and_pre = (m.group(1)).split(",")                    
                     self.precision = int(len_and_pre[1])
                     self.val = 0
+                elif fld_type.find(u"datetime") > -1:
+                    self.type = field_type.datetime
+                    self.val = ""
     def char_to_str(self):
         return self.val[:self.maxlength]
     def dec_to_str(self):
@@ -83,7 +87,7 @@ class dbrecord(object):
             ds[str(e)] = self[e].val
         #print sql
         #print ds
-        self.__db__.cursor.execute(sql, ds)
+        self.__db__.execute(sql, ds)
         self.__db__.db.commit()
     def find(self, *args, **kwargs):
         res = False
@@ -92,7 +96,8 @@ class dbrecord(object):
         if len(kwargs) > 0:
             sql += " where ";
             sql += " and ".join(e + " = " + kwargs[e] for e in kwargs)
-            self.__db__.cursor.execute(sql)
+            ##self.__db__.cursor.execute(sql)
+            self.__db__.execute(sql)
             row = self.__db__.cursor.fetchone()
             if row is not None:
                 for (i, e) in enumerate(self.__fields__):
@@ -137,12 +142,23 @@ class dbworker:
             self.connect()
             self.cursor.execute(sql, dic)
     def create_table(self):
-        sql = [
-        """
-        CREATE TABLE IF NOT EXISTS goods (
+        sql = ["""
+        CREATE TABLE IF NOT EXISTS additionalfields (
         id CHAR(36) PRIMARY KEY,
         caption CHAR(250) COLLATE utf8_general_ci,
-        price DECIMAL(14,2)
+        price_id CHAR(36),
+        value CHAR(250)
+        ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS prices (
+        id CHAR(36) PRIMARY KEY,
+        caption CHAR(250) COLLATE utf8_general_ci,
+        good CHAR(36),
+        price DECIMAL(14,2),
+        price_date DATETIME,
+        sync_tag CHAR(10),
+        organization CHAR(36)
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
         """]
         for e in sql:

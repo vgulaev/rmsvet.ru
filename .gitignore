@@ -3,6 +3,7 @@
 *.png
 .pydevproject
 .settings/
+osc/
 libs
 helloword.html
 helloword.py

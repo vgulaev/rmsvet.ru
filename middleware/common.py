@@ -11,6 +11,7 @@ def _U(s):
         
 def _Q(s):
     return "'{s}'".format(s = s)
+
 def read_file_to_str(filename):
     #t = open(filename, "r")
     t = codecs.open(filename, encoding='utf-8')
@@ -18,4 +19,5 @@ def read_file_to_str(filename):
 
 ldb = sitedb.dbworker()
 
-googs_sql = ldb.class_from_table("goods")
+prices_sql = ldb.class_from_table("prices")
+additionalfields_sql = ldb.class_from_table("additionalfields")
