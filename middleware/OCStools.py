@@ -6,21 +6,7 @@ import sett
 import common as cm
 
 headers = {'content-type': 'application/json; charset=utf-8'}
-#payload = {'Login': 'PYpjGUZKz', 'Token': 'dLxX&p^scYYsWrAt&UdhRxMBMGfXrN'}
-#urlgc = "https://b2btestservice.ocs.ru/b2bjson.asmx/GetCatalog"
-#urlpa = "https://b2btestservice.ocs.ru/b2bjson.asmx/GetProductAvailability"
 
-"""payload = {"Login": sett.ocs_login,
-           "Token": sett.ocs_token,
-           "Availability": 1,
-           "ShipmentCity": "Тюмень",
-           "DisplayMissing": 0,
-           "LocationList": [],
-           #"CategoryIDList" : ["20"],
-           "CategoryIDList" : [],
-           "ItemIDList": ["1000122597"]}
-r = requests.post(urlpa, data=json.dumps(payload), headers=headers)"""
-#print(r.text)
 def currency_sync():
     payload = {"Login": sett.ocs_login,
            "Token": sett.ocs_token}
@@ -61,12 +47,30 @@ def load_to_db( CategoryIDList ):
         p.sync_tag = "ocs " + CategoryIDList
         p.write()
         
+        ad =  cm.additionalfields_sql()
+        ad.caption = "PartNumber"
+        ad.price_id = p.id
+        ad.value = e["PartNumber"]
+        ad.write()
+        
+        ad =  cm.additionalfields_sql()
+        ad.caption = "Producer"
+        ad.price_id = p.id
+        ad.value = e["Producer"]
+        ad.write()
+        
+        ad =  cm.additionalfields_sql()
+        ad.caption = "__ItemID__"
+        ad.price_id = p.id
+        ad.value = e["ItemID"]
+        ad.write()
+
     print len(s["d"]["Products"])
     
 #currency_sync()
-get_price("20")
-load_to_db("20")
-get_price("15")
-load_to_db("15")
+l = ["20", "15", "26", "16", "01", "02"]
+for e in l:
+    get_price(e)
+    load_to_db(e)
 
 print "End"

@@ -47,9 +47,9 @@ def application(environ, start_response):
     elif url == "/":
         standart_response(start_response, "text/html");
         html = common.read_file_to_str("index.html")
-    elif url == "/libs/jquery/jquery-2.1.1.js":
+    elif url[0:6] == "/libs/":
         standart_response(start_response, "text/javascript");
-        html = common.read_file_to_str("libs/jquery/jquery-2.1.1.min.js")
+        html = common.read_file_to_str(url[1:])
         #html = "(){}"
     elif url == "/cart":
         standart_response(start_response, "text/html");

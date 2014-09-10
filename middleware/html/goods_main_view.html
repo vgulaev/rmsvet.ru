@@ -4,7 +4,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title> {{gd.caption.val}} </title>
 		<meta name="author" content="Valentin" />
-		<script src="/libs/jquery/jquery-2.1.1.js"></script>
+		<script src="/libs/jquery/jquery-2.1.1.min.js"></script>
 		<script src="/js/my.js"></script>
 		<script src="/js/fastsearch.js"></script>
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
@@ -27,7 +27,9 @@
 		<div><h1 id = "caption"> {{gd.caption.val}} </h1></div>
 		<div><span>Цена: &nbsp;</span><span>₽ </span><span id = "price"> {{gd.price}} </span></div>
 		<div><span>Характеристики:</span>
-		{{addfld}}			
+		{{#addfld}}
+		<div> {{name}} {{value}} </div>
+		{{/addfld}}			
 		</div>
 		</span>
 		<span id = "col3"><button onclick="add_to_cart('{{gd.id}}')">В корзину</button></span>
