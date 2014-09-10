@@ -4,6 +4,7 @@ import requests
 import json
 import sett
 import common as cm
+import codecs
 
 headers = {'content-type': 'application/json; charset=utf-8'}
 
@@ -32,7 +33,7 @@ def get_price( CategoryIDList ):
            "CategoryIDList" : [CategoryIDList],
            "ItemIDList": []}
     r = requests.post(sett.ocs_srv + "GetProductAvailability", data=json.dumps(payload), headers=headers)
-    f = open("ocs_price.json", "w")
+    f = codecs.open("ocs_price.json", "w", "utf-8")
     f.write(r.text)
 
 def load_to_db( CategoryIDList ):
