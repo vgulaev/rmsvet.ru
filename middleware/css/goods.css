@@ -9,3 +9,12 @@ h1 {
 .width850 {
 	min-width: 850px;
 }
+/*ItemInformation*/
+.ii_title {
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-weight: bold;
+}
+.ii_name_td{
+	width: 270px;
+}

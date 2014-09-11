@@ -181,13 +181,15 @@ class dbworker:
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
         """,
         #Это справочсник цен
+        #price_in и currency_in это цена и валюта закупа, она может быть и неизвестна
         """
         CREATE TABLE IF NOT EXISTS prices (
         id CHAR(36) PRIMARY KEY,
         caption CHAR(250) COLLATE utf8_general_ci,
         good CHAR(36),
         price DECIMAL(14,2),
-        currency CHAR(36),
+        price_in DECIMAL(14,2),
+        currency_in CHAR(36),
         price_date DATETIME,
         sync_tag CHAR(10),
         organization CHAR(36)

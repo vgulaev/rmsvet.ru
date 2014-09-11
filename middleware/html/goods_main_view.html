@@ -26,10 +26,15 @@
 		<span id = "col2">
 		<div><h1 id = "caption"> {{gd.caption.val}} </h1></div>
 		<div><span>Цена: &nbsp;</span><span>₽ </span><span id = "price"> {{gd.price}} </span></div>
-		<div><span>Характеристики:</span>
-		{{#addfld}}
-		<div> {{name}} {{value}} </div>
-		{{/addfld}}			
+		<div><span class = "ii_title">Характеристики:</span>
+		<table>
+			{{#addfld}}
+			<tr>
+				<td class = "ii_name_td"> {{name}} </td>
+				<td> {{value}} </td>
+			</tr>
+			{{/addfld}}			
+		</table>
 		</div>
 		</span>
 		<span id = "col3"><button onclick="add_to_cart('{{gd.id}}')">В корзину</button></span>
