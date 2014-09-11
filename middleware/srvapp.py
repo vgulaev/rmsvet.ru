@@ -13,6 +13,7 @@ paste.reloader.watch_file("sitedb.py")
 paste.reloader.watch_file("wsservers.py")
 paste.reloader.watch_file("staticcontentgenerator.py")
 paste.reloader.watch_file("sett.py")
+paste.reloader.watch_file("statistics.py")
 
 #own libs
 import wsservers as ws
@@ -32,31 +33,32 @@ def application(environ, start_response):
     environ['wsgi.charset'] = 'utf-8'
     url = environ["PATH_INFO"]
     if url[0:6] == "/html/":
-        standart_response(start_response, "text/html");
+        standart_response(start_response, "text/html")
         html = common.read_file_to_str(url[1:])
     elif url[0:4] == "/js/":
-        standart_response(start_response, "text/javascript");
+        standart_response(start_response, "text/javascript")
         html = common.read_file_to_str(url[1:])
     elif url[0:5] == "/css/":
-        standart_response(start_response, "text/css");
+        standart_response(start_response, "text/css")
         html = common.read_file_to_str(url[1:])
         #html = common.read_file_to_str(url[1:])
     elif url[0:9] == "/catalog/":
-        standart_response(start_response, "text/html");
+        standart_response(start_response, "text/html")
         html = scg.goods_main_view(url)
+    elif url == "/stat":
+        standart_response(start_response, "text/html")
+        html = scg.stat()
     elif url == "/":
-        standart_response(start_response, "text/html");
+        standart_response(start_response, "text/html")
         html = common.read_file_to_str("index.html")
     elif url[0:6] == "/libs/":
-        standart_response(start_response, "text/javascript");
+        standart_response(start_response, "text/javascript")
         html = common.read_file_to_str(url[1:])
-        #html = "(){}"
     elif url == "/cart":
-        standart_response(start_response, "text/html");
+        standart_response(start_response, "text/html")
         html = common.read_file_to_str("html/cart.html")
     elif url == "/ws/autocomplate":
-        #html = str(ret)
-        standart_response(start_response, "application/json");
+        standart_response(start_response, "application/json")
         post_env = environ.copy()
         post_env['QUERY_STRING'] = ''
         post = cgi.FieldStorage(
@@ -69,11 +71,13 @@ def application(environ, start_response):
         ft = post.getvalue("filter")
 
         html = ws.auto_complate(tb, ft)
+    elif url[0:7] == "/debug/":
+        standart_response(start_response, "text/html")
+        html = str(ret)
     #else:
-        #standart_response(start_response, "text/html");
+        #standart_response(start_response, "text/html")
         #html = "environ['wsgi.charset']"
         #html = url[0:6]
-
     if url[0:5] == "/png/":
         status = '200 OK'
         headers = [('Content-type', 'image/png')]

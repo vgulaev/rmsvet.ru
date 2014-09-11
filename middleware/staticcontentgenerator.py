@@ -26,3 +26,16 @@ def  goods_main_view(url):
 	#res = _templ_res.format(gd = obj, addfld = html_view_for_addfld(id))
 	res = pystache.render(_templ_res, {"gd" : obj, "addfld" : html_view_for_addfld( id )})
 	return res
+
+import statistics
+def stat():
+	_templ_res = cm.read_file_to_str("html/stat.html")
+	s = statistics.stat_info()
+	ls = []
+	total = 0
+	for e in s:
+		s[e]["name"] = e
+		ls += [s[e]]
+		total += s[e]["lines"]
+	res = pystache.render(_templ_res, {"stats": ls, "total": total, "dol": total * 12})
+	return res
