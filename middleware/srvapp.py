@@ -26,10 +26,19 @@ def standart_response(start_response, ct):
     headers = [('Content-type', ct + ', charset=UTF-8')]
     start_response(status, headers)
 
+def detect_common_env( domain ):
+    d = common.domains_sql()
+    if d.find(caption = domain):
+        o = common.organization_sql()
+        if o.find(id = d.organization_id.val):
+            common.env["organization"] = o
+
 def application(environ, start_response):
     ret = ["%s: %s\n" % (key, value)
            for key, value in environ.iteritems()]
     
+    #detect_common_env(environ["HTTP_HOST"])
+
     environ['wsgi.charset'] = 'utf-8'
     url = environ["PATH_INFO"]
     if url[0:6] == "/html/":

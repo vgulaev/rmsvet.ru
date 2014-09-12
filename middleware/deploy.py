@@ -32,3 +32,26 @@ except:
     p = cm.partners_sql()
     p.caption = "OCS"
     p.write()
+
+    o = cm.organization_sql()
+    o.caption = "ezsp"
+    o.write()
+
+    p = cm.domains_sql()
+    p.organization_id = o.id.val
+    p.caption = "ezsp.ru"
+    p.write()
+
+    p = cm.domains_sql()
+    p.organization_id = o.id.val
+    p.caption = "eazyshop.ru"
+    p.write()
+
+    o = cm.organization_sql()
+    o.caption = "rmsvet"
+    o.write()
+
+    p = cm.domains_sql()
+    p.organization_id = o.id.val
+    p.caption = "rmsvet.ru"
+    p.write()

@@ -155,6 +155,21 @@ class dbworker:
             self.cursor.execute(sql, dic)
     def create_table(self):
         sql = [
+        #Это справочсник доменов
+        """
+        CREATE TABLE IF NOT EXISTS domains (
+        id CHAR(36) PRIMARY KEY,
+        caption CHAR(250) COLLATE utf8_general_ci,
+        organization_id CHAR(36)
+        ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
+        """,
+        #Это справочсник организаций
+        """
+        CREATE TABLE IF NOT EXISTS organization (
+        id CHAR(36) PRIMARY KEY,
+        caption CHAR(250) COLLATE utf8_general_ci
+        ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
+        """,
         #Это справочсник контрагентов
         """
         CREATE TABLE IF NOT EXISTS partners (
@@ -180,6 +195,15 @@ class dbworker:
         value CHAR(250)
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
         """,
+        #Это справочсник картинок
+        """
+        CREATE TABLE IF NOT EXISTS images (
+        id CHAR(36) PRIMARY KEY,
+        caption CHAR(250) COLLATE utf8_general_ci,
+        price_id CHAR(36),
+        url CHAR(250)
+        ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
+        """,
         #Это справочсник цен
         #price_in и currency_in это цена и валюта закупа, она может быть и неизвестна
         """
@@ -188,6 +212,7 @@ class dbworker:
         caption CHAR(250) COLLATE utf8_general_ci,
         good CHAR(36),
         price DECIMAL(14,2),
+        description TEXT,
         price_in DECIMAL(14,2),
         currency_in CHAR(36),
         price_date DATETIME,

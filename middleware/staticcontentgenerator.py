@@ -21,10 +21,14 @@ def html_view_for_addfld( id ):
 def  goods_main_view(url):
 	_templ_res = cm.read_file_to_str("html/goods_main_view.html")
 	obj = cm.prices_sql()
+	img = cm.images_sql()
 	id = url[-36:] 
 	obj.find(id = id)
 	#res = _templ_res.format(gd = obj, addfld = html_view_for_addfld(id))
-	res = pystache.render(_templ_res, {"gd" : obj, "addfld" : html_view_for_addfld( id )})
+	img_url = "/png/nophoto.png"
+	if img.find(price_id = obj.id.val):
+		img_url = img.url.val
+	res = pystache.render(_templ_res, {"gd" : obj, "addfld" : html_view_for_addfld( id ), "img_url" : img_url})
 	return res
 
 import statistics

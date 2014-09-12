@@ -21,7 +21,7 @@
 	</div>
 	<div id = "output" class="main width850">
 		<span id = "col1" class = "left100">
-			<img id = "{{gd.id}}" src="/png/nophoto.png">
+			<img id = "{{gd.id}}" src="{{img_url}}">
 		</span>
 		<span id = "col2">
 		<div><h1 id = "caption"> {{gd.caption.val}} </h1></div>
@@ -35,6 +35,8 @@
 			</tr>
 			{{/addfld}}			
 		</table>
+		<div><span class = "ii_title">Описание:</span></div>
+		<div>{{{gd.description.val}}}</div>
 		</div>
 		</span>
 		<span id = "col3"><button onclick="add_to_cart('{{gd.id}}')">В корзину</button></span>

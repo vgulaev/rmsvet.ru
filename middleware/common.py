@@ -23,3 +23,7 @@ prices_sql = ldb.class_from_table("prices")
 additionalfields_sql = ldb.class_from_table("additionalfields")
 partners_sql = ldb.class_from_table("partners")
 currency_sql = ldb.class_from_table("currency")
+images_sql = ldb.class_from_table("images")
+domains_sql = ldb.class_from_table("domains")
+organization_sql = ldb.class_from_table("organization")
+env = {"organization" : None}
