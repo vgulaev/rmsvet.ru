@@ -16,6 +16,8 @@ def load_from_1c():
     common.ldb.execute(sql)
     dt_now = datetime.datetime.now()
     dt_for_db = dt_now.strftime('%Y-%m-%d %H:%M:%S')
+    org = common.organization_sql()
+    org.find(caption = "ezsp")
     pos = 0
     for i in range(sheet.nrows - 1):
         if (sheet.cell(i,2).value == u"руб"):
