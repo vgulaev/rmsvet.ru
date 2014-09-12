@@ -21,7 +21,6 @@ def auto_complate(tbname, filter):
     if org is not None:
         sql += "\n and organization = '{org_id}'".format(org_id = org.id.val)
     sql += "\n limit 7;" 
-    print sql
     #print sql
     cursor = common.ldb.getcursor()
     cursor.execute(sql)
