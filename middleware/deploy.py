@@ -4,6 +4,7 @@ import sitedb
 
 try:
     t = sitedb.dbworker()
+    t.connect()
     
     cred = sitedb.loadmysqlcredential()
     db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], charset = 'utf8')

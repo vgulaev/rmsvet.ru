@@ -102,7 +102,7 @@ class dbrecord(object):
         cursor = con.cursor()
         cursor.execute(sql, ds)
         con.commit()
-        cursor.close()
+        #cursor.close()
     def find(self, *args, **kwargs):
         res = False
         sql = "SELECT * FROM {tn}"
@@ -123,7 +123,7 @@ class dbrecord(object):
                 for (i, e) in enumerate(self.__fields__):
                     setattr(self, e, row[i])
                 res = True
-            cursor.close()
+            #cursor.close()
         return res
     def drop(self):
         sql = "DROP TABLE IF EXISTS {tn}".format(tn = self.__tablename__)

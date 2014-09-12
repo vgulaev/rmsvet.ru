@@ -27,6 +27,7 @@ def load_from_1c():
                 newprice = common.prices_sql()
                 newprice.caption = sheet.cell(i,1).value
                 newprice.sync_tag = "from 1c"
+                newprice.organization = org.id.val
                 newprice.price_date = dt_for_db
                 if isinstance(pr, unicode):
                     newprice.price = float(pr.replace(unichr(160), u"").replace(",", "."))
