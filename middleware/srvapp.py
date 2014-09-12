@@ -36,11 +36,14 @@ def detect_common_env( domain ):
 def application(environ, start_response):
     ret = ["%s: %s\n" % (key, value)
            for key, value in environ.iteritems()]
-    
-    #detect_common_env(environ["HTTP_HOST"])
+    #ret = [environ["HTTP_HOST"]]
+    ###
+    detect_common_env(environ["HTTP_HOST"])
 
     environ['wsgi.charset'] = 'utf-8'
     url = environ["PATH_INFO"]
+    #print "url: ", url
+    #print "host: ", environ["HTTP_HOST"]
     if url[0:6] == "/html/":
         standart_response(start_response, "text/html")
         html = common.read_file_to_str(url[1:])
@@ -108,8 +111,10 @@ if __name__ == '__main__':
     from paste import httpserver
     from paste.exceptions import errormiddleware
     from paste import evalexception
+    import datetime
     #app = errormiddleware.ErrorMiddleware(application, debug=True)
     app = evalexception.EvalException(application)
     #app = application
     #httpserver.serve(AuthDigestHandler(dump_environ, realm, authfunc), host='127.0.0.1', port='8080')
+    print "Start at {date}".format(date = datetime.datetime.now())
     httpserver.serve(app, host = sett.host, port = sett.port)

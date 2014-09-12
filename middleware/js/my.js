@@ -78,3 +78,21 @@ function my() {
     }
         );
 };
+
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
+
+function test_500ajax() {
+    for (var i = 0; i < 2000; i++) {
+        $("#SearchStr").val(makeid());
+        my();
+    };
+}

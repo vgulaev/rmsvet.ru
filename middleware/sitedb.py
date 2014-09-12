@@ -9,7 +9,8 @@ class field_type:
     decimal = 1
     char = 2
     datetime = 3
-    null = 4
+    text = 4
+    null = 5
     
 def loadmysqlcredential():
     passwd = ""
@@ -46,6 +47,9 @@ class dbrecord(object):
                     self.val = 0
                 elif fld_type.find(u"datetime") > -1:
                     self.type = field_type.datetime
+                    self.val = ""
+                elif fld_type.find(u"text") > -1:
+                    self.type = field_type.text
                     self.val = ""
     def char_to_str(self):
         return self.val[:self.maxlength]
@@ -94,8 +98,11 @@ class dbrecord(object):
             ds[str(e)] = self[e].val
         #print sql
         #print ds
-        self.__db__.execute(sql, ds)
-        self.__db__.db.commit()
+        con = self.__db__.connect()
+        cursor = con.cursor()
+        cursor.execute(sql, ds)
+        con.commit()
+        cursor.close()
     def find(self, *args, **kwargs):
         res = False
         sql = "SELECT * FROM {tn}"
@@ -109,12 +116,14 @@ class dbrecord(object):
             #print sql
             #kwargs[e]
             ##self.__db__.cursor.execute(sql)
-            self.__db__.execute(sql, ds)
-            row = self.__db__.cursor.fetchone()
+            cursor = self.__db__.getcursor()
+            cursor.execute(sql, ds)
+            row = cursor.fetchone()
             if row is not None:
                 for (i, e) in enumerate(self.__fields__):
                     setattr(self, e, row[i])
                 res = True
+            cursor.close()
         return res
     def drop(self):
         sql = "DROP TABLE IF EXISTS {tn}".format(tn = self.__tablename__)
@@ -143,16 +152,18 @@ class dbrecord(object):
 class dbworker:
     def connect(self):
         cred = loadmysqlcredential()
-        self.db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], db = "vg_site_db", charset = 'utf8')
-        self.cursor = self.db.cursor()
+        db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], db = "vg_site_db", charset = 'utf8')
+        return db
     def __init__(self):
-        self.connect()
+        pass
+        #self.connect()
+    def getcursor(self):
+        db = self.connect()
+        return db.cursor()
     def execute(self, sql, dic = None):
-        try:
-            self.cursor.execute(sql, dic)
-        except (MySQLdb.OperationalError):
-            self.connect()
-            self.cursor.execute(sql, dic)
+        cursor = self.getcursor()
+        cursor.execute(sql, dic)
+        return cursor
     def create_table(self):
         sql = [
         #Это справочсник доменов
@@ -225,8 +236,8 @@ class dbworker:
             self.db.commit()
     def class_from_table(self, table_name):
         sql = "show columns from {tn}".format(tn = table_name)
-        self.cursor.execute(sql)
-        
+        cursor = self.getcursor()
+        cursor.execute(sql)
         retclass = dbrecord()
         #print retclass.__dict__
         class retclass(dbrecord):
@@ -239,11 +250,11 @@ class dbworker:
         retclass.__fields__ = []
         retclass.__fields_type__ = []
         retclass.__tablename__ = table_name
-        row = self.cursor.fetchone()
+        row = cursor.fetchone()
         while row is not None:
             retclass.__fields__ += [row[0]]
             retclass.__fields_type__ += [row[1]]
             dbr = dbrecord(fld_type = row[1])
             #setattr(retclass, row[0], dbr)
-            row =  self.cursor.fetchone()
+            row =  cursor.fetchone()
         return retclass

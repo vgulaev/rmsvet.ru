@@ -8,14 +8,17 @@ def _h(s):
 
 def html_view_for_addfld( id ):
 	sql = "select * from additionalfields where price_id = %s"
-	cm.ldb.execute(sql, [ id ])
-	row = cm.ldb.cursor.fetchone()
+	cursor = cm.ldb.execute(sql, [ id ])
+	row = cursor.fetchone()
 	res = []
 	while (row is not None):
 		if not (row[1][0 : 2] == "__"):
 			el = {"name" : row[1], "value" : row[3]}
 			res += [el]
-		row = cm.ldb.cursor.fetchone()
+		row = cursor.fetchone()
+	cursor.close()
+	#el = {"name" : "organization", "value" : cm.env["organization"]}
+	#res += [el]
 	return res
 
 def  goods_main_view(url):

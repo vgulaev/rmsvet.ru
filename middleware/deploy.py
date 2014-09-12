@@ -47,6 +47,12 @@ except:
     p.caption = "eazyshop.ru"
     p.write()
 
+    p = cm.domains_sql()
+    p.organization_id = o.id.val
+    p.caption = "127.0.0.1:8080"
+    p.write()
+
+
     o = cm.organization_sql()
     o.caption = "rmsvet"
     o.write()
