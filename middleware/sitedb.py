@@ -257,4 +257,5 @@ class dbworker:
             dbr = dbrecord(fld_type = row[1])
             #setattr(retclass, row[0], dbr)
             row =  cursor.fetchone()
+        cursor.close()
         return retclass
