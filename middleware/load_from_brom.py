@@ -13,6 +13,8 @@ def load_from_brom():
     dt_now = datetime.datetime.now()
     dt_for_db = dt_now.strftime('%Y-%m-%d %H:%M:%S')
     pos = 0
+    org = common.organization_sql()
+    org.find(caption = "rmsvet")
     for i in range(1, sheet.nrows - 1):
         pos += 1
         newprice = common.prices_sql()
@@ -20,6 +22,7 @@ def load_from_brom():
         newprice.price = sheet.cell(i,4).value
         newprice.description = sheet.cell(i,12).value
         newprice.sync_tag = "brom"
+        newprice.organization = org.id.val
         newprice.price_date = dt_for_db
         newprice.write()
     print "Loading {p} complate".format(p = pos)
@@ -43,5 +46,5 @@ def load_images():
     print "Loading {p} complate".format(p = pos)
 
 
-#load_from_brom()
+load_from_brom()
 load_images()
