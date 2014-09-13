@@ -231,9 +231,11 @@ class dbworker:
         organization CHAR(36)
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
         """]
+        con = self.connect()
+        cursor = con.cursor()
         for e in sql:
-            self.cursor.execute(e)
-            self.db.commit()
+            cursor.execute(e)
+            con.commit()
     def class_from_table(self, table_name):
         sql = "show columns from {tn}".format(tn = table_name)
         cursor = self.getcursor()
