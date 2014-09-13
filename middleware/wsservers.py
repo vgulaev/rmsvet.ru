@@ -15,8 +15,8 @@ def auto_complate(tbname, filter):
         sql += "\n where MATCH (caption) "
         likes = filter.split(" ")
         #likes = ["caption like '%" + e + "%'" for e in likes if e <> ""]
-        likes = ["'*" + e + "*'" for e in likes if e <> ""]
-        sql += "AGAINST(" + ", ".join(likes) + "  IN BOOLEAN MODE)"
+        likes = ["'+*" + e + "*'" for e in likes if e <> ""]
+        sql += "AGAINST(" + " ".join(likes) + "  IN BOOLEAN MODE)"
     org = common.env["organization"]
     if org is not None:
         sql += "\n and organization = '{org_id}'".format(org_id = org.id.val)
