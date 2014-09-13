@@ -1,0 +1,5 @@
+err=3
+while test "$err" -eq 3 ; do
+    python srvapp.py
+    err="$?"
+done
