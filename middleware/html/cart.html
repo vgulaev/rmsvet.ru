@@ -5,6 +5,7 @@
 		<title>index</title>
 		<meta name="author" content="Valentin" />
 		<script src="/libs/jquery/jquery-2.1.1.min.js"></script>
+		<script src="/libs/mustache.js"></script>
 		<script src="/js/common.js"></script>
 		<script src="/js/my.js"></script>
 		<script src="/js/cart.js"></script>
@@ -22,20 +23,37 @@
 		</span>
 	</div>
 	<div id = "output" class="main">
-		<table>
+		<div class = "left100">
+		<table class="cart_table mart10">
 			<thead>
 				<tr>
-					<th>№</th>
+					<!--th>№</th-->
 					<th>Товар</th>
 					<th>Кол-во</th>
 					<th>Цена</th>
 					<th>Сумма</th>
 				</tr>
 			</thead>
+			<script id="goods_tmpl" type="x-tmpl-mustache">
+				{{#el}}
+				<tr id = "{{ id }}">
+					<td>{{ &caption }}</td>
+					<td class = "qty">{{ count }}</td>
+					<td class = "num">{{ price }} </td>
+					<td class = "num">{{ sum }} </td>
+				</tr>
+				{{/el}}
+				<tr>
+					<td colSpan = 3 class = "total">Всего ({{ length }} позиций)</td>
+					<td class = "num">{{ totalsum }}</td>			
+				</tr>
+			</script>
 			<tbody id = "goods">
 			</tbody>
 		</table>
-		<input type = "submit" name = "">
+		<button>Выписать счет</button>
+		<button>Купить</button>
+		</div>
 	</div>
 	</body>
 </html>

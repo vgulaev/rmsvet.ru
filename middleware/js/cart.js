@@ -36,27 +36,25 @@ cart = {
 		var sum = 0;
 		var totalsum = 0;
 		tbody.empty();
-		if (length == undefined) length = 0; 
+		if (length == undefined) length = 0;
+		var el = []; 
 		for (var i = 0; i <= length - 1; i++) {
 			var count = parseFloat(localStorage["cart." + i + ".count"]);
 			var price = parseFloat(localStorage["cart." + i + ".price"]);
 			sum = (count * price);
 			totalsum = totalsum + sum;
-			rowhtml = ["<tr id = " + localStorage["cart." + i + ".id"] + ">",
-					"<td>" + (i + 1) + "</td>",
-					"<td>" + this.make_td_for_caption(i) + "</td>",
-					"<td>" + count + "</td>",
-					"<td class = \"num\">" + price.toFixed(2) + "</td>",
-					"<td id = \"sum\" class = \"num\">" + sum.toFixed(2) + "</td>",
-				"</tr>"].join('\n');
-			tbody.append(rowhtml);
+			var newel = {"id" : localStorage["cart." + i + ".id"],
+			"caption"	: this.make_td_for_caption(i),
+			"count"		: count,
+			"price"		: price.toFixed(2),
+			"sum"		: sum.toFixed(2)
+			};
+			el.push(newel);
 		};
-		rowhtml = ["<tr>",
-		"<td colSpan = 4>Всего</td>",
-		"<td class = \"num\">" + totalsum.toFixed(2) + "</td>",
-		"</tr>"
-		].join('\n');
-		tbody.append(rowhtml); 
+		var template = $("#goods_tmpl").html();
+  		Mustache.parse(template);
+		var rendered = Mustache.render(template, {"el" : el, "totalsum" : totalsum.toFixed(2), "length" : length});
+		$("#goods").html(rendered);
 	}
 };
 

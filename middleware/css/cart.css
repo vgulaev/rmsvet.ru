@@ -1,3 +1,13 @@
 .num {
 	text-align: right;
 }
+.cart_table {
+	width: 60%;
+}
+.total {
+	text-align: right;
+	font-weight: bold;
+}
+.qty {
+	text-align: center;
+}
