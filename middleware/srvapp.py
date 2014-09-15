@@ -89,10 +89,7 @@ def application(environ, start_response):
     elif url[0:7] == "/debug/":
         standart_response(start_response, "text/html")
         html = str(ret)
-    #else:
-        #standart_response(start_response, "text/html")
-        #html = "environ['wsgi.charset']"
-        #html = url[0:6]
+    
     if url[0:5] == "/png/":
         status = '200 OK'
         headers = [('Content-type', 'image/png')]
@@ -109,7 +106,6 @@ def application(environ, start_response):
     
     return ret
 
-#
 if __name__ == '__main__':
     from paste import httpserver
     from paste.exceptions import errormiddleware

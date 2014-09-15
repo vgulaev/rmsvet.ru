@@ -30,7 +30,7 @@ def  goods_main_view(url, url_type = None):
 		obj.find(id = id)
 	else:
 		u = urllib.quote(url[1:-6])
-		print url[1:-6], type(url[1:-6]), u
+		#print url[1:-6], type(url[1:-6]), u
 		obj.find(fantastic_url = u)
 	#res = _templ_res.format(gd = obj, addfld = html_view_for_addfld(id))
 	img_url = "/png/nophoto.png"
