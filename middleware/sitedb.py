@@ -122,6 +122,7 @@ class dbrecord(object):
             if row is not None:
                 for (i, e) in enumerate(self.__fields__):
                     setattr(self, e, row[i])
+                    #print e, " :: ", type(row[i])
                 res = True
             #cursor.close()
         return res
@@ -223,12 +224,13 @@ class dbworker:
         caption CHAR(250) COLLATE utf8_general_ci,
         good CHAR(36),
         price DECIMAL(14,2),
-        description TEXT,
+        description TEXT COLLATE utf8_general_ci,
         price_in DECIMAL(14,2),
         currency_in CHAR(36),
         price_date DATETIME,
         sync_tag CHAR(10),
-        organization CHAR(36)
+        organization CHAR(36),
+        FULLTEXT fultext_caption(caption)
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
         """]
         con = self.connect()
