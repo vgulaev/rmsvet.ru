@@ -222,6 +222,7 @@ class dbworker:
         CREATE TABLE IF NOT EXISTS prices (
         id CHAR(36) PRIMARY KEY,
         caption CHAR(250) COLLATE utf8_general_ci,
+        fantastic_url TEXT COLLATE utf8_general_ci,
         good CHAR(36),
         price DECIMAL(14,2),
         description TEXT COLLATE utf8_general_ci,

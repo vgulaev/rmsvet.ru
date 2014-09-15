@@ -36,7 +36,7 @@ function currency_sym( cur ) {
 function make_element_for_main_page( obj ) {
     var rowhtml = [
     "<div class = \"left100 width430 mart10\">",
-    "<a href=\"/catalog/goods/" + obj.id + "\">",
+    "<a href=\"/" + obj.fantastic_url + "/goods\">",
         "<div>",
             //"<span id = \"caption\">" + obj.caption.substring(0, 20) + "</span><span>" + obj.caption.substring(20) + "</span>",
             "<span id = \"caption\">" + obj.caption + "</span>",

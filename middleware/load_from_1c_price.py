@@ -4,6 +4,7 @@ import sitedb
 import xlrd
 import common
 import MySQLdb
+import urllib
 
 import datetime
 
@@ -26,6 +27,7 @@ def load_from_1c():
                 pos = pos + 1
                 newprice = common.prices_sql()
                 newprice.caption = sheet.cell(i,1).value
+                newprice.fantastic_url = urllib.quote(common._U(sheet.cell(i,1).value))
                 newprice.sync_tag = "from 1c"
                 newprice.organization = org.id.val
                 newprice.price_date = dt_for_db

@@ -21,12 +21,17 @@ def html_view_for_addfld( id ):
 	#res += [el]
 	return res
 
-def  goods_main_view(url):
+def  goods_main_view(url, url_type = None):
 	_templ_res = cm.read_file_to_str("html/goods_main_view.html")
 	obj = cm.prices_sql()
 	img = cm.images_sql()
 	id = url[-36:] 
-	obj.find(id = id)
+	if (url_type == "id"):
+		obj.find(id = id)
+	else:
+		u = urllib.quote(url[1:-6])
+		print url[1:-6], type(url[1:-6]), u
+		obj.find(fantastic_url = u)
 	#res = _templ_res.format(gd = obj, addfld = html_view_for_addfld(id))
 	img_url = "/png/nophoto.png"
 	if img.find(price_id = obj.id.val):

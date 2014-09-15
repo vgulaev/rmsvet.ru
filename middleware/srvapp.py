@@ -56,6 +56,9 @@ def application(environ, start_response):
         #html = common.read_file_to_str(url[1:])
     elif url[0:9] == "/catalog/":
         standart_response(start_response, "text/html")
+        html = scg.goods_main_view(url, "id")
+    elif url[-6:] == "/goods":
+        standart_response(start_response, "text/html")
         html = scg.goods_main_view(url)
     elif url == "/stat":
         standart_response(start_response, "text/html")
