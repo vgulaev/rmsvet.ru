@@ -19,6 +19,7 @@ def load_from_brom():
         pos += 1
         newprice = common.prices_sql()
         newprice.caption = sheet.cell(i,2).value
+        newprice.fantastic_url = urllib.quote(common._U(sheet.cell(i,2).value))
         newprice.price = sheet.cell(i,4).value
         newprice.description = sheet.cell(i,12).value
         newprice.sync_tag = "brom"
