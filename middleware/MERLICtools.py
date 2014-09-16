@@ -23,7 +23,7 @@ def fs():
 def load_items(CategoryIDList):
     sql = "delete from prices where sync_tag = '{id}' and id <> ''".format( id = "merlic " + "N1" )
     cm.ldb.execute(sql)
-    org = common.organization_sql()
+    org = cm.organization_sql()
     org.find(caption = "ezsp")
     a = api.service.getItems(cat_id = CategoryIDList)
     print "Take {n} item elements".format(n = len(a.item))
