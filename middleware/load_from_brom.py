@@ -2,6 +2,7 @@
 import xlrd
 import common
 import datetime
+import urllib
 
 #common.ldb.create_table();
 def load_from_brom():
