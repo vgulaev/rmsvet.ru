@@ -36,18 +36,6 @@ def get_price( CategoryIDList ):
     f = codecs.open("ocs_price.json", "w", "utf-8")
     f.write(r.text)
 
-def price_maker( val ):
-    newprice = round(val, -2) - 1
-    if (newprice - val) / val < 0.02:
-        ret = newprice
-    else:
-        newprice = round(val, -1) - 0.11
-        if (newprice - val) / val < 0.02:
-            ret = newprice
-        else:
-            ret = val
-    
-    return "{0:.2f}".format(ret)
 
 def load_to_db( CategoryIDList ):
     sql = "delete from prices where sync_tag = 'ocs {id}'".format( id = CategoryIDList )

@@ -225,13 +225,17 @@ class dbworker:
         fantastic_url TEXT COLLATE utf8_general_ci,
         good CHAR(36),
         price DECIMAL(14,2),
+        partner_id CHAR(36),
+        item_partner_id CHAR(36),
         description TEXT COLLATE utf8_general_ci,
         price_in DECIMAL(14,2),
         currency_in CHAR(36),
         price_date DATETIME,
         sync_tag CHAR(10),
         organization CHAR(36),
-        FULLTEXT fultext_caption(caption)
+        INDEX organization_i (organization),
+        INDEX caption_i (caption),
+        INDEX fantastic_url_i (fantastic_url)
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
         """]
         con = self.connect()

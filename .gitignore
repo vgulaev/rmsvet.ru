@@ -11,4 +11,5 @@ sett.py
 *.xls
 *.XLS
 ocs*.json
+mer*.json
 nbproject/

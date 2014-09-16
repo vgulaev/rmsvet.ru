@@ -17,6 +17,21 @@ def read_file_to_str(filename):
     t = codecs.open(filename, encoding='utf-8')
     return t.read()
 
+def price_maker( val ):
+    ret = 0
+    if val <> 0:
+        newprice = round(val, -2) - 1
+        if (newprice - val) / val < 0.02:
+            ret = newprice
+        else:
+            newprice = round(val, -1) - 0.11
+            if (newprice - val) / val < 0.02:
+                ret = newprice
+            else:
+                ret = val
+    
+    return "{0:.2f}".format(ret)
+
 ldb = sitedb.dbworker()
 
 prices_sql = ldb.class_from_table("prices")
