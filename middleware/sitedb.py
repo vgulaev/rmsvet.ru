@@ -236,6 +236,7 @@ class dbworker:
         INDEX organization_i (organization),
         INDEX caption_i (caption),
         INDEX fantastic_url_i (fantastic_url(100))
+        INDEX item_partner_id_i (item_partner_id)
         ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
         """]
         con = self.connect()
