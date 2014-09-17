@@ -19,8 +19,11 @@ def load_from_brom():
     for i in range(1, sheet.nrows - 1):
         pos += 1
         newprice = common.prices_sql()
-        newprice.caption = sheet.cell(i,2).value
-        newprice.fantastic_url = urllib.quote(common._U(str(sheet.cell(i,2).value)))
+        c = common._U(sheet.cell(i,2).value)
+        newprice.caption = c
+        if not isinstance(c, unicode) and not isinstance(c, str):
+            c = str(c)
+        newprice.fantastic_url = urllib.quote(sheet.cell(i,2).value)
         newprice.price = sheet.cell(i,4).value
         newprice.description = sheet.cell(i,12).value
         newprice.sync_tag = "brom"
