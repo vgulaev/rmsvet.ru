@@ -233,6 +233,7 @@ class dbworker:
         price_date DATETIME,
         sync_tag CHAR(10),
         organization CHAR(36),
+        in_search CHAR(1),
         INDEX organization_i (organization),
         INDEX caption_i (caption),
         INDEX fantastic_url_i (fantastic_url(100)),
