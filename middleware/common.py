@@ -35,7 +35,7 @@ def price_maker( val ):
 ldb = sitedb.dbworker()
 
 prices_sql = ldb.class_from_table("prices")
-additionalfields_sql = ldb.class_from_table("additionalfields")
+properties_sql = ldb.class_from_table("properties")
 partners_sql = ldb.class_from_table("partners")
 currency_sql = ldb.class_from_table("currency")
 images_sql = ldb.class_from_table("images")

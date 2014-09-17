@@ -7,7 +7,7 @@ def _h(s):
 	return str(s).replace("<", "").replace(">", "")
 
 def html_view_for_addfld( id ):
-	sql = "select * from additionalfields where price_id = %s"
+	sql = "select * from properties where price_id = %s"
 	cursor = cm.ldb.execute(sql, [ id ])
 	row = cursor.fetchone()
 	res = []
@@ -36,7 +36,7 @@ def  goods_main_view(url, url_type = None):
 	img_url = "/png/nophoto.png"
 	if img.find(price_id = obj.id.val):
 		img_url = img.url.val
-	res = pystache.render(_templ_res, {"gd" : obj, "addfld" : html_view_for_addfld( id ), "img_url" : img_url})
+	res = pystache.render(_templ_res, {"gd" : obj, "addfld" : html_view_for_addfld( obj.id.val ), "img_url" : img_url})
 	return res
 
 import statistics
