@@ -29,7 +29,8 @@ def load_items(CategoryIDList):
     print "Take {n} item elements".format(n = len(a.item))
     for e in a.item:
         p = cm.prices_sql()
-        p.caption = e.Name
+        #print cm._U(e.Name)
+        p.caption = cm._U(e.Name)
         p.fantastic_url = urllib.quote(cm._U(e.Name))
         p.item_partner_id = e.No
         p.currency_in = "USD"
@@ -38,7 +39,7 @@ def load_items(CategoryIDList):
         p.write()
 
 def load_price_for_items(CategoryIDList):
-    a = api.service.getItemsAvail(shipment_method = "МПК_ПЕРВЫЙ", shipment_date = "2014-09-16", cat_id = CategoryIDList)
+    a = api.service.getItemsAvail(shipment_method = u"МПК_ПЕРВЫЙ", shipment_date = "2014-09-16", cat_id = CategoryIDList)
     p = cm.prices_sql()
     print "Take {n} prices elements".format(n = len(a.item))
     for e in a.item:
