@@ -112,7 +112,7 @@ class dbrecord(object):
             sql += " and ".join("{e} = %({e})s".format( e = e ) for e in kwargs)
             ds = dict()
             for e in kwargs:
-                ds[str(e)] = kwargs[e] 
+                ds[str(e)] = kwargs[e]
             #print sql
             #kwargs[e]
             ##self.__db__.cursor.execute(sql)
@@ -126,6 +126,18 @@ class dbrecord(object):
                 res = True
             #cursor.close()
         return res
+    def delete(self, *args, **kwargs):
+        sql = "delete from {tn} where id <> ''"
+        sql = sql.format(tn = self.__tablename__)
+        ds = dict()
+        for e in kwargs:
+            sql += " and {e} = %({e})s".format(e = e)
+            ds[str(e)] = kwargs[e]
+        con = self.__db__.connect()
+        cursor = con.cursor()
+        cursor.execute(sql, ds)
+        con.commit()
+        #print sql
     def drop(self):
         sql = "DROP TABLE IF EXISTS {tn}".format(tn = self.__tablename__)
         self.__db__.cursor.execute(sql)
@@ -200,7 +212,7 @@ class dbworker:
         """,
         #Это справочсник дополнительных полей (возможно __поле__ - типо как в Питоне системное поле, для массового индекса)
         """
-        CREATE TABLE IF NOT EXISTS additionalfields (
+        CREATE TABLE IF NOT EXISTS properties (
         id CHAR(36) PRIMARY KEY,
         caption CHAR(250) COLLATE utf8_general_ci,
         price_id CHAR(36),

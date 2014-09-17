@@ -39,13 +39,17 @@ def load_items(CategoryIDList):
         p.write()
 
 def load_price_for_items(CategoryIDList):
-    a = api.service.getItemsAvail(shipment_method = u"МПК_ПЕРВЫЙ", shipment_date = "2014-09-16", cat_id = CategoryIDList)
+    a = api.service.getItemsAvail(shipment_method = u"МПК_ПЕРВЫЙ", shipment_date = "2014-09-17", cat_id = CategoryIDList)
     p = cm.prices_sql()
     print "Take {n} prices elements".format(n = len(a.item))
     for e in a.item:
         if p.find(item_partner_id = e.No):
             p.price_in = e.PriceClient
             p.price = cm.price_maker( e.PriceClient * 37.9861 * 1.1 )
+            if e.PriceClient == 0:
+                p.in_search = 'n'
+            else:
+                p.in_search = 'y'
             p.write()
 
 def add_img( id ):
@@ -72,11 +76,44 @@ def load_img_for_items(CategoryIDList):
         row = cursor.fetchone()
         print "{pos} from {r}".format(pos = pos, r = cursor.rowcount)
 
-#sql = "delete from prices where sync_tag = '{id}' and id <> ''".format( id = "merlic " + "N1" )
-#print sql
-#cm.ldb.execute(sql)
+def add_properties( id ):
+    p = cm.prices_sql()
+    if p.find(item_partner_id = id):
+        pr = cm.properties_sql()
+        pr.delete( price_id = p.id.val )
+        a = api.service.getItemsProperties( item_id = id )
+        for e in a.item:
+                if e.No is None:
+                    continue
+                pr = cm.properties_sql()
+                pr.price_id = p.id.val
+                pr.caption = cm._U(e.PropertyName)
+                pr.value = cm._U(e.Value)
+                pr.write()
 
-load_items("N1")
-load_price_for_items("N1")
-load_img_for_items("N1")
+def load_properties_for_items(CategoryIDList):
+    sql = "select item_partner_id from prices where sync_tag = '{id}'".format( id = "merlic " + CategoryIDList )
+    cursor = cm.ldb.execute(sql)
+    pos = 0;
+    row = cursor.fetchone()
+    while row is not None:
+        pos += 1
+        add_properties( row[0] )
+        row = cursor.fetchone()
+        print "{pos} from {r}".format(pos = pos, r = cursor.rowcount)
+#
+#sql = "delete from properties where id <> ''"
+#print sql
+#con = cm.ldb.connect()
+#cursor = con.cursor()
+#cursor.execute(sql)
+#con.commit()
+#load_items("N1")
+#load_price_for_items("N1")
+#load_img_for_items("N1")
+#load_properties_for_items("N1")
+#p = cm.properties_sql()
+#p.delete( price_id = "59bbc490-3e49-11e4-86cb-4ceb421a4969" )
+#add_properties( "934500" )
+load_properties_for_items("N1")
 print "end"

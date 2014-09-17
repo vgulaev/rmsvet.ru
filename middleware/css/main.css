@@ -45,3 +45,6 @@ a:visited {
 	color: rgb(177, 39, 4); /*green;*/
 	font-weight: bold;
 }
+.col2 {
+	vertical-align: top;
+}

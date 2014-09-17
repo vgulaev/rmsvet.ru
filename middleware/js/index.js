@@ -29,5 +29,13 @@ $( function () {
     class_cart_label.create();
     fint_view();
     $("#SearchStr").focus();
+    var qs = getParameterByName("q");
+    if (qs != "") {
+        $("#SearchStr").val(qs);
+        $("#core").css({position: "inherit"});
+        $("#secondline").show();
+        $("#output").show();
+        my();
+    };
 }
 );

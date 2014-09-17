@@ -20,11 +20,12 @@ def load_from_brom():
         pos += 1
         newprice = common.prices_sql()
         newprice.caption = sheet.cell(i,2).value
-        newprice.fantastic_url = urllib.quote(common._U(sheet.cell(i,2).value))
+        newprice.fantastic_url = urllib.quote(common._U(str(sheet.cell(i,2).value)))
         newprice.price = sheet.cell(i,4).value
         newprice.description = sheet.cell(i,12).value
         newprice.sync_tag = "brom"
         newprice.organization = org.id.val
+        newprice.in_search = "y"
         newprice.price_date = dt_for_db
         newprice.write()
     print "Loading {p} complate".format(p = pos)
