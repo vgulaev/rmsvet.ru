@@ -113,7 +113,7 @@ ezsp_query = {
             })
         .done(function ( data ) {
             var cur_q = $( ezsp_query.input_id ).val();
-            if (ezsp_query_com.q != cur_q) {
+            if (data.q != cur_q) {
                 ezsp_query_com.q = cur_q;
                 ezsp_query.query_to_server();
             }
@@ -132,6 +132,7 @@ ezsp_query = {
         $( id ).on( "input", function () {
                 ezsp_query_com.q = $( ezsp_query.input_id ).val();
                 ezsp_query.query_to_server();
+                console.log("", ezsp_query_com.q);
             })
     },
     output_id : "",
