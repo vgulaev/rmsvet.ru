@@ -1,3 +1,6 @@
+body {
+	min-width: 900px;
+}
 div {
 	display: block;
 }
@@ -47,4 +50,14 @@ a:visited {
 }
 .col2 {
 	vertical-align: top;
+}
+.wp {
+	word-wrap: break-word;
+	word-break: break-all;
+}
+.row {
+	display: inline-block;
+}
+.in_price {
+	width: 50px;
 }

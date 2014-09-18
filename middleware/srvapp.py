@@ -33,6 +33,44 @@ def detect_common_env( domain ):
         if o.find(id = d.organization_id.val):
             common.env["organization"] = o
 
+def make_json_ans( url , environ):
+    html = ""
+    if url == "/ws/autocomplate":
+        post_env = environ.copy()
+        post_env['QUERY_STRING'] = ''
+        post = cgi.FieldStorage(
+                                fp=environ['wsgi.input'],
+                                environ=post_env,
+                                keep_blank_values=True
+                                )
+        tb = post.getvalue("table")
+        ft = post.getvalue("filter")
+        html = ws.auto_complate(tb, ft)
+    elif url == "/ws/getfilters":
+        post_env = environ.copy()
+        post_env['QUERY_STRING'] = ''
+        post = cgi.FieldStorage(
+                                fp=environ['wsgi.input'],
+                                environ=post_env,
+                                keep_blank_values=True
+                                )
+        ft = post.getvalue("filter")
+        html = ws.getfilters(ft)
+    elif url == "/ws/ezsp-query":
+        post_env = environ.copy()
+        post_env['QUERY_STRING'] = ''
+        post = cgi.FieldStorage(
+                                fp=environ['wsgi.input'],
+                                environ=post_env,
+                                keep_blank_values=True
+                                )
+        eq = post.getvalue("ezsp-query")
+        #print "eq :", eq
+        #print "post :", post
+        html = ws.ezspquery( eq )
+
+    return html
+
 def application(environ, start_response):
     ret = ["%s: %s\n" % (key, value)
            for key, value in environ.iteritems()]
@@ -72,20 +110,9 @@ def application(environ, start_response):
     elif url == "/cart":
         standart_response(start_response, "text/html")
         html = common.read_file_to_str("html/cart.html")
-    elif url == "/ws/autocomplate":
+    elif url[0:4] == "/ws/":
         standart_response(start_response, "application/json")
-        post_env = environ.copy()
-        post_env['QUERY_STRING'] = ''
-        post = cgi.FieldStorage(
-                                fp=environ['wsgi.input'],
-                                environ=post_env,
-                                keep_blank_values=True
-                                )
-        
-        tb = post.getvalue("table")
-        ft = post.getvalue("filter")
-
-        html = ws.auto_complate(tb, ft)
+        html = make_json_ans( url, environ )
     elif url[0:7] == "/debug/":
         standart_response(start_response, "text/html")
         html = str(ret)

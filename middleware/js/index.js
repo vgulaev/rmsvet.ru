@@ -5,6 +5,12 @@ function fint_view() {
     e.css({position: "absolute",left: left + "px", top: toppx + "px"})
 };
 
+function work_state() {
+    $("#core").css({position: "inherit"});
+    $("#secondline").show();
+    $("#output").show();
+}
+
 $( window ).resize( function () {
     if ($("#SearchStr").val() == "")
         fint_view();
@@ -12,19 +18,8 @@ $( window ).resize( function () {
 
 $( function () {
     $("#SearchStr").on("input", function () {
-            my();
-            if ($("#SearchStr").val() == "") {
-                fint_view();
-                $("#secondline").hide();
-                $("#output").hide();
-                //$("#core").css({position: "inherit"});
-            }
-            else {
-                $("#core").css({position: "inherit"});
-                $("#secondline").show();
-                $("#output").show();
-            };
-            //$("#output").html( $("#SearchStr").val() );
+            //my();
+            work_state();
         })
     class_cart_label.create();
     fint_view();
@@ -32,10 +27,11 @@ $( function () {
     var qs = getParameterByName("q");
     if (qs != "") {
         $("#SearchStr").val(qs);
-        $("#core").css({position: "inherit"});
-        $("#secondline").show();
-        $("#output").show();
-        my();
+        work_state();
+        ezsp_query_com.q = qs;
+        ezsp_query.query_to_server();
+        //my();
     };
-}
-);
+    ezsp_query.link_input("#SearchStr");
+    ezsp_query.link_output = "#output";
+});

@@ -23,6 +23,7 @@ class_cart_label = {
 function add_to_cart( id ) {
     class_cart_label.add_item( id );
 }
+
 function currency_sym( cur ) {
     if (cur == "USD"){
         res = "$"
@@ -33,26 +34,31 @@ function currency_sym( cur ) {
     return res;
 }
 
-function make_element_for_main_page( obj ) {
-    var rowhtml = [
-    "<div class = \"left100 width430 mart10\">",
-    "<a href=\"/" + obj.fantastic_url + "/goods\">",
-        "<div>",
-            //"<span id = \"caption\">" + obj.caption.substring(0, 20) + "</span><span>" + obj.caption.substring(20) + "</span>",
-            "<span id = \"caption\">" + obj.caption + "</span>",
-        "</div>",
-        "<div>",
-            "<span>" + currency_sym(obj.currency) + " &nbsp;</span><span id = \"price\">" + obj.price + "</span>", 
-        "</div>",
-        "</a>",
-    "</div>",
-    ].join('\n');  
-    "<p><span id = \"caption\">" + obj.caption.substring(0, 20) + "</span><span id =- \"price\">" + obj.price + "</span></p>"
-    //return "<p>" + obj.caption.substring(0, 20) + "</p>";
-    return rowhtml;
+function getfilters() {
+    $.ajax(
+        {
+            url: "/ws/getfilters",
+            type: "POST",
+            dataType: "json",
+            data: {
+                "filter" : $("#SearchStr").val()
+            }
+        })
+    .done(function ( data ) {
+        $("#filters").empty();
+        $.get('/html/filter.html', function(template) {
+            var rendered = Mustache.render(template, {"items": data.items});
+            $("#filters").html(rendered);
+            //getfilters();
+          });
+        });
 }
+
+filters = {
+    items : []
+}
+
 function my() {
-    //alert("Hello!!!");
     $.ajax(
         {
             url: "/ws/autocomplate",
@@ -65,34 +71,29 @@ function my() {
         })
     .done(function ( data ) {
         $("#output").empty();
-        for (var e in data.goods) {
-            var el = make_element_for_main_page( data.goods[e] );
-            $("#output").append(el);
-        }
-        //alert("Done");
-    })
-    .success(
-        )
-    .always( function () {
-        //alert("!!!");
-    }
-        );
+        $.get('/html/search_goods.html', function(template) {
+            var rendered = Mustache.render(template, {"items": data.goods});
+            $("#output").html(rendered);
+            getfilters();
+          });
+        })
+    .success()
+    .always();
 };
 
 function makeid()
 {
     var text = "";
     var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
     for( var i=0; i < 5; i++ )
         text += possible.charAt(Math.floor(Math.random() * possible.length));
-
     return text;
 }
 
 function test_500ajax() {
     for (var i = 0; i < 2000; i++) {
         $("#SearchStr").val(makeid());
-        my();
+        //my();
+        ezsp_query.query_to_server();
     };
 }

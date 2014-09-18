@@ -1,0 +1,133 @@
+_templ = {
+    main : "",
+    result_list : "",
+    filter_main : "",
+    filter_list : ""
+};
+
+function load_templs() {
+    $.get('/html/query-obj/main.html', function ( template ) {
+        _templ.main = template;
+    });
+
+    $.get('/html/query-obj/result-list.html', function ( template ) {
+        _templ.result_list = template;
+    });
+
+    $.get('/html/query-obj/filter-main.html', function ( template ) {
+        _templ.filter_main = template;
+    });
+
+    $.get('/html/query-obj/filter-list.html', function ( template ) {
+        _templ.filter_list = template;
+    });
+};
+
+load_templs();
+
+ezsp_query_com = {
+    //query string
+    q : "",
+    //filters
+    f : [],
+    //result
+    r : [],
+    o : []
+};
+
+function hz( things ) {
+    alert( things );
+    return false;
+}
+
+filters_manager = {
+    filter_list : function ( things ) {
+        var sub = $( "#filter_name" ).val();
+        if (sub == "") {
+            res = things;
+        }
+        else {
+            res = [];
+            for (var i = 0; i < things.length; i++) {
+                if (things[i].toLowerCase().indexOf(sub) != -1) { 
+                    res.push(things[i]);
+                };
+            };
+        };
+        return res;
+    },
+    render_list : function () {
+        var rendered = Mustache.render(_templ.filter_list, {"items": filters_manager.filter_list(ezsp_query_com.f.items)});
+        $( "#filter-list" ).html( rendered );
+    },
+    init : function () {
+        //var rendered = Mustache.render(_templ.filter_main, {"items": ezsp_query_com.f.items});
+        $( "#result-list" ).html(_templ.filter_main);
+        $( "#filter_name" ).on( "input", function () {
+                filters_manager.render_list();
+            });
+        filters_manager.render_list();
+    }
+}
+
+ezsp_query = {
+    ajaxing : false,
+    render_init : function () {
+        //var rendered = Mustache.render(_templ.main, {"items": ezsp_query_com.r});
+        $( "#output" ).html( _templ.main );
+    },
+    addfilter : function () {
+        filters_manager.init();
+    },
+    update_add_filter_button: function () {
+        $( "#add_filter_button" ).html("Добавить один из " + ezsp_query_com.f.items.length + " фильтров");
+    },
+    render : function ( data ) {
+        ezsp_query_com = data;
+        var cont = $( "#result-list" );
+        if (cont.length == 0) {
+            ezsp_query.render_init();
+            cont = $( "#result-list" );
+        }
+        var rendered = Mustache.render(_templ.result_list, {"items": ezsp_query_com.r.goods});
+        ezsp_query.update_add_filter_button();
+        cont.html(rendered);
+    },
+    query_to_server : function () {
+        $.ajax(
+            {
+                url: "/ws/ezsp-query",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "ezsp-query" : JSON.stringify(ezsp_query_com)
+                },
+                beforeSend: function () {
+                    res = false;
+                    if (ezsp_query.ajaxing == false) {
+                        ezsp_query.ajaxing = true;
+                        res = true;
+                    }
+                    return res;
+                }
+            })
+        .done(function ( data ) {
+            ezsp_query.render(data);
+            //alert( "done" );
+            })
+        .always(function () {
+            ezsp_query.ajaxing = false;
+            //alert( "always" );
+        });
+        //alert($(ezsp_query.input_id).val());
+    },
+    link_input : function ( id ) {
+        ezsp_query.input_id = id;
+        $( id ).on( "input", function () {
+                ezsp_query_com.q = $( ezsp_query.input_id ).val();
+                ezsp_query.query_to_server();
+            })
+    },
+    output_id : "",
+    input_id : ""
+};
