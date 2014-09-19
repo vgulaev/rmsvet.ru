@@ -56,18 +56,48 @@ def getfilters( filter ):
     items = []
     cursor = common.ldb.execute(sql)
     row = cursor.fetchone()
+    i = 0
     while row is not None:
-        items += [row[0]]
+        items += [{"index" : i,
+                    "name" : row[0],
+                    "condition" : "eq",
+                    "values" : ""}]
+        i += 1
         row = cursor.fetchone()
     res = {"items": items}
     return res
 
 def process( eq ):
-    res = auto_complate( eq["q"] )
-    eq["r"] = res
-    res = getfilters( eq["q"] )
-    eq["f"] = res
+    goods = auto_complate( eq["q"] )
+    filters = getfilters( eq["q"] )
+    ans = { "q" : eq["q"],
+            "r" : goods, 
+            "f" : filters }
+    return ans
 def ezspquery( jsonsrt ):
     eq = json.loads(jsonsrt)
-    process( eq )
-    return json.dumps(eq)
+    ans = process( eq )
+    return json.dumps( ans )
+
+def ezsp_get_filters_value ( jsonsrt ):
+    sql = """select * from (
+    SELECT properties.value FROM vg_site_db.prices
+    join vg_site_db.properties on prices.id = properties.price_id
+    where """ + make_cond_from_filter( filter ) + """
+    
+    group by properties.value)
+    as cap;"""
+    items = []
+    cursor = common.ldb.execute(sql)
+    row = cursor.fetchone()
+    i = 0
+    while row is not None:
+        items += [{"index" : i,
+                    "name" : row[0],
+                    "condition" : "eq",
+                    "values" : ""}]
+        i += 1
+        row = cursor.fetchone()
+    res = {"items": items}
+
+    return 

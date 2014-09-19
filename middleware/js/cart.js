@@ -19,16 +19,6 @@ cart = {
 		localStorage["cart.count"] = length - 1;
 		this.render();
 	},
-	make_td_for_caption : function ( i ) {
-		var res = ["<div>",
-		"<a href=\"/catalog/goods/" + localStorage["cart." + i + ".id"] + "\">" + localStorage["cart." + i + ".caption"] + "</a>",
-		"</div>",
-		"<div>",
-		"<button onclick = \"cart.deleterow(" + i + ")\">Удалить</button>",
-		"</div>"
-		].join('\n');
-		return 	res;
-	},
 	render : function () {
 		var length = localStorage["cart.count"];
 		var rowhtml = "";
@@ -44,7 +34,8 @@ cart = {
 			sum = (count * price);
 			totalsum = totalsum + sum;
 			var newel = {"id" : localStorage["cart." + i + ".id"],
-			"caption"	: this.make_td_for_caption(i),
+			"i"			: i,
+			"caption"	: localStorage["cart." + i + ".caption"],
 			"count"		: count,
 			"price"		: price.toFixed(2),
 			"sum"		: sum.toFixed(2)

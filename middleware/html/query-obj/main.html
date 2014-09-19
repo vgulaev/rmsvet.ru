@@ -3,7 +3,14 @@
 <div class = "row col2">
 <div>Цена: от <input id = "price_from" class = "in_price"/> до <input id = "price_to" class = "in_price"/> </div>
 <div>
-<div class="row">Сортировка: </div><div class="row">По наименованию</div> 
+<div class="row">Сортировка: </div><div class="row">
+	<select>
+	<option>По наименованию А-Я</option>
+	<option>По наименованию Я-А</option>
+	<option>Самые дешевые вверху</option>
+	<option>Самые дорогие вверху</option>
+	</select>
+</div> 
 </div>
 <div>
 	<button id = "add_filter_button" onclick="ezsp_query.addfilter()">Добавить фильт</button>

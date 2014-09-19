@@ -65,9 +65,17 @@ def make_json_ans( url , environ):
                                 keep_blank_values=True
                                 )
         eq = post.getvalue("ezsp-query")
-        #print "eq :", eq
-        #print "post :", post
         html = ws.ezspquery( eq )
+    elif url == "/ws/ezsp-query-filters-value":
+        post_env = environ.copy()
+        post_env['QUERY_STRING'] = ''
+        post = cgi.FieldStorage(
+                                fp=environ['wsgi.input'],
+                                environ=post_env,
+                                keep_blank_values=True
+                                )
+        eq = post.getvalue("ezsp-query")
+        html = ws.ezsp_get_filters_value( eq )
 
     return html
 
@@ -91,7 +99,9 @@ def application(environ, start_response):
     elif url[0:5] == "/css/":
         standart_response(start_response, "text/css")
         html = common.read_file_to_str(url[1:])
-        #html = common.read_file_to_str(url[1:])
+    elif url == "/yml.xml":
+        standart_response(start_response, "text/xml")
+        html = common.read_file_to_str(url[1:])
     elif url[0:9] == "/catalog/":
         standart_response(start_response, "text/html")
         html = scg.goods_main_view(url, "id")

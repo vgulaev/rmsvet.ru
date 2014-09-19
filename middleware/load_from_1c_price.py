@@ -31,6 +31,7 @@ def load_from_1c():
                 newprice.sync_tag = "from 1c"
                 newprice.organization = org.id.val
                 newprice.price_date = dt_for_db
+                newprice.in_search = "y";
                 if isinstance(pr, unicode):
                     newprice.price = float(pr.replace(unichr(160), u"").replace(",", "."))
                 else:
@@ -38,13 +39,13 @@ def load_from_1c():
                 #try:
                 newprice.write()
                 
-                addfld = common.additionalfields_sql()
+                addfld = common.properties_sql()
                 addfld.caption = "__caption__"
                 addfld.price_id = str(newprice.id)
                 addfld.value = unicode(newprice.caption)
                 addfld.write()
 
-                addfld = common.additionalfields_sql()
+                addfld = common.properties_sql()
                 addfld.caption = "код прайса 1с"
                 addfld.price_id = str(newprice.id)
                 addfld.value = sheet.cell(i,0).value

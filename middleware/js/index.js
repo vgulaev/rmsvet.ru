@@ -28,7 +28,7 @@ $( function () {
     if (qs != "") {
         $("#SearchStr").val(qs);
         work_state();
-        ezsp_query_com.q = qs;
+        ezsp_query.query.q = qs;
         ezsp_query.query_to_server();
         //my();
     };
