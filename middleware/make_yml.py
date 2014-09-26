@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 import pystache
 import datetime
 
-templ = """<offer id="{{ yml_id }}" type="vendor.model" available="true">
+"""<offer id="{{ yml_id }}" available="true">
     <url>http://eazyshop.ru/{{ url }}/goods</url>
     <price>{{ price }}</price>
     <currencyId>RUR</currencyId>
@@ -17,9 +17,23 @@ templ = """<offer id="{{ yml_id }}" type="vendor.model" available="true">
     <typePrefix>1С</typePrefix>
     <vendor>1С</vendor>
     <vendorCode>{{ yml_id }}</vendorCode>
-    <description>Программа для ведения бухгалтерского учета</description>
+</offer>"""
+#type="vendor.model" 
+templ = """
+<offer id="{{ yml_id }}" available="true">
+    <url>http://eazyshop.ru/{{ url }}/goods</url>
+    <price>{{ price }}</price>
+    <currencyId>RUR</currencyId>
+    <categoryId>1</categoryId>
+    <store>true</store>
+    <pickup>false</pickup>
+    <delivery>true</delivery>
+    <name>{{ name }}</name>
+    <vendor>1С</vendor>
+    <vendorCode>{{ yml_id }}</vendorCode>
 </offer>
 """
+#    <description>Программа для ведения бухгалтерского учета</description>
 tree = ET.parse('yml.xml')
 root = tree.getroot()
 
@@ -42,7 +56,8 @@ def add_offers( yml_id ):
         print "too length url ", yml_id
     el_str = pystache.render( templ, {"yml_id" : yml_id,
                                       "url" : t.fantastic_url.val,
-                                      "price" : t.price } )
+                                      "price" : t.price,
+                                      "name" : t.caption.val} )
     offer = ET.fromstring( el_str )
     offers.append( offer )
 
