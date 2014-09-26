@@ -9,6 +9,7 @@ function work_state() {
     $("#core").css({position: "inherit"});
     $("#secondline").show();
     $("#output").show();
+    $("#cardinfo").hide();    
 }
 
 $( window ).resize( function () {

@@ -131,7 +131,11 @@ def application(environ, start_response):
         status = '200 OK'
         headers = [('Content-type', 'image/png')]
         start_response(status, headers)
-        #ret = file(url[1:])
+        ret = open(url[1:], "rb").read()
+    elif url[0:5] == "/gif/":
+        status = '200 OK'
+        headers = [('Content-type', 'image/gif')]
+        start_response(status, headers)
         ret = open(url[1:], "rb").read()
     elif url == "/favicon.ico":
         status = '200 OK'
