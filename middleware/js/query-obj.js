@@ -1,4 +1,4 @@
-_templ = {
+var _templ = {
     main                    : "",
     result_list             : "",
     filter_main             : "",
@@ -26,11 +26,11 @@ function load_templs() {
     $.get('/html/query-obj/filter-type-and-values.html', function ( template ) {
         _templ.filter_type_and_values = template;
     });
-};
+}
 
 load_templs();
 
-ezsp_query_com = {
+var ezsp_query_com = {
     server : {
         //query string
         q : "",
@@ -47,12 +47,12 @@ ezsp_query_com = {
     },
 };
 
-function hz( things ) {
+/*function hz( things ) {
     alert( things );
     return false;
-}
+}*/
 
-filters_manager = {
+var filters_manager = {
     query_to_server : function () {
         ezsp_query_com.r = [];
         ezsp_query_com.f = [];
@@ -80,8 +80,9 @@ filters_manager = {
         return false;
     },
     filter_list : function ( things ) {
+        var res;
         var sub = $( "#filter_name" ).val();
-        if (sub == "") {
+        if (sub === "") {
             res = things;
         }
         else {
@@ -89,9 +90,9 @@ filters_manager = {
             for (var i = 0; i < things.length; i++) {
                 if (things[i].name.toLowerCase().indexOf(sub) != -1) { 
                     res.push(things[i]);
-                };
-            };
-        };
+                }
+            }
+        }
         return res;
     },
     render_list : function () {
@@ -106,9 +107,9 @@ filters_manager = {
             });
         filters_manager.render_list();
     }
-}
+};
 
-ezsp_query = {
+var ezsp_query = {
     na : 0,
     np : 0,
     query : {
@@ -134,7 +135,7 @@ ezsp_query = {
     render : function ( data ) {
         ezsp_query.ans = data;
         var cont = $( "#result-list" );
-        if (cont.length == 0) {
+        if (cont.length === 0) {
             ezsp_query.render_init();
             cont = $( "#result-list" );
         }
@@ -152,8 +153,8 @@ ezsp_query = {
                     "ezsp-query" : JSON.stringify(ezsp_query.query)
                 },
                 beforeSend: function () {
-                    res = false;
-                    if (ezsp_query.ajaxing == false) {
+                    var res = false;
+                    if (ezsp_query.ajaxing === false) {
                         ezsp_query.ajaxing = true;
                         res = true;
                     }
@@ -181,7 +182,7 @@ ezsp_query = {
                 ezsp_query.query.q = $( ezsp_query.input_id ).val();
                 ezsp_query.query_to_server();
                 //console.log( ezsp_query.np++ );
-            })
+            });
     },
     output_id : "",
     input_id : ""
