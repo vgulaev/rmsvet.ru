@@ -8,12 +8,12 @@ import cgi
 import paste.reloader
 paste.reloader.install()
 paste.reloader.watch_file("checkrestart.py")
-#paste.reloader.watch_file("index.html")
 paste.reloader.watch_file("sitedb.py")
 paste.reloader.watch_file("wsservers.py")
 paste.reloader.watch_file("staticcontentgenerator.py")
 paste.reloader.watch_file("sett.py")
 paste.reloader.watch_file("statistics.py")
+
 
 #own libs
 import wsservers as ws

@@ -6,7 +6,7 @@ import codecs
 def _U(s):
     res = s
     if isinstance(s, unicode):
-        res = s.encode('utf-8')
+        res = s.encode("utf-8")
     return res
         
 def _Q(s):
@@ -14,7 +14,7 @@ def _Q(s):
 
 def read_file_to_str(filename):
     #t = open(filename, "r")
-    t = codecs.open(filename, encoding='utf-8')
+    t = codecs.open(filename, encoding="utf-8")
     return t.read()
 
 def price_maker( val ):
