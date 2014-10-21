@@ -39,6 +39,30 @@ def  goods_main_view(url, url_type = None):
 	res = pystache.render(_templ_res, {"gd" : obj, "addfld" : html_view_for_addfld( obj.id.val ), "img_url" : img_url})
 	return res
 
+def make_map( count ):
+	_templ_res = cm.read_file_to_str("html/site-map.html")
+	if count == "":
+		count = "0"
+	sql = """
+	SELECT caption, fantastic_url FROM vg_site_db.prices 
+	where organization = '{org_id}'
+	order by in_search desc
+	limit {count}, 50;
+	""".format( org_id = cm.env["organization"].id.val, count = count )
+	cursor = cm.ldb.execute( sql )
+	row = cursor.fetchone()
+	if row is None:
+		nexthref = False
+	else:
+		nexthref = int( count ) + 50
+	hrefs = []
+	while (row is not None):
+		hrefs += [{ "caption": row[0], "url": row[1] }]
+		row = cursor.fetchone()
+	cursor.close()
+	res = pystache.render( _templ_res, { "hrefs" : hrefs, "nexthref" : nexthref } )
+	return res
+
 import statistics
 def stat():
 	_templ_res = cm.read_file_to_str("html/stat.html")

@@ -126,6 +126,9 @@ def application(environ, start_response):
     elif url[0:7] == "/debug/":
         standart_response(start_response, "text/html")
         html = str(ret)
+    elif url[0:10] == "/site-map/":
+        standart_response(start_response, "text/html")
+        html = scg.make_map( url[10:] )
     
     if url[0:5] == "/png/":
         status = '200 OK'
