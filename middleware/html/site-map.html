@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Карта сайта</title>
+	</head>
+	<body>
+	<a href="/">Главная</a>
+	<br>
+	Карта сайта
+	{{#hrefs}}
+	<br>
+	<a href = "/{{ url }}/goods">{{ caption }}</a>
+	{{/hrefs}}
+	<br>
+	{{#nexthref}}
+	<a href = "/site-map/{{ . }}">Следующие</a>
+	{{/nexthref}}
+	</body>
+</html>
