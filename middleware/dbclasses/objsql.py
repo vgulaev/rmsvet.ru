@@ -11,6 +11,20 @@ class objsql():
         self.addprop( pdict = propdict( pname = "id", ptype = "CHAR(36)" ) )
         for e in pprop:
             self.addprop( pdict = e )
+        self.sqlwrite = self.getsqlwrite()
+    def keysforsql( self ):
+        res = ",".join( [ e["name"] for e in self.prop ] )
+        return res
+    def valuesforsql( self ):
+        res = ",".join( [ "%({e})s".format( e = e["name"] ) for e in self.prop ] )
+        return res
+    def updateforsql( self ):
+        res = ",".join( [ "{e}=%({e})s".format( e = e["name"] )  for e in self.prop ] )
+        return res
+    def getsqlwrite( self ):
+        sql = "INSERT INTO `{tn}` ({keys}) VALUES ({values})".format( tn = self.name, keys = self.keysforsql(), values = self.valuesforsql() )
+        sql += "ON DUPLICATE KEY UPDATE {eq}".format( eq = self.updateforsql() )
+        return sql
     def sqlcreate( self ):
         sql = "CREATE TABLE IF NOT EXISTS `{tname}` (".format( tname = self.name )
         sqllines = []

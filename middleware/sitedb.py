@@ -179,7 +179,24 @@ class dbworker:
         return cursor
     def create_table(self):
         sql = [
-        #Это справочсник доменов
+        """
+        CREATE TABLE IF NOT EXISTS orders_goods (
+        id CHAR(36) PRIMARY KEY,
+        order_id CHAR(36), 
+        quantity DECIMAL(10, 4),
+        price DECIMAL(10, 2),
+        sum DECIMAL(10, 2)
+        ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
+        """,
+        """
+        CREATE TABLE IF NOT EXISTS orders (
+        id CHAR(36) PRIMARY KEY,
+        number CHAR(36),
+        period CHAR(36),
+        organization_id CHAR(36)
+        ) ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;
+        """,
+        #Это справочник доменов
         """
         CREATE TABLE IF NOT EXISTS domains (
         id CHAR(36) PRIMARY KEY,
