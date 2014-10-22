@@ -4,13 +4,19 @@ from propdict import propdict
 class objsql():
     def addprop( self, pdict ):
         self.prop += [ pdict ]
-    def __init__( self, pname, pprop, ptables = None ):
-        self.name = pname
+    def __init__( self, pname, pprop, ptables = [], powner = None ):
+        self.istable = not(powner == None)
+        if self.istable:
+            self.name = powner + "_" + pname
+        else:
+            self.name = pname
         self.prop = []
         self.tables = []
         self.addprop( pdict = propdict( pname = "id", ptype = "CHAR(36)" ) )
         for e in pprop:
             self.addprop( pdict = e )
+        for e in ptables:
+            self.tables += [e]
         self.sqlwrite = self.getsqlwrite()
     def keysforsql( self ):
         res = ",".join( [ e["name"] for e in self.prop ] )

@@ -22,3 +22,8 @@ def createtable():
         db = dbworker.getcon()
         cursor = db.cursor()
         cursor.execute( sql )
+        for t in e.tables:
+            sql = t.sqlcreate()
+            db = dbworker.getcon()
+            cursor = db.cursor()
+            cursor.execute( sql )            
