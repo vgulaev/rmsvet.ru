@@ -11,5 +11,4 @@ for e in dbschema.schema["objects"]:
             for e in self.__mtdata__.tables:
                 setattr( self, e["name"], tablemgr )
     retclass.__mtdata__ = e
-    
     objects[e.name] = retclass

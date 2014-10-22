@@ -26,4 +26,4 @@ def createtable():
             sql = t.sqlcreate()
             db = dbworker.getcon()
             cursor = db.cursor()
-            cursor.execute( sql )            
+            cursor.execute( sql )
