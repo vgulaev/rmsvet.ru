@@ -6,12 +6,14 @@ class objsql():
         self.prop += [ pdict ]
     def __init__( self, pname, pprop, ptables = [], powner = None ):
         self.istable = not(powner == None)
-        if self.istable:
-            self.name = powner + "_" + pname
-        else:
-            self.name = pname
         self.prop = []
         self.tables = []
+        if self.istable:
+            self.name = powner + "_" + pname
+            self.addprop( pdict = propdict( pname = "count", ptype = "INT" ) )
+        else:
+            self.name = pname
+        self.attname = pname
         self.addprop( pdict = propdict( pname = "id", ptype = "CHAR(36)" ) )
         for e in pprop:
             self.addprop( pdict = e )
@@ -39,8 +41,13 @@ class objsql():
             if tp[0:4] == "own:":
                 tp = "CHAR(36)"
             sqll = "{name} {type}".format( name = e["name"], type = tp )            
-            if e["name"] == "id":
-                sqll += " PRIMARY KEY"
+            #if e["name"] == "id":
+                #sqll += " PRIMARY KEY"
             sqllines += [sqll]
+        if self.istable:
+            sqllines += [ "count INT" ]
+            sqllines += [ "primary key ( id, count )" ]
+        else:
+            sqllines += [ "primary key ( id )" ]
         sql += ", ".join(sqllines) + ") ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;"
         return sql
