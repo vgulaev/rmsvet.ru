@@ -18,7 +18,7 @@ def make_cond_from_filter( filter ):
     if len(sql) > 0:
         sql += "and " 
     sql += """prices.organization = '{org_id}'
-    and prices.in_search = 'y'
+    and prices.insearch = 1
     """.format( org_id = org.id.val )
     return sql
 
@@ -28,7 +28,7 @@ def auto_complate( filter ):
     """
     sql += make_cond_from_filter( filter )
     sql += "\n limit 7;" 
-    #print sql
+    print sql
     cursor = common.ldb.getcursor()
     cursor.execute(sql)
     gd = []
@@ -49,7 +49,7 @@ def auto_complate( filter ):
 def getfilters( filter ):
     sql = """select * from (
     SELECT properties.caption FROM vg_site_db.prices
-    join vg_site_db.properties on prices.id = properties.price_id
+    join vg_site_db.properties on prices.id = properties.priceref
     where """ + make_cond_from_filter( filter ) + """
     group by properties.caption)
     as cap;"""
@@ -82,7 +82,7 @@ def ezspquery( jsonsrt ):
 def ezsp_get_filters_value ( jsonsrt ):
     sql = """select * from (
     SELECT properties.value FROM vg_site_db.prices
-    join vg_site_db.properties on prices.id = properties.price_id
+    join vg_site_db.properties on prices.id = properties.priceref
     where """ + make_cond_from_filter( filter ) + """
     
     group by properties.value)

@@ -14,12 +14,21 @@ paste.reloader.watch_file("staticcontentgenerator.py")
 paste.reloader.watch_file("sett.py")
 paste.reloader.watch_file("statistics.py")
 
-
 #own libs
 import wsservers as ws
 import common
 import staticcontentgenerator as scg
 import sett
+import dbclasses.dbworker
+
+def loadmysqlcredential():
+    passwd = ""
+    r = {   "host" : 'localhost',
+            "user" : 'root',
+            "passwd" : sett.mysql_pass}
+    return r
+
+dbclasses.dbworker.cred = loadmysqlcredential()
 
 def standart_response(start_response, ct):
     status = '200 OK'
@@ -30,7 +39,7 @@ def detect_common_env( domain ):
     d = common.domains_sql()
     if d.find(caption = domain):
         o = common.organization_sql()
-        if o.find(id = d.organization_id.val):
+        if o.find(id = d.organization.val):
             common.env["organization"] = o
 
 def make_json_ans( url , environ):

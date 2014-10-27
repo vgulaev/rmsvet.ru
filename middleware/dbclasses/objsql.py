@@ -45,7 +45,6 @@ class objsql():
                 #sqll += " PRIMARY KEY"
             sqllines += [sqll]
         if self.istable:
-            sqllines += [ "count INT" ]
             sqllines += [ "primary key ( id, count )" ]
         else:
             sqllines += [ "primary key ( id )" ]

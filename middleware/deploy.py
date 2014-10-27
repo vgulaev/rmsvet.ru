@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 import MySQLdb
 import sitedb
+import dbclasses.dbmaintenance
+import sett
 
 try:
+    print "try DB droping"
     t = sitedb.dbworker()
     t.connect()
     
@@ -25,7 +28,10 @@ except:
     db.commit()
     
     t = sitedb.dbworker()
-    t.create_table()
+    
+    dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
+    dbclasses.dbmaintenance.createtable()
+    #t.create_table()
     print "DB preparation complate"
     
     import common as cm
@@ -39,17 +45,17 @@ except:
     o.write()
 
     p = cm.domains_sql()
-    p.organization_id = o.id.val
+    p.organization = o.id.val
     p.caption = "ezsp.ru"
     p.write()
 
     p = cm.domains_sql()
-    p.organization_id = o.id.val
+    p.organization = o.id.val
     p.caption = "eazyshop.ru"
     p.write()
 
     p = cm.domains_sql()
-    p.organization_id = o.id.val
+    p.organization = o.id.val
     p.caption = "127.0.0.1:8080"
     p.write()
 
@@ -59,6 +65,6 @@ except:
     o.write()
 
     p = cm.domains_sql()
-    p.organization_id = o.id.val
+    p.organization = o.id.val
     p.caption = "rmsvet.ru"
     p.write()
