@@ -28,7 +28,7 @@ def auto_complate( filter ):
     """
     sql += make_cond_from_filter( filter )
     sql += "\n limit 7;" 
-    print sql
+    #print sql
     cursor = common.ldb.getcursor()
     cursor.execute(sql)
     gd = []
