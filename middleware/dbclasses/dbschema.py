@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 from objsql import objsql
 from propdict import propdict
-from sqlalchemy.sql.expression import column
 
 schema = { "objects" : [
 	objsql( pname = "order",
 		pprop = [ 
-			propdict( pname = "number", ptype = "CHAR(36)" )
+			propdict( pname = "number", ptype = "CHAR(36)" ),
+			propdict( pname = "partner", ptype = "own:partners" )
 		],
 		ptables = [
 			objsql( pname = "goods", powner = "order", pprop = [

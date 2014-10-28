@@ -46,7 +46,7 @@ def make_map( count ):
 	sql = """
 	SELECT caption, fantastic_url FROM vg_site_db.prices 
 	where organization = '{org_id}'
-	order by in_search desc
+	order by insearch desc
 	limit {count}, 50;
 	""".format( org_id = cm.env["organization"].id.val, count = count )
 	cursor = cm.ldb.execute( sql )

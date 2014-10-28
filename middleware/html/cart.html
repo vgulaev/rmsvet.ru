@@ -65,9 +65,17 @@
 			<tbody id = "goods">
 			</tbody>
 		</table>
-		<button>Выписать счет</button>
-		<button>Купить</button>
-		<button>Указать НДС</button>
+		<div>
+			<button onclick = "">Выписать счет</button>
+			<button>Купить</button>
+			<button>Указать НДС</button>
+		</div>
+		<div>
+			<span>Контрагент: </span><input id = "partner" class="partner" />
+		</div>
+		<div>
+			<button onclick = "cart.write_to_srv()">Записать</button>
+		</div>
 		</div>
 	</div>
 	</body>

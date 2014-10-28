@@ -46,7 +46,24 @@ cart = {
   		Mustache.parse(template);
 		var rendered = Mustache.render(template, {"el" : el, "totalsum" : totalsum.toFixed(2), "length" : length});
 		$("#goods").html(rendered);
-	}
+	},
+	write_to_srv : function () {
+        $.ajax(
+            {
+                url: "/ws/write-order-to-srv",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "data" : JSON.stringify({})
+                },
+                beforeSend: function () {
+                }
+            })
+        .done(function ( data ) {
+            alert("Yes");
+            })
+		alert("Hey!!!");
+	} 
 };
 
 $(function ()

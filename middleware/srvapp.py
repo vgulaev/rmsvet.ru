@@ -85,6 +85,8 @@ def make_json_ans( url , environ):
                                 )
         eq = post.getvalue("ezsp-query")
         html = ws.ezsp_get_filters_value( eq )
+    elif url == "/ws/write-order-to-srv":
+        html = "{}"
 
     return html
 
