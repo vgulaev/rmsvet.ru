@@ -37,10 +37,6 @@ def  goods_main_view(url, url_type = None):
 	img_url = "/png/nophoto.png"
 	if img.find( priceref = obj.id ):
 		img_url = img.url.val
-	print obj.caption
-	print type(obj.caption)
-	print obj.price
-	print type(obj.price)
 	res = pystache.render(_templ_res, {"gd" : obj.__dict__, "addfld" : html_view_for_addfld( obj.id ), "img_url" : img_url})
 	return res
 
