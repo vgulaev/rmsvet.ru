@@ -62,7 +62,16 @@ def load_from_1c():
                 addfld.write()"""
     print "Loading {p} complate".format(p = pos)
 
-load_from_1c()
+import wget
+import zipfile
+def get_price_from_web():
+    url = "http://www.1c.ru/ftp/pub/pricelst/price_1c.zip"
+    filename = wget.download(url)
+    print "Ok"
+    print filename
+    zp = zipfile.ZipFile( filename, "r" )
+    zp.extractall( )
+    print type( filename )
 
-#dt_now = datetime.datetime.now()
-#print dt_now.strftime('%Y-%m-%d %H:%M:%S')
+get_price_from_web()
+load_from_1c()
