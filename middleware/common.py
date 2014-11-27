@@ -2,6 +2,12 @@
 import sitedb
 import codecs
 
+def _D( s ):
+    ret = dict( s )
+    for ( key, val ) in s.items():
+        if isinstance( val, unicode ):
+            s[ key ] = s[ key ].encode("utf-8")
+    return s
 
 def _U(s):
     res = s
