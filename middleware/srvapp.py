@@ -7,6 +7,7 @@ import cgi
 
 import paste.reloader
 paste.reloader.install()
+paste.reloader.watch_file("common.py")
 paste.reloader.watch_file("checkrestart.py")
 paste.reloader.watch_file("sitedb.py")
 paste.reloader.watch_file("wsservers.py")
