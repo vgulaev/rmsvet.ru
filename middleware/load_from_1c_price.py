@@ -29,7 +29,8 @@ def load_from_1c():
     org.find(caption = "ezsp")
     pos = 0
     for i in range(sheet.nrows - 1):
-        if (sheet.cell(i,2).value == u"руб"):
+        currency = sheet.cell(i,2).value
+        if (currency == u"руб") or (currency == u"руб."):
             pr = sheet.cell(i,3).value;
             if not((pr == "*") or (pr == "-") or (pr == "")):
                 pos = pos + 1
@@ -40,6 +41,11 @@ def load_from_1c():
                 newprice.fantastic_url = urllib.quote(common._U(sheet.cell(i,1).value))
                 newprice.synctag = "from 1c"
                 newprice.organization = org.id.val
+                vat = sheet.cell( i, 6 ).value
+                if vat == u"18%":
+                    newprice.vat = 18
+                else:
+                    newprice.vat = 0
                 #newprice.price_date = dt_for_db
                 newprice.insearch = True;
                 if isinstance(pr, unicode):
@@ -49,18 +55,16 @@ def load_from_1c():
                 #try:
                 newprice.write()
                 
-                """addfld = common.properties_sql()
-                addfld.caption = "__caption__"
-                addfld.price_id = str(newprice.id)
-                addfld.value = unicode(newprice.caption)
+                addfld = dbclasses.dbobj.objects["properties"]()
+                addfld.priceref = newprice.id
+                addfld.caption = "код прайса 1с"
+                addfld.value = sheet.cell(i,0).value
                 addfld.write()
 
-                addfld = common.properties_sql()
-                addfld.caption = "код прайса 1с"
-                addfld.price_id = str(newprice.id)
-                addfld.value = sheet.cell(i,0).value
-                addfld.write()"""
-    print "Loading {p} complate".format(p = pos)
+                if (pos % 200) == 0:
+                    print "Complate {p}".format( p = pos )
+
+    print "Loading {p} complate, from {lines}".format( p = pos, lines = sheet.nrows )
 
 import wget
 import zipfile

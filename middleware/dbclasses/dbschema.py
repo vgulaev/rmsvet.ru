@@ -11,7 +11,9 @@ schema = { "objects" : [
 		ptables = [
 			objsql( pname = "goods", powner = "order", pprop = [
 				propdict( pname = "good", ptype = "own:prices" ),
-				propdict( pname = "quantity", ptype = "DECIMAL(10, 4)" )
+				propdict( pname = "quantity", ptype = "DECIMAL(10, 4)" ),
+				propdict( pname = "price", ptype = "DECIMAL(10, 2)" ),
+				propdict( pname = "sum", ptype = "DECIMAL(10, 2)" )
 			] )
 		] ),
 	objsql( pname = "goods", 
@@ -37,8 +39,12 @@ schema = { "objects" : [
 			propdict( pname = "fantastic_url", ptype = "TEXT" ),
 			propdict( pname = "good", ptype = "own:goods" ),
 			propdict( pname = "price", ptype = "DECIMAL(10, 2)" ),
+			propdict( pname = "vat", ptype = "INT" ),
+			propdict( pname = "price_in", ptype = "DECIMAL(10, 2)" ),
+			propdict( pname = "currency_in", ptype = "CHAR(50)" ),
 			propdict( pname = "organization", ptype = "own:organization" ),
 			propdict( pname = "synctag", ptype = "CHAR(50)" ),
+			propdict( pname = "item_partner_id", ptype = "CHAR(50)" ),
 			propdict( pname = "insearch", ptype = "BOOL" )
 		] ),
 	objsql( pname = "currency",

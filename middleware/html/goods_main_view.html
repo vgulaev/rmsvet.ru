@@ -27,11 +27,13 @@
 	</div>
 	<div id = "output" class="main width850">
 		<span id = "col1" class = "left100">
-			<img id = "{{gd.id}}" src="{{img_url}}" class="img_c">
+			<img id = "{{ gd.id }}" src="{{img_url}}" class="img_c">
 		</span>
 		<span id = "col2">
-		<div><h1 id = "caption"> {{gd.caption.val}} </h1></div>
+		<div><h1 id = "caption"> {{gd.caption}} </h1></div>
 		<div><span>Цена: &nbsp;</span><span>₽ </span><span id = "price"> {{gd.price}} </span></div>
+		<div><span>НДС: &nbsp;</span><span id = "vat"> {{gd.vat}} </span></div>
+		<div><span>Sync tag: &nbsp;</span><span>{{gd.synctag}}</span></div>
 		<div><span class = "ii_title">Характеристики:</span>
 		<table>
 			{{#addfld}}

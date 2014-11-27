@@ -11,6 +11,7 @@ hwinit.py
 sett.py
 *.xls
 *.XLS
+*.zip
 ocs*.json
 mer*.json
 nbproject/

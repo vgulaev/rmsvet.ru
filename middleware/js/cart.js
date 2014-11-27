@@ -19,13 +19,10 @@ cart = {
 		localStorage["cart.count"] = length - 1;
 		this.render();
 	},
-	render : function () {
-		var length = localStorage["cart.count"];
-		var rowhtml = "";
-		var tbody = $("#goods");
+	getjson : function () {
 		var sum = 0;
 		var totalsum = 0;
-		tbody.empty();
+		var length = localStorage["cart.count"];
 		if (length == undefined) length = 0;
 		var el = []; 
 		for (var i = 0; i <= length - 1; i++) {
@@ -42,19 +39,27 @@ cart = {
 			};
 			el.push(newel);
 		};
+		return { "rows" : el, "totalsum" : totalsum, "length" : length};
+	},
+	render : function () {
+		var rowhtml = "";
+		var tbody = $("#goods");
+		tbody.empty();
+		var el = this.getjson();
 		var template = $("#goods_tmpl").html();
   		Mustache.parse(template);
-		var rendered = Mustache.render(template, {"el" : el, "totalsum" : totalsum.toFixed(2), "length" : length});
+		var rendered = Mustache.render(template, {"el" : el["rows"], "totalsum" : el["totalsum"].toFixed(2), "length" : el["length"]});
 		$("#goods").html(rendered);
 	},
 	write_to_srv : function () {
+        var el = this.getjson();
         $.ajax(
             {
                 url: "/ws/write-order-to-srv",
                 type: "POST",
                 dataType: "json",
                 data: {
-                    "data" : JSON.stringify({})
+                    "data" : JSON.stringify(el["rows"])
                 },
                 beforeSend: function () {
                 }
