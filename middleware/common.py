@@ -5,9 +5,10 @@ import codecs
 def _D( s ):
     ret = dict( s )
     for ( key, val ) in s.items():
+        print type(val)
         if isinstance( val, unicode ):
             s[ key ] = s[ key ].encode("utf-8")
-    return s
+    return ret
 
 def _U(s):
     res = s
