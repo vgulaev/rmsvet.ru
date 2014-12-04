@@ -106,5 +106,8 @@ def orders( url ):
     ds = { "id" : url }
     cursor.execute( sql, ds )
     rows = fetch_to_row_dict( cursor )
-    res = pystache.render(_templ_res, { "order" : order.__dict__ , "partner" : partner.__dict__ , "el" : rows })
+    totalsum = 0
+    for e in rows:
+        totalsum += e[ "sum" ]
+    res = pystache.render(_templ_res, { "order" : order.__dict__ , "partner" : partner.__dict__ , "el" : rows, "totalsum" : totalsum , "length" : len(rows) })
     return res

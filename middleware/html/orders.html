@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Корзина</title>
+        <title>Заказ</title>
         <meta name="author" content="Valentin" />
         <script src="/libs/jquery/jquery-2.1.1.min.js"></script>
         <script src="/libs/mustache.js"></script>
@@ -49,13 +49,10 @@
                 <tr id = "{{ id }}">
                     <td>
                         <div class = "wp">
-                        <a href="/catalog/goods/{{ id }}">{{caption}}</a>
-                        </div>
-                        <div>
-                        <button onclick = "cart.deleterow({{ i }})">Удалить</button>
+                        {{good}}
                         </div>
                     </td>
-                    <td class = "qty">{{ count }}</td>
+                    <td class = "qty">{{ quantity }}</td>
                     <td class = "num">{{ price }} </td>
                     <td class = "num">{{ sum }} </td>
                 </tr>
@@ -68,17 +65,6 @@
             <tbody id = "goods">
             </tbody>
         </table>
-        <!--div>
-            <button onclick = "">Выписать счет</button>
-            <button>Купить</button>
-            <button>Указать НДС</button>
-        </div>
-        <div>
-            <span>Контрагент: </span><input id = "partner" class="partner" />
-        </div>
-        <div>
-            <button onclick = "cart.write_to_srv()">Записать</button>
-        </div-->
         <div>
             <!-- Значения всех полей условны и приведены исключительно для примера --> 
             <form action="https://money.yandex.ru/eshop.xml" method="post"> 
@@ -86,11 +72,11 @@
             <!-- Обязательные поля --> 
             <input name="shopId" value="20820" type="hidden"/> 
             <input name="scid" value="11033" type="hidden"/> 
-            <input name="sum" value="1.16" type="hidden"> 
-            <input name="customerNumber" value="Гуляева Татьяна" type="hidden"/>
+            <input name="sum" value="{{ totalsum }}" type="hidden"> 
+            <input name="customerNumber" value="{{partner.caption}}" type="hidden"/>
             
             <!-- Необязательные поля --> 
-            <input name="orderNumber" value="20141204-01" type="hidden"/>
+            <input name="orderNumber" value="{{order.number}}" type="hidden"/>
             <input name="paymentType" value="AC" type="hidden"/>
               
             <!--input name="shopArticleId" value="567890" type="hidden"/> 
@@ -99,7 +85,7 @@
             <input name="cps_phone" value="79110000000" type="hidden"/> 
             <input name="cps_email" value="user@domain.com" type="hidden"/--> 
               
-            <input type="submit" value="Заплатить"/> 
+            <input type="submit" value="Оплать Visa/MasterCard"/> 
             </form>            
         </div>
         </div>
