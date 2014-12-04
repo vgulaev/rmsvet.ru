@@ -57,7 +57,7 @@ def load_from_1c():
                 
                 addfld = dbclasses.dbobj.objects["properties"]()
                 addfld.priceref = newprice.id
-                addfld.caption = "код прайса 1с"
+                addfld.caption = u"код прайса 1с"
                 addfld.value = sheet.cell(i,0).value
                 addfld.write()
 

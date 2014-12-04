@@ -37,7 +37,8 @@ def  goods_main_view(url, url_type = None):
     img_url = "/png/nophoto.png"
     if img.find( priceref = obj.id ):
         img_url = img.url.val
-    res = pystache.render(_templ_res, {"gd" : cm._D( obj.__dict__ ), "addfld" : html_view_for_addfld( obj.id ), "img_url" : img_url})
+    #html_view_for_addfld( obj.id )
+    res = pystache.render(_templ_res, {"gd" :  obj.__dict__ , "addfld" : {}, "img_url" : img_url})
     return res
 
 def make_map( count ):
@@ -109,5 +110,6 @@ def orders( url ):
     totalsum = 0
     for e in rows:
         totalsum += e[ "sum" ]
+    #res = pystache.render(_templ_res, { "order" :  , "partner" : partner.__dict__ , "el" : rows, "totalsum" : totalsum , "length" : len(rows) })
     res = pystache.render(_templ_res, { "order" : order.__dict__ , "partner" : partner.__dict__ , "el" : rows, "totalsum" : totalsum , "length" : len(rows) })
     return res
