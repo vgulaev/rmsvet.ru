@@ -6,6 +6,7 @@ schema = { "objects" : [
 	objsql( pname = "order",
 		pprop = [ 
 			propdict( pname = "number", ptype = "CHAR(36)" ),
+			propdict( pname = "date", ptype = "DATETIME" ),
 			propdict( pname = "partner", ptype = "own:partners" )
 		],
 		ptables = [
@@ -51,6 +52,7 @@ schema = { "objects" : [
 		pprop = [ 
 			propdict( pname = "caption", ptype = "CHAR(50)" ),
 			propdict( pname = "partner", ptype = "own:partners" ),
+			propdict( pname = "ratedate", ptype = "DATE" ),
 			propdict( pname = "rate", ptype = "DECIMAL(10, 4)" )
 		] ),
 	objsql( pname = "properties",

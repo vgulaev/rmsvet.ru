@@ -86,6 +86,7 @@ def work_loading():
         load_to_db(e)
 
 #load_to_db("20")
-work_loading()
+#work_loading()
+currency_sync()
 
 print "End"

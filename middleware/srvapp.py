@@ -141,6 +141,9 @@ def application(environ, start_response):
     elif url[0:10] == "/site-map/":
         standart_response(start_response, "text/html")
         html = scg.make_map( url[10:] )
+    elif url[0:8] == "/orders/":
+        standart_response(start_response, "text/html")
+        html = scg.orders( url[8:] )
     
     if url[0:5] == "/png/":
         status = '200 OK'

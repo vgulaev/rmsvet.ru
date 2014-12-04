@@ -24,10 +24,10 @@ def fs():
     f.write(str(a))
     a = api.service.getCurrencyRate()
     f.write(str(a))
-    a = api.service.getShipmentDates()
+    """a = api.service.getShipmentDates()
     f.write(str(a))
     a = api.service.getCatalog()
-    f.write(str(a))
+    f.write(str(a))"""
 
 def load_items(CategoryIDList):
     sql = "delete from prices where synctag = '{id}' and id <> ''".format( id = "merlic " + "N1" )

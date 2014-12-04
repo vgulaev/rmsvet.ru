@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Корзина</title>
+        <meta name="author" content="Valentin" />
+        <script src="/libs/jquery/jquery-2.1.1.min.js"></script>
+        <script src="/libs/mustache.js"></script>
+        <script src="/js/common.js"></script>
+        <script src="/js/query-obj.js"></script>
+        <script src="/js/my.js"></script>
+        <script src="/js/cart.js"></script>
+        <script src="/js/fastsearch.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/main.css">
+        <link rel="stylesheet" type="text/css" href="/css/cart.css">
+    </head>
+    <body>
+    <div id = "core">
+        <span class = "fc">Ваш запрос:</span><input id = "SearchStr">
+    </div>
+    <div id = "secondline">
+        <span>
+        <span class = "bt left100 right20">Информация о товаре</span>
+        <span class = "bt left20">Действия на сайте</span>
+        <span class = "bt left20">
+            <a id = "cart_label" href="/cart">
+            <span>Товаров в корзине &nbsp;</span><span id = "cart_label_count"></span></a>
+        </span>
+        <span class = "bt left20"><a href="/html/contact.html">О нас</a></span>
+        </span>
+    </div>
+    <div id = "output" class="main">
+        <div class = "left100">
+        <div>Номер заказа: <span><b>{{order.number}}</b></span> от <span><b>{{order.date}}</b></span></div>
+        <div class="wp cart_table">Поставщик: <b>ООО "Логистрим", ИНН 7203318874, КПП 720301001, 625046, Тюменская обл, Тюмень г, Широтная ул, дом № 148, корпус 3, квартира 205, тел.: +7-961-209-1778</b></div>
+        <div class="wp cart_table">Покупатель: <b>{{partner.caption}}</b></div>
+        <table class="cart_table mart10">
+            <thead>
+                <tr>
+                    <!--th>№</th-->
+                    <th>Товар</th>
+                    <th>Кол-во</th>
+                    <th>Цена</th>
+                    <th>Сумма</th>
+                </tr>
+            </thead>
+            <script id="goods_tmpl" type="x-tmpl-mustache">
+                {{#el}}
+                <tr id = "{{ id }}">
+                    <td>
+                        <div class = "wp">
+                        <a href="/catalog/goods/{{ id }}">{{caption}}</a>
+                        </div>
+                        <div>
+                        <button onclick = "cart.deleterow({{ i }})">Удалить</button>
+                        </div>
+                    </td>
+                    <td class = "qty">{{ count }}</td>
+                    <td class = "num">{{ price }} </td>
+                    <td class = "num">{{ sum }} </td>
+                </tr>
+                {{/el}}
+                <tr>
+                    <td colSpan = 3 class = "total">Всего ({{ length }} позиций)</td>
+                    <td class = "num">{{ totalsum }}</td>           
+                </tr>
+            </script>
+            <tbody id = "goods">
+            </tbody>
+        </table>
+        <!--div>
+            <button onclick = "">Выписать счет</button>
+            <button>Купить</button>
+            <button>Указать НДС</button>
+        </div>
+        <div>
+            <span>Контрагент: </span><input id = "partner" class="partner" />
+        </div>
+        <div>
+            <button onclick = "cart.write_to_srv()">Записать</button>
+        </div-->
+        <div>
+            <!-- Значения всех полей условны и приведены исключительно для примера --> 
+            <form action="https://money.yandex.ru/eshop.xml" method="post"> 
+              
+            <!-- Обязательные поля --> 
+            <input name="shopId" value="20820" type="hidden"/> 
+            <input name="scid" value="11033" type="hidden"/> 
+            <input name="sum" value="1.16" type="hidden"> 
+            <input name="customerNumber" value="Гуляева Татьяна" type="hidden"/>
+            
+            <!-- Необязательные поля --> 
+            <input name="orderNumber" value="20141204-01" type="hidden"/>
+            <input name="paymentType" value="AC" type="hidden"/>
+              
+            <!--input name="shopArticleId" value="567890" type="hidden"/> 
+            <input name="paymentType" value="AC" type="hidden"/> 
+            <input name="orderNumber" value="abc1111111" type="hidden"/> 
+            <input name="cps_phone" value="79110000000" type="hidden"/> 
+            <input name="cps_email" value="user@domain.com" type="hidden"/--> 
+              
+            <input type="submit" value="Заплатить"/> 
+            </form>            
+        </div>
+        </div>
+    </div>
+    </body>
+</html>

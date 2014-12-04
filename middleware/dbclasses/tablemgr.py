@@ -12,9 +12,10 @@ class tablemgr():
         self.owner = powner
         self.row = []
     def write( self ):
+        self.owner.checkid()
         db = dbworker.getcon()
         cursor = db.cursor()
         for e in self.row:
-            #print e
+            e["id"] = self.owner.id
             cursor.execute( self.__mtdata__.sqlwrite, e )
             db.commit()

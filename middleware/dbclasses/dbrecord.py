@@ -5,12 +5,14 @@ import uuid
 class dbrecord():
     def __init__( self ):
         pass
+    def checkid( self ):
+        if self.id == "":
+            self.id = str(uuid.uuid1())
     def write( self ):
         sql = self.__mtdata__.sqlwrite
         db = dbworker.getcon()
         cursor = db.cursor()
-        if self.id == "":
-            self.id = str(uuid.uuid1())
+        self.checkid()
         d = {}
         for e in self.__mtdata__.prop:
             d[ e["name"] ] = getattr( self, e["name"] )
@@ -22,7 +24,7 @@ class dbrecord():
         return True
     def find( self, *args, **kwargs ):
         res = False
-        sql = "SELECT * FROM {tn}"
+        sql = "SELECT * FROM `{tn}`"
         sql = sql.format(tn = self.__mtdata__.name)
         if len(kwargs) > 0:
             sql += " where ";
