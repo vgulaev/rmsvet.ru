@@ -114,6 +114,9 @@ def application(environ, start_response):
     elif url == "/yml.xml":
         standart_response(start_response, "text/xml")
         html = common.read_file_to_str(url[1:])
+    elif url == "/google08c306b085ecc151.html":
+        standart_response(start_response, "text/html")
+        html = common.read_file_to_str(url[1:])
     elif url[0:9] == "/catalog/":
         standart_response(start_response, "text/html")
         html = scg.goods_main_view(url, "id")
