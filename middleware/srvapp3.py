@@ -12,7 +12,7 @@ projectorium.reloader.watch_file( "projectorium/reloader.py" )
 projectorium.reloader.watch_file( "myhttpd/HTTPRequestHandler.py" )
 
 projectorium.reloader.start_watch()
-#projectorieloader.
+#projectorieloader
 
 def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
     server_address = ('', 8080)
