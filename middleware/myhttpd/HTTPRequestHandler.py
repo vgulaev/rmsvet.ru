@@ -54,8 +54,13 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             self.ans_like_text_file( self.path[ 1: ], "text/css" )
         elif self.path[ -4: ] == ".ico":
             self.ans_like_text_file( self.path[ 1: ], "image/ico" )
+        elif self.path[ -4: ] == ".png":
+            self.ans_like_text_file( self.path[ 1: ], "image/png" )
         elif self.path[ -6: ] == "/goods":
             html = scg.goods_main_view( self.path )
+            self.ans_like_text( html )
+        elif self.path[0:10] == "/site-map/":
+            html = scg.make_map( self.path[10:] )
             self.ans_like_text( html )
         else:
             self.ans_like_404()

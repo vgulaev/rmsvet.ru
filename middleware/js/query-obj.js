@@ -7,23 +7,23 @@ var _templ = {
 };
 
 function load_templs() {
-    $.get('/html/query-obj/main.html', function ( template ) {
+    $.get('/query-obj/main.html', function ( template ) {
         _templ.main = template;
     });
 
-    $.get('/html/query-obj/result-list.html', function ( template ) {
+    $.get('/query-obj/result-list.html', function ( template ) {
         _templ.result_list = template;
     });
 
-    $.get('/html/query-obj/filter-main.html', function ( template ) {
+    $.get('/query-obj/filter-main.html', function ( template ) {
         _templ.filter_main = template;
     });
 
-    $.get('/html/query-obj/filter-list.html', function ( template ) {
+    $.get('/query-obj/filter-list.html', function ( template ) {
         _templ.filter_list = template;
     });
 
-    $.get('/html/query-obj/filter-type-and-values.html', function ( template ) {
+    $.get('/query-obj/filter-type-and-values.html', function ( template ) {
         _templ.filter_type_and_values = template;
     });
 }

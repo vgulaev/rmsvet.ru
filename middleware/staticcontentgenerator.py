@@ -53,8 +53,10 @@ def make_map( count ):
     where organization = '{org_id}'
     order by insearch desc
     limit {count}, 50;
-    """.format( org_id = cm.env["organization"].id.val, count = count )
-    cursor = cm.ldb.execute( sql )
+    """.format( org_id = cm.env["organization"].id, count = count )
+    con = dbclasses.dbworker.getcon()
+    cursor = con.cursor()
+    cursor.execute( sql )
     row = cursor.fetchone()
     if row is None:
         nexthref = False

@@ -21,8 +21,8 @@
 		<span>
 		<span class = "bt left100 right20">Информация о товаре</span>
 		<span class = "bt left20">Действия на сайте</span>
-		<span class = "bt left20"><a id = "cart_label" href="/cart"><span>Товаров в корзине &nbsp;</span><span id = "cart_label_count"></span></a></span>
-		<span class = "bt left20"><a href="/html/contact.html">О нас</a></span>
+		<span class = "bt left20"><a id = "cart_label" href="/cart.html"><span>Товаров в корзине &nbsp;</span><span id = "cart_label_count"></span></a></span>
+		<span class = "bt left20"><a href="/contact.html">О нас</a></span>
 		</span>
 	</div>
 	<div id = "output" class="main width850">
@@ -44,7 +44,7 @@
 			{{/addfld}}			
 		</table>
 		<div><span class = "ii_title">Описание:</span></div>
-		<div>{{{gd.description.val}}}</div>
+		<div>{{{gd.description}}}</div>
 		</div>
 		</span>
 		<span id = "col3"><button onclick="add_to_cart('{{gd.id}}')">В корзину</button></span>
