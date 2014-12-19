@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from objsql import objsql
-from propdict import propdict
+from .objsql import objsql
+from .propdict import propdict
 
 schema = { "objects" : [
 	objsql( pname = "order",

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from propdict import propdict
+from .propdict import propdict
 
 class objsql():
     def addprop( self, pdict ):
@@ -48,5 +48,5 @@ class objsql():
             sqllines += [ "primary key ( id, count )" ]
         else:
             sqllines += [ "primary key ( id )" ]
-        sql += ", ".join(sqllines) + ") ENGINE=INNODB CHARACTER SET utf8 COLLATE utf8_bin;"
+        sql += ", ".join(sqllines) + ") ENGINE=INNODB CHARACTER SET utf8;"
         return sql

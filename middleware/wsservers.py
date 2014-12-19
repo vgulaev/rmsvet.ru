@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import json
 import common
+import dbclasses.dbworker
 
 def debug_my_code(filter):
     res = {"goods": [],
@@ -13,13 +14,13 @@ def make_cond_from_filter( filter ):
     org = common.env["organization"]
     if len(filter) > 0:
         likes = filter.split(" ")
-        likes = ["prices.caption like '%" + e + "%'" for e in likes if e <> ""]
+        likes = ["prices.caption like '%" + e + "%'" for e in likes if e != ""]
         sql += " and ".join(likes)
     if len(sql) > 0:
         sql += "and " 
     sql += """prices.organization = '{org_id}'
     and prices.insearch = 1
-    """.format( org_id = org.id.val )
+    """.format( org_id = org.id )
     return sql
 
 def auto_complate( filter ):
@@ -29,15 +30,16 @@ def auto_complate( filter ):
     sql += make_cond_from_filter( filter )
     sql += "\n limit 7;" 
     #print sql
-    cursor = common.ldb.getcursor()
-    cursor.execute(sql)
+    con = dbclasses.dbworker.getcon()
+    cursor = con.cursor()
+    cursor.execute( sql )
     gd = []
     row = cursor.fetchone()
     while row is not None:
         gd += [{ "id": row[0],
                 "fantastic_url": row[1],
                 "caption": row[2],
-                "price" : str(row[3]),
+                "price" : str( row[3] ),
                 "currency" : "RUR"
                 }]
         row = cursor.fetchone()
@@ -54,7 +56,9 @@ def getfilters( filter ):
     group by properties.caption)
     as cap;"""
     items = []
-    cursor = common.ldb.execute(sql)
+    con = dbclasses.dbworker.getcon()
+    cursor = con.cursor()
+    cursor.execute( sql )
     row = cursor.fetchone()
     i = 0
     while row is not None:
@@ -75,7 +79,9 @@ def process( eq ):
             "f" : filters }
     return ans
 def ezspquery( jsonsrt ):
-    eq = json.loads(jsonsrt)
+    eq = json.loads( jsonsrt )
+    #print( type( jsonobj ) )
+    #print( jsonobj )
     ans = process( eq )
     return json.dumps( ans )
 

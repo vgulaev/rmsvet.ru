@@ -16,3 +16,4 @@ ocs*.json
 mer*.json
 nbproject/
 yml.xml
+*.dmp

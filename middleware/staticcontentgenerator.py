@@ -25,14 +25,17 @@ def html_view_for_addfld( id ):
 def  goods_main_view(url, url_type = None):
     _templ_res = cm.read_file_to_str("html/goods_main_view.html")
     obj = dbclasses.dbobj.objects[ "prices" ]()
-    img = cm.images_sql()
+    img = dbclasses.dbobj.objects[ "images" ]()
     id = url[-36:] 
     if (url_type == "id"):
         obj.find(id = id)
     else:
-        u = urllib.quote(url[1:-6])
-        #print url[1:-6], type(url[1:-6]), u
+        #u = urllib.parse.unquote( url[ 1:-6] )
+        u = url[ 1:-6]
+        print( "len ==", len(u) )
+        print( "path:==", u )
         obj.find( fantastic_url = u )
+        print( "id==", obj.id )
     #res = _templ_res.format(gd = obj, addfld = html_view_for_addfld(id))
     img_url = "/png/nophoto.png"
     if img.find( priceref = obj.id ):

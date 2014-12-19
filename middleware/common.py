@@ -1,6 +1,14 @@
 # -*- coding: utf-8 -*-
 #import sitedb
 import codecs
+import dbclasses.dbobj
+
+def detect_common_env( domain = "ezsp.ru" ):
+    d = dbclasses.dbobj.objects[ "domains" ]()
+    if d.find( caption = domain ):
+        o = dbclasses.dbobj.objects[ "organization" ]( )
+        if o.find( id = d.organization ):
+            env[ "organization" ] = o
 
 def _D( s ):
     ret = dict( s )

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import dbworker
+from . import dbworker
 import uuid
 
 class dbrecord():
@@ -33,11 +33,13 @@ class dbrecord():
             for e in kwargs:
                 ds[str(e)] = kwargs[e]
             db = dbworker.getcon()
-            cursor = db.cursor()
-            cursor.execute( sql,ds )
+            cursor = db.cursor( raw = False )
+            cursor.execute( sql, ds )
             row = cursor.fetchone()
             if row is not None:
                 for ( i,e ) in enumerate(row):
+                    if type( e ) is bytearray:
+                        e = e.decode( "utf-8" )
                     setattr( self, cursor.description[i][0], e )
                 res = True
         return res

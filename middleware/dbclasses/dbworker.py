@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-import MySQLdb
+#import MySQLdb
+import mysql.connector as MySQLdb
+
 cred = {
         "host" : "",
         "user" : "",
@@ -16,5 +18,5 @@ def loadmysqlcredential( psett ):
     return r
 
 def getcon():
-    db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], db = "vg_site_db", charset = 'utf8')
+    db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], db = "vg_site_db", charset = 'utf8' )
     return db

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import dbworker
+from . import dbworker
 class tablemgr():
     def add( self ):
         ref = {}

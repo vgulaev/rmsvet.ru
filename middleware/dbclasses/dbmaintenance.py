@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import dbworker
-import dbschema
+from . import dbworker
+from . import dbschema
 def droptable( tname ):
     sql = "DROP TABLE IF EXISTS `{tn}`".format( tn = tname )
     db = dbworker.getcon()

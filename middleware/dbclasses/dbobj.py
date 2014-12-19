@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-import dbschema
-from dbrecord import dbrecord
-from tablemgr import tablemgr
+from . import dbschema
+from .dbrecord import dbrecord
+from .tablemgr import tablemgr
 
 def create_class_for_table( schema_class ):
     class retclass( dbrecord ):
