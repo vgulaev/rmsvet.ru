@@ -23,7 +23,7 @@ projectorium.reloader.start_watch()
 #projectorieloade
 
 def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
-    server_address = ( sett.host, 8080)
+    server_address = ( sett.host, sett.port )
     httpd = server_class(server_address, handler_class)
     httpd.serve_forever()
 
