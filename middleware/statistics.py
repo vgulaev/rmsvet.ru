@@ -14,19 +14,15 @@ def stat_info():
 		stat[e] = {"items" : 0, "lines" : 0}
 	totallines = 0
 	for root, subFolders, files in os.walk(rootdir):
-		#print subFolders
-		#break
 		for fl in files:
 			fileName, fileExtension = os.path.splitext(fl)
 			if root.find(dirsym + "libs" + dirsym) != -1:
 				continue
-			f = open(root + dirsym + fl)
-			if ((fileExtension in stat) == True):
+			if ( ( fileExtension in stat ) == True):
+				f = open( root + dirsym + fl, encoding="utf-8" )
 				stat[fileExtension]["items"] = stat[fileExtension]["items"] + 1
-				lines = len(f.readlines())
+				lines = len( f.readlines() )
 				stat[fileExtension]["lines"] = stat[fileExtension]["lines"] + lines
 				totallines = totallines + lines
-			f.close()			
+				f.close()			
 	return stat
-
-#print index()
