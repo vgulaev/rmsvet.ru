@@ -28,9 +28,8 @@ def  goods_main_view(url, url_type = None):
     img = dbclasses.dbobj.objects[ "images" ]()
     id = url[-36:] 
     if (url_type == "id"):
-        obj.find(id = id)
+        obj.find( id = id )
     else:
-        #u = urllib.parse.unquote( url[ 1:-6] )
         u = url[ 1:-6]
         print( "len ==", len(u) )
         print( "path:==", u )
