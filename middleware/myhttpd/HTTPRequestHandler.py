@@ -66,7 +66,10 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             self.ans_like_text( html )
         elif self.path[0:10] == "/site-map/":
             html = scg.make_map( self.path[10:] )
-            self.ans_like_text( html )
+            if html == False:
+                self.ans_like_404()
+            else:
+                self.ans_like_text( html )
         elif self.path == "/stat":
             html = scg.stat()
             self.ans_like_text( html )

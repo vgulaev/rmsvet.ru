@@ -44,28 +44,38 @@ def  goods_main_view(url, url_type = None):
     return res
 
 def make_map( count ):
+    if len( count ) > 15:
+        return False
+    l = count.split( "-" )
     _templ_res = cm.read_file_to_str("html/site-map.html")
-    if count == "":
-        count = "0"
-    sql = """
-    SELECT caption, fantastic_url FROM vg_site_db.prices 
-    where organization = '{org_id}'
-    order by insearch desc
-    limit {count}, 50;
-    """.format( org_id = cm.env["organization"].id, count = count )
     con = dbclasses.dbworker.getcon()
     cursor = con.cursor()
-    cursor.execute( sql )
-    row = cursor.fetchone()
-    if row is None:
-        nexthref = False
-    else:
-        nexthref = int( count ) + 50
     hrefs = []
-    while (row is not None):
-        hrefs += [{ "caption": row[0], "url": row[1] }]
+    nexthref = False
+    if len( l ) < 2:
+        sql = "select count(*) FROM vg_site_db.prices where organization = '{org_id}'".format( org_id = cm.env["organization"].id )
+        if count == "":
+            index = 0
+        else:
+            index = int( l[0] )
+        for i in range( 40 ):
+            end = "{start}-{end}".format( start = index, end = index + 39 )
+            hrefs += [ { "caption": end , "url" : "/site-map/" + end } ]
+            index += 40
+        nexthref = index
+    else:
+        sql = """
+        SELECT caption, fantastic_url FROM vg_site_db.prices 
+        where organization = '{org_id}'
+        order by insearch desc
+        limit {count}, 40;
+        """.format( org_id = cm.env["organization"].id, count = l[0] )
+        cursor.execute( sql )
         row = cursor.fetchone()
-    cursor.close()
+        while (row is not None):
+            hrefs += [{ "caption": row[0], "url": "/" + row[1] + "/goods" }]
+            row = cursor.fetchone()
+        cursor.close()
     res = pystache.render( _templ_res, { "hrefs" : hrefs, "nexthref" : nexthref } )
     return res
 
