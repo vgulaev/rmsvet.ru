@@ -1,3 +1,21 @@
+function onvoice(argument) {
+    var recognition = new webkitSpeechRecognition();
+    recognition.onresult = function( speechData ) { 
+      if (speechData.results.length > 0) {
+        var sra = speechData.results[0];
+        if (sra.length > 0) {
+            var mytext = sra[0].transcript;
+            //console.log( mytext )
+            $( "#SearchStr" ).val( mytext );
+            $( "#SearchStr" ).trigger( "input" ); 
+        }
+      }
+      //console.log(event) 
+    }
+    recognition.start();
+    //alert("try");
+}
+
 function fint_view() {
     var e = $("#core");
     var toppx = Math.round($(window).height() - $("#SearchStr").height())/2;

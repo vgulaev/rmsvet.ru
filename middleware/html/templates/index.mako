@@ -17,6 +17,7 @@
 	<%include file="yandex-metrika.tmpl"/>
 	<div id = "core">
 		<span class = "fc">Ваш запрос:</span><input id = "SearchStr">
+		<button onclick = "onvoice()">Голос</button>
 	</div>
 	<div id = "secondline" style="display: none;">
 		<span>

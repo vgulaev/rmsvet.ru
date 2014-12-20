@@ -7,7 +7,7 @@ import sys
 class rl(object):
     files = []    
 
-def reloadserver():
+def reloadserver( filename ):
     os._exit(3)
 
 def watch_file( filename, callback = reloadserver ):
@@ -18,7 +18,7 @@ def file_modify():
     for e in rl.files:
         if e[ "timem" ] != os.path.getmtime( e[ "name" ] ):
             print( "Modify : {fn}".format( fn = e[ "name" ] ), " call: ", e[ "callback" ] )
-            e[ "callback" ]()
+            e[ "callback" ]( filename = e[ "name" ] )
     return res
 def start_watch():
     if file_modify():

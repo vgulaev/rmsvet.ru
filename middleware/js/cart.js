@@ -51,7 +51,7 @@ cart = {
 		var rendered = Mustache.render(template, {"el" : el["rows"], "totalsum" : el["totalsum"].toFixed(2), "length" : el["length"]});
 		$("#goods").html(rendered);
 	},
-	write_to_srv : function () {
+	create_order : function () {
         var el = this.getjson();
         $.ajax(
             {
@@ -67,7 +67,8 @@ cart = {
         .done(function ( data ) {
             alert("Yes");
             })
-		alert("Hey!!!");
+		//alert("Hey!!!");
+        //window.location.href = "/"
 	} 
 };
 

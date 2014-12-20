@@ -2,14 +2,15 @@
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from http.server import HTTPServer, BaseHTTPRequestHandler
+
 import datetime
-import projectorium.reloader
+from http.server import HTTPServer
 from myhttpd.HTTPRequestHandler import HTTPRequestHandler
 import sett
-import dbclasses.dbworker
-import dbclasses.dbobj
 import common
+import projectorium.reloader
+import projectorium.rerender
+import dbclasses.dbworker
 
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 
@@ -19,13 +20,16 @@ projectorium.reloader.watch_file( "myhttpd/HTTPRequestHandler.py" )
 projectorium.reloader.watch_file( "wsservers.py" )
 projectorium.reloader.watch_file( "staticcontentgenerator.py" )
 
+projectorium.reloader.watch_file( "html/templates/index.mako" )
+
 projectorium.reloader.start_watch()
 
-#projectorielo
+projectorium.rerender.rerender( filename = "" )
+#projectoriel
 
 def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
     server_address = ( sett.host, sett.port )
-    httpd = server_class(server_address, handler_class)
+    httpd = server_class( server_address, handler_class )
     httpd.serve_forever()
 
 if __name__ == '__main__':

@@ -29,23 +29,28 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             self.end_headers()
             bs = common.read_file_to_str( "html/404.html" )
             self.wfile.write( bs )
+    def get_postdata( self ):
+        self.send_response(200)
+        self.send_header( "Content-type", "application/json" )
+        self.end_headers()
+        length = int(self.headers['Content-Length'])
+        res = urllib.parse.parse_qs( self.rfile.read( length ).decode( "utf-8" ) )
+        return res
     def do_POST( self ):
+        ans = "{}"
         if self.path == "/ws/ezsp-query":
-            self.send_response(200)
-            self.send_header( "Content-type", "application/json" )
-            self.end_headers()
-            length = int(self.headers['Content-Length'])
-            post_data = urllib.parse.parse_qs( self.rfile.read( length ).decode( "utf-8" ) )
-            ans = "{}"
+            post_data = self.get_postdata()
             if self.path == "/ws/ezsp-query":
                 eq = post_data[ "ezsp-query" ]
                 ans = ws.ezspquery( eq[0] )
             bs = bytes( ans, "utf-8" )
             self.wfile.write( bs )
+        elif self.path == "/ws/write-order-to-srv":
+            post_data = self.get_postdata()
     def do_GET( self ):
         #print( self.path )
         if self.path == "/":
-            self.ans_like_text_file( "index.html", "text/html" )
+            self.ans_like_text_file( "html/index.html", "text/html" )
         elif self.path[ -5: ] == ".html":
             self.ans_like_text_file( "html/" + self.path[ 1: ], "text/html" )
         elif self.path[ -3: ] == ".js":
