@@ -16,6 +16,7 @@ dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 
 projectorium.reloader.watch_file( "srvapp3.py" )
 projectorium.reloader.watch_file( "projectorium/reloader.py" )
+projectorium.reloader.watch_file( "projectorium/rerender.py" )
 projectorium.reloader.watch_file( "myhttpd/HTTPRequestHandler.py" )
 projectorium.reloader.watch_file( "wsservers.py" )
 projectorium.reloader.watch_file( "staticcontentgenerator.py" )
@@ -26,7 +27,7 @@ projectorium.reloader.watch_file( "html/templates/orders.mako" )
 projectorium.reloader.start_watch()
 
 projectorium.rerender.rerenderall()
-#projectorie
+#projectori
 
 def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
     server_address = ( sett.host, sett.port )

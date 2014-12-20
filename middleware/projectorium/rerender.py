@@ -1,7 +1,7 @@
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
-mylookup = TemplateLookup( directories = [ "" ] )
+mylookup = TemplateLookup( directories = [ "" ], input_encoding = "utf-8" )
 
 template_dir = "html/templates/"
 html_dir = "html/"

@@ -65,7 +65,9 @@ cart = {
                 }
             })
         .done(function ( data ) {
-            alert("Yes");
+            if (data[ "r" ] === true ) {
+                window.location.href = "/orders/" + data[ "id" ];
+            }
             })
 		//alert("Hey!!!");
         //window.location.href = "/"

@@ -46,8 +46,9 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             self.wfile.write( bs )
         elif self.path == "/ws/write-order-to-srv":
             post_data = self.get_postdata()
-            ws.create_order( post_data[ "data" ][ 0 ] )
-            print( post_data )
+            ans = ws.create_order( post_data[ "data" ][ 0 ] )
+            bs = bytes( ans, "utf-8" )
+            self.wfile.write( bs )
     def do_GET( self ):
         #print( self.path )
         if self.path == "/":

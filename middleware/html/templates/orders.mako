@@ -19,17 +19,7 @@
     <div id = "core">
         <span class = "fc">Ваш запрос:</span><input id = "SearchStr">
     </div>
-    <div id = "secondline">
-        <span>
-        <span class = "bt left100 right20">Информация о товаре</span>
-        <span class = "bt left20">Действия на сайте</span>
-        <span class = "bt left20">
-            <a id = "cart_label" href="/cart">
-            <span>Товаров в корзине &nbsp;</span><span id = "cart_label_count"></span></a>
-        </span>
-        <span class = "bt left20"><a href="/contact.html">О нас</a></span>
-        </span>
-    </div>
+    <%include file="secondline.tmpl"/>
     <div id = "output" class="main">
         <div class = "left100">
         <div>Номер заказа: <span><b>{{order.number}}</b></span> от <span><b>{{order.date}}</b></span></div>

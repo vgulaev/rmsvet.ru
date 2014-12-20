@@ -77,5 +77,5 @@ def get_price_from_web():
     zp = zipfile.ZipFile( filename, "r" )
     zp.extractall( )
 
-#get_price_from_web()
+get_price_from_web()
 load_from_1c()
