@@ -21,11 +21,12 @@ projectorium.reloader.watch_file( "wsservers.py" )
 projectorium.reloader.watch_file( "staticcontentgenerator.py" )
 
 projectorium.reloader.watch_file( "html/templates/index.mako" )
+projectorium.reloader.watch_file( "html/templates/orders.mako" )
 
 projectorium.reloader.start_watch()
 
-projectorium.rerender.rerender( filename = "" )
-#projectoriel
+projectorium.rerender.rerenderall()
+#projectorie
 
 def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
     server_address = ( sett.host, sett.port )

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import datetime
 import common
 import dbclasses.dbworker
 
@@ -78,6 +79,7 @@ def process( eq ):
             "r" : goods, 
             "f" : filters }
     return ans
+
 def ezspquery( jsonsrt ):
     eq = json.loads( jsonsrt )
     #print( type( jsonobj ) )
@@ -106,4 +108,33 @@ def ezsp_get_filters_value ( jsonsrt ):
         row = cursor.fetchone()
     res = {"items": items}
 
-    return 
+def getnextordernumber( dt_for_number ):
+    org = common.env["organization"]
+    sql = "select count(*) from order where order.organization = '{org_id}'".format( org_id = org.id )
+    con = dbclasses.dbworker.getcon()
+    cursor = con.cursor()
+    cursor.execute( sql )
+    row = cursor.fetchone()
+    if row is not None:
+        res = row[ 0 ] + 1
+    else:
+        res = 1
+    return dt_for_number + "-" + str( res )
+
+def create_order( jsonstr ):
+    rows = json.loads( jsonstr )
+    org = common.env["organization"]
+    ds = dbclasses.dbobj.objects[ "order" ]()
+    dt_now = datetime.datetime.now()
+    dt_for_db = dt_now.strftime( '%Y-%m-%d %H:%M:%S' )
+    dt_for_number = dt_now.strftime( '%Y-%m-%d' )
+    ds.organization = org.id 
+    ds.number = getnextordernumber( dt_for_number )
+    ds.date = dt_for_db
+    for e in rows:
+        newpos = ds.goods.add()
+        newpos["good"] = e[ "caption" ]
+        newpos["quantity"] = e[ "count" ]
+        newpos["price"] = e[ "price" ]
+        newpos["sum"] = e[ "sum" ]
+    ds.write()

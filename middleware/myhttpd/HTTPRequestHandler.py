@@ -40,13 +40,14 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
         ans = "{}"
         if self.path == "/ws/ezsp-query":
             post_data = self.get_postdata()
-            if self.path == "/ws/ezsp-query":
-                eq = post_data[ "ezsp-query" ]
-                ans = ws.ezspquery( eq[0] )
+            eq = post_data[ "ezsp-query" ]
+            ans = ws.ezspquery( eq[0] )
             bs = bytes( ans, "utf-8" )
             self.wfile.write( bs )
         elif self.path == "/ws/write-order-to-srv":
             post_data = self.get_postdata()
+            ws.create_order( post_data[ "data" ][ 0 ] )
+            print( post_data )
     def do_GET( self ):
         #print( self.path )
         if self.path == "/":
@@ -68,6 +69,9 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             self.ans_like_text( html )
         elif self.path[ -6: ] == "/goods":
             html = scg.goods_main_view( self.path )
+            self.ans_like_text( html )
+        elif self.path[ 0 : 8 ] == "/orders/":
+            html = scg.orders( self.path[8:] )
             self.ans_like_text( html )
         elif self.path[0:10] == "/site-map/":
             html = scg.make_map( self.path[10:] )

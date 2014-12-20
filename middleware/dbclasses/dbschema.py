@@ -7,6 +7,7 @@ schema = { "objects" : [
 		pprop = [ 
 			propdict( pname = "number", ptype = "CHAR(36)" ),
 			propdict( pname = "date", ptype = "DATETIME" ),
+			propdict( pname = "organization", ptype = "own:organization" ),
 			propdict( pname = "partner", ptype = "own:partners" )
 		],
 		ptables = [

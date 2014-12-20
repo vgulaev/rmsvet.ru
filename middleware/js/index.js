@@ -37,6 +37,9 @@ $( window ).resize( function () {
 });
 
 $( function () {
+    if ( !('webkitSpeechRecognition' in window) ) {
+        $( "#speechButton").remove();
+    }
     $("#SearchStr").on("input", function () {
             //my();
             work_state();

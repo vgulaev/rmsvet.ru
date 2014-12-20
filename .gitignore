@@ -19,3 +19,4 @@ yml.xml
 *.dmp
 __pycache__
 middleware/html/index.html
+middleware/html/orders.html

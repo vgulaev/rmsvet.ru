@@ -15,6 +15,7 @@
         <link rel="stylesheet" type="text/css" href="/css/cart.css">
     </head>
     <body>
+    <%include file="yandex-metrika.tmpl"/>
     <div id = "core">
         <span class = "fc">Ваш запрос:</span><input id = "SearchStr">
     </div>
@@ -26,7 +27,7 @@
             <a id = "cart_label" href="/cart">
             <span>Товаров в корзине &nbsp;</span><span id = "cart_label_count"></span></a>
         </span>
-        <span class = "bt left20"><a href="/html/contact.html">О нас</a></span>
+        <span class = "bt left20"><a href="/contact.html">О нас</a></span>
         </span>
     </div>
     <div id = "output" class="main">
