@@ -54,13 +54,17 @@
 		<span class = "bt left20"><a href="/contact.html">О нас</a></span>
 		</span>
 	</div>
-	<div id = "output" class="main width850">
+	<div id = "output" class="main width850" itemscope itemtype="http://data-vocabulary.org/Product">
 		<span id = "col1" class = "left100">
 			<img id = "{{ gd.id }}" src="{{img_url}}" class="img_c">
 		</span>
 		<span id = "col2">
-		<div><h1 id = "caption"> {{gd.caption}} </h1></div>
-		<div><span>Цена: &nbsp;</span><span>₽ </span><span id = "price"> {{gd.price}} </span></div>
+		<div><h1 id = "caption" itemprop="name"> {{gd.caption}} </h1></div>
+		<div itemprop="offerDetails" itemscope itemtype="http://data-vocabulary.org/Offer">
+			<span>Цена: &nbsp;</span><span>₽ </span>
+			<meta itemprop="priceCurrency" content="RUB" />
+			<span id = "price" itemprop="price"> {{gd.price}} </span>
+		</div>
 		<div><span>НДС: &nbsp;</span><span id = "vat"> {{gd.vat}} </span></div>
 		<div><span>Sync tag: &nbsp;</span><span>{{gd.synctag}}</span></div>
 		<div><span class = "ii_title">Характеристики:</span>
