@@ -1,5 +1,6 @@
 function onvoice(argument) {
     var recognition = new webkitSpeechRecognition();
+    recognition.lang = "ru";
     recognition.onresult = function( speechData ) { 
       if (speechData.results.length > 0) {
         var sra = speechData.results[0];
