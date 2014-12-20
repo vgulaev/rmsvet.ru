@@ -17,3 +17,4 @@ mer*.json
 nbproject/
 yml.xml
 *.dmp
+__pycache__

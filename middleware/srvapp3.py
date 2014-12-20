@@ -20,7 +20,8 @@ projectorium.reloader.watch_file( "wsservers.py" )
 projectorium.reloader.watch_file( "staticcontentgenerator.py" )
 
 projectorium.reloader.start_watch()
-#projectorieloade
+
+#projectorielo
 
 def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
     server_address = ( sett.host, sett.port )
