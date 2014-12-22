@@ -62,7 +62,10 @@ def make_map( count ):
             end = "{start}-{end}".format( start = index, end = index + 39 )
             hrefs += [ { "caption": end , "url" : "/site-map/" + end } ]
             index += 40
-        nexthref = index
+        if index < 6000:
+            nexthref = index
+        else:
+            nexthref = False
     else:
         sql = """
         SELECT caption, fantastic_url FROM vg_site_db.prices 
