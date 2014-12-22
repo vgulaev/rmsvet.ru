@@ -12,6 +12,7 @@ sett.py
 *.xls
 *.XLS
 *.zip
+*.xml
 ocs*.json
 mer*.json
 nbproject/

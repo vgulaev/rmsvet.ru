@@ -17,7 +17,7 @@ urlset = ET.Element( "urlset", attrib = { "xmlns" : "http://www.sitemaps.org/sch
 con = dbclasses.dbworker.getcon()
 cursor = con.cursor()
 
-sql = """select fantastic_url from prices"""
+sql = """select fantastic_url, id from prices"""
 cursor.execute( sql )
 
 lastmod = ET.Element( "lastmod" )
@@ -30,7 +30,10 @@ row = cursor.fetchone()
 while row is not None:
     url = ET.Element( "url" )
     loc = ET.Element( "loc" )
-    loc.text = "http://eazyshop.ru/" + row[ 0 ] + "/goods"
+    if len( row[ 0 ] ) < 200:
+        loc.text = "http://eazyshop.ru/" + row[ 0 ] + "/goods"
+    else:
+        loc.text = "http://eazyshop.ru/catalog/goods/" + row[ 1 ]
     
     url.append( loc )
     url.append( lastmod )
