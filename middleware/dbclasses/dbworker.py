@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #import MySQLdb
-import mysql.connector as MySQLdb
+#import mysql.connector as MySQLdb
+import pymysql as MySQLdb
 
 cred = {
         "host" : "",

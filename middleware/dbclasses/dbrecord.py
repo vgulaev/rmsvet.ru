@@ -33,7 +33,7 @@ class dbrecord():
             for e in kwargs:
                 ds[str(e)] = kwargs[e]
             db = dbworker.getcon()
-            cursor = db.cursor( raw = False )
+            cursor = db.cursor( )
             cursor.execute( sql, ds )
             row = cursor.fetchone()
             if row is not None:
