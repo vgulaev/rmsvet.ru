@@ -23,6 +23,9 @@ projectorium.reloader.watch_file( "staticcontentgenerator.py" )
 
 projectorium.reloader.watch_file( "html/templates/index.mako" )
 projectorium.reloader.watch_file( "html/templates/orders.mako" )
+projectorium.reloader.watch_file( "html/templates/contact.mako" )
+projectorium.reloader.watch_file( "html/templates/ezsp_for_everybody.mako" )
+projectorium.reloader.watch_file( "html/templates/ezsp_for_everybody/content.tmpl" )
 
 projectorium.reloader.start_watch()
 

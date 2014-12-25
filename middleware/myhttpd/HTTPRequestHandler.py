@@ -50,7 +50,7 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             bs = bytes( ans, "utf-8" )
             self.wfile.write( bs )
     def do_GET( self ):
-        #print( self.path )
+        print( self.headers )
         if self.path == "/":
             self.ans_like_text_file( "html/index.html", "text/html" )
         elif self.path[ -5: ] == ".html":

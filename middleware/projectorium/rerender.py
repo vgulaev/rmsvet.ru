@@ -1,3 +1,6 @@
+import os
+import statistics
+
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
@@ -13,6 +16,10 @@ def rerender( filename ):
     f.write( res )
 
 def rerenderall():
-    filenames = [ "index.mako", "orders.mako" ]
-    for e in filenames:
-        rerender( e )
+    rootdir = statistics.getrootdir() + "/middleware/html/templates"
+    for root, subFolders, files in os.walk(rootdir):
+        for fl in files:
+            fileName, fileExtension = os.path.splitext( fl )
+            if fileExtension == ".mako":
+                rerender( fl )
+

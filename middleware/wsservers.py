@@ -110,7 +110,7 @@ def ezsp_get_filters_value ( jsonsrt ):
 
 def getnextordernumber( dt_for_number ):
     org = common.env["organization"]
-    sql = "select count(*) from `order` where `order`.organization = '{org_id}'".format( org_id = org.id )
+    sql = "select count(*) from `order` where `order`.number like '{dt}%' and `order`.organization = '{org_id}'".format( org_id = org.id, dt = dt_for_number )
     con = dbclasses.dbworker.getcon()
     cursor = con.cursor()
     cursor.execute( sql )

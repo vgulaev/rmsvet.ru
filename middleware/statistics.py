@@ -2,13 +2,17 @@
 import os
 import platform
 
-def stat_info():
+def getrootdir(): 
 	if (platform.system() == "Windows"):
 		dirsym = "\\"
 	else:
 		dirsym = "/"
-	path = __file__.split(dirsym)
-	rootdir = dirsym.join(path[0:-2])
+	path = __file__.split( dirsym )
+	rootdir = dirsym.join( path[0:-2] )
+	return rootdir
+
+def stat_info():
+	rootdir = getrootdir()
 	stat = {".css" : {}, ".js" : {}, ".py" : {}, ".html" : {}}
 	for e in stat:
 		stat[e] = {"items" : 0, "lines" : 0}

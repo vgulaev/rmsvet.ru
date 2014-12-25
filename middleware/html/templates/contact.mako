@@ -9,13 +9,13 @@
 		<script src="/js/common.js"></script>
 		<script src="/js/query-obj.js"></script>
 		<script src="/js/my.js"></script>
-		<script src="/js/cart.js"></script>
+		<!--script src="/js/cart.js"></script-->
 		<script src="/js/fastsearch.js"></script>
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
-		<link rel="stylesheet" type="text/css" href="/css/cart.css">
+		<!--link rel="stylesheet" type="text/css" href="/css/cart.css"-->
 	</head>
 	<body>
-	<link rel="import" href="/import/yandex-metrika.html">
+	<%include file="yandex-metrika.tmpl"/>
 	<div id = "core">
 		<span class = "fc">Ваш запрос:</span><input id = "SearchStr">
 	</div>
