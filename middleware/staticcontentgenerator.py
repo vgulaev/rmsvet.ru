@@ -27,20 +27,19 @@ def  goods_main_view(url, url_type = None):
     obj = dbclasses.dbobj.objects[ "prices" ]()
     img = dbclasses.dbobj.objects[ "images" ]()
     id = url[-36:] 
+    res = False
     if (url_type == "id"):
-        obj.find( id = id )
+        res = obj.find( id = id )
     else:
         u = url[ 1:-6]
-        print( "len ==", len(u) )
-        print( "path:==", u )
-        obj.find( fantastic_url = u )
-        print( "id==", obj.id )
+        res = obj.find( fantastic_url = u )
     #res = _templ_res.format(gd = obj, addfld = html_view_for_addfld(id))
     img_url = "/png/nophoto.png"
     if img.find( priceref = obj.id ):
         img_url = img.url.val
     #html_view_for_addfld( obj.id )
-    res = pystache.render(_templ_res, {"gd" :  obj.__dict__ , "addfld" : {}, "img_url" : img_url})
+    if res == True:
+        res = pystache.render(_templ_res, {"gd" :  obj.__dict__ , "addfld" : {}, "img_url" : img_url})
     return res
 
 def make_map( count ):

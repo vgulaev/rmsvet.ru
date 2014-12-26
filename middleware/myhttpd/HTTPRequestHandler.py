@@ -50,7 +50,6 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             bs = bytes( ans, "utf-8" )
             self.wfile.write( bs )
     def do_GET( self ):
-        print( self.headers )
         if self.path == "/":
             self.ans_like_text_file( "html/index.html", "text/html" )
         elif self.path[ -5: ] == ".html":
@@ -70,7 +69,10 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             self.ans_like_text( html )
         elif self.path[ -6: ] == "/goods":
             html = scg.goods_main_view( self.path )
-            self.ans_like_text( html )
+            if html == False:
+                self.ans_like_404()
+            else:
+                self.ans_like_text( html )
         elif self.path[ 0 : 8 ] == "/orders/":
             html = scg.orders( self.path[8:] )
             self.ans_like_text( html )
