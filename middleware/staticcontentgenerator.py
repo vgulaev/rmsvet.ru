@@ -50,17 +50,20 @@ def make_map( count ):
     con = dbclasses.dbworker.getcon()
     cursor = con.cursor()
     hrefs = []
+    title = "Карта сайта ( {se} )"
     nexthref = False
     if len( l ) < 2:
-        sql = "select count(*) FROM vg_site_db.prices where organization = '{org_id}'".format( org_id = cm.env["organization"].id )
+        #sql = "select count(*) FROM vg_site_db.prices where organization = '{org_id}'".format( org_id = cm.env["organization"].id )
         if count == "":
             index = 0
         else:
             index = int( l[0] )
+        se = str( index ) + " - "
         for i in range( 40 ):
             end = "{start}-{end}".format( start = index, end = index + 39 )
             hrefs += [ { "caption": end , "url" : "/site-map/" + end } ]
             index += 40
+        se += str( index - 1 )
         if index < 6000:
             nexthref = index
         else:
@@ -74,11 +77,13 @@ def make_map( count ):
         """.format( org_id = cm.env["organization"].id, count = l[0] )
         cursor.execute( sql )
         row = cursor.fetchone()
+        se = "{a}-{b}".format( a = l[0], b = int( l[0] ) + cursor.rowcount )
+        # str( l[0] ) + " - " + str( ( l[0] + cursor.rowcount ) )
         while (row is not None):
             hrefs += [{ "caption": row[0], "url": "/" + row[1] + "/goods" }]
             row = cursor.fetchone()
         cursor.close()
-    res = pystache.render( _templ_res, { "hrefs" : hrefs, "nexthref" : nexthref } )
+    res = pystache.render( _templ_res, { "hrefs" : hrefs, "nexthref" : nexthref, "title" : title.format( se = se ) } )
     return res
 
 import statistics
