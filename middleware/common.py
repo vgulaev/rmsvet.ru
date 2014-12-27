@@ -2,6 +2,8 @@
 #import sitedb
 import codecs
 import dbclasses.dbobj
+import time
+import os
 
 def detect_common_env( domain = "ezsp.ru" ):
     d = dbclasses.dbobj.objects[ "domains" ]()
@@ -9,6 +11,13 @@ def detect_common_env( domain = "ezsp.ru" ):
         o = dbclasses.dbobj.objects[ "organization" ]( )
         if o.find( id = d.organization ):
             env[ "organization" ] = o
+    fname = "PRICE_1C.XLS"
+    if os.path.isfile( fname ):
+        tm = time.gmtime( os.path.getmtime( fname ) )
+    else:
+        tm = time.gmtime( time.time() )
+    env[ "Modified-Since" ] = time.mktime( tm )
+    env[ "HTTP-Modified-Since" ] = time.strftime('%a, %d %b %Y %H:%M:%S GMT', tm )
 
 def _D( s ):
     ret = dict( s )
@@ -57,4 +66,4 @@ currency_sql = ldb.class_from_table("currency")
 images_sql = ldb.class_from_table("images")
 domains_sql = ldb.class_from_table("domains")
 organization_sql = ldb.class_from_table("organization")"""
-env = {"organization" : None}
+env = { "organization" : None, "Modified-Since" : None }

@@ -2,6 +2,7 @@ from http.server import BaseHTTPRequestHandler
 import common
 import json
 import urllib.parse
+import time
 import wsservers as ws
 import staticcontentgenerator as scg
 import os.path
@@ -12,6 +13,10 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             if os.path.isfile( filename ):
                 self.send_response(200)
                 self.send_header( "Content-type", contenttype )
+                exptime = time.strftime('%a, %d %b %Y %H:%M:%S GMT', time.gmtime( time.time() + 60 * 60 ) )
+                self.send_header( "expires", exptime )
+                self.send_header( "cache-control", "public, max-age=86400" )
+                self.send_header( "Last-Modified", common.env[ "HTTP-Modified-Since" ] )
                 self.end_headers()
                 bs = common.read_file_to_str( filename )
                 self.wfile.write( bs )
@@ -23,6 +28,10 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             self.end_headers()
             bs = bytearray( html, "utf-8" )
             self.wfile.write( bs )
+    def ans_like_304( self ):
+            self.send_response(304)
+            self.send_header( "Last-Modified", common.env[ "HTTP-Modified-Since" ] )
+            self.end_headers()
     def ans_like_404( self ):
             self.send_response(404)
             self.send_header("Content-type", "text/html")
@@ -33,7 +42,7 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
         self.send_response(200)
         self.send_header( "Content-type", "application/json" )
         self.end_headers()
-        length = int(self.headers['Content-Length'])
+        length = int( self.headers[ "Content-Length" ] )
         res = urllib.parse.parse_qs( self.rfile.read( length ).decode( "utf-8" ) )
         return res
     def do_POST( self ):
@@ -50,6 +59,13 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             bs = bytes( ans, "utf-8" )
             self.wfile.write( bs )
     def do_GET( self ):
+        ms = self.headers[ "If-Modified-Since" ]
+        if ms is not None:
+            tm = time.mktime( time.strptime( ms, '%a, %d %b %Y %H:%M:%S GMT' ) )
+            print( common.env[ "Modified-Since" ], tm )
+            if tm >= common.env[ "Modified-Since" ]:
+                self.ans_like_304( )
+                return
         if self.path == "/":
             self.ans_like_text_file( "html/index.html", "text/html" )
         elif self.path[ -5: ] == ".html":

@@ -15,6 +15,7 @@ import dbclasses.dbworker
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 
 projectorium.reloader.watch_file( "srvapp3.py" )
+projectorium.reloader.watch_file( "common.py" )
 projectorium.reloader.watch_file( "projectorium/reloader.py" )
 projectorium.reloader.watch_file( "projectorium/rerender.py" )
 projectorium.reloader.watch_file( "myhttpd/HTTPRequestHandler.py" )
