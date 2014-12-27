@@ -62,7 +62,6 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
         ms = self.headers[ "If-Modified-Since" ]
         if ms is not None:
             tm = time.mktime( time.strptime( ms, '%a, %d %b %Y %H:%M:%S GMT' ) )
-            print( common.env[ "Modified-Since" ], tm )
             if tm >= common.env[ "Modified-Since" ]:
                 self.ans_like_304( )
                 return
