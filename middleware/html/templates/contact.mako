@@ -58,7 +58,7 @@
 				<tr>
 					<td colspan="2">			
 						<div class="adr">
-						625046, Тюменская обл.,
+						625026, Тюменская обл.,
 						<span class="locality">г. Тюмень</span>,
 						<span class="street-address">ул Мельникайте 106, оф 201</span>
 						</div>
