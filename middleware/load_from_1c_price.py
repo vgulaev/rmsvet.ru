@@ -49,6 +49,7 @@ def load_from_1c():
                     newprice.vat = 0
                 #newprice.price_date = dt_for_db
                 newprice.insearch = True;
+                newprice.price_in = 0
                 if isinstance(pr, str):
                     newprice.price = float( pr.replace( chr(160), "" ).replace(",", ".") )
                 else:
@@ -77,5 +78,5 @@ def get_price_from_web():
     zp = zipfile.ZipFile( filename, "r" )
     zp.extractall( )
 
-get_price_from_web()
+#get_price_from_web()
 load_from_1c()

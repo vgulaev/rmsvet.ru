@@ -16,12 +16,17 @@ class dbrecord():
         d = {}
         for e in self.__mtdata__.prop:
             d[ e["name"] ] = getattr( self, e["name"] )
-        cursor.execute( sql, d )
-        db.commit()
-        for e in self.__mtdata__.tables:
-            tbl = getattr(self, e.attname)
-            tbl.write()
-        return True
+        try:
+            cursor.execute( sql, d )
+            db.commit()
+            for e in self.__mtdata__.tables:
+                tbl = getattr(self, e.attname)
+                tbl.write()
+            res = True
+        except:
+            res = False
+            print( "SQL error happen" )
+        return res
     def find( self, *args, **kwargs ):
         res = False
         sql = "SELECT * FROM `{tn}`"
