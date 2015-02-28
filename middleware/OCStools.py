@@ -76,7 +76,7 @@ def load_to_db( CategoryIDList ):
         ad.value = e["ItemID"]
         ad.write()
 
-    print len(s["d"]["Products"])
+    print( len( s["d"]["Products"] ) )
     
 def work_loading():
     currency_sync()
@@ -87,6 +87,7 @@ def work_loading():
 
 #load_to_db("20")
 #work_loading()
-currency_sync()
+#currency_sync()
+get_price( "20" )
 
-print "End"
+print( "End" )
