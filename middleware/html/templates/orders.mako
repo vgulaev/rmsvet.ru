@@ -77,7 +77,27 @@
             <input name="cps_email" value="user@domain.com" type="hidden"/--> 
               
             <input type="submit" value="Оплать Visa/MasterCard"/> 
-            </form>            
+            </form>
+            <form action="https://money.yandex.ru/eshop.xml" method="post"> 
+              
+            <!-- Обязательные поля --> 
+            <input name="shopId" value="20820" type="hidden"/> 
+            <input name="scid" value="11033" type="hidden"/> 
+            <input name="sum" value="{{ totalsum }}" type="hidden"> 
+            <input name="customerNumber" value="{{partner.caption}}" type="hidden"/>
+            
+            <!-- Необязательные поля --> 
+            <input name="orderNumber" value="{{order.number}}" type="hidden"/>
+            <input name="paymentType" value="PC" type="hidden"/>
+              
+            <!--input name="shopArticleId" value="567890" type="hidden"/> 
+            <input name="paymentType" value="AC" type="hidden"/> 
+            <input name="orderNumber" value="abc1111111" type="hidden"/> 
+            <input name="cps_phone" value="79110000000" type="hidden"/> 
+            <input name="cps_email" value="user@domain.com" type="hidden"/--> 
+              
+            <input type="submit" value="Оплать Яндекс.Деньги"/> 
+            </form>
         </div>
         </div>
     </div>
