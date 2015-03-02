@@ -4,6 +4,7 @@ import json
 import urllib.parse
 import time
 import wsservers as ws
+import sett
 import staticcontentgenerator as scg
 import os.path
 
@@ -60,11 +61,12 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             self.wfile.write( bs )
     def do_GET( self ):
         ms = self.headers[ "If-Modified-Since" ]
-        if ms is not None:
-            tm = time.mktime( time.strptime( ms, '%a, %d %b %Y %H:%M:%S GMT' ) )
-            if tm >= common.env[ "Modified-Since" ]:
-                self.ans_like_304( )
-                return
+        if sett.server_dep != "windows dev":
+            if ms is not None:
+                tm = time.mktime( time.strptime( ms, '%a, %d %b %Y %H:%M:%S GMT' ) )
+                if tm >= common.env[ "Modified-Since" ]:
+                    self.ans_like_304( )
+                    return
         if self.path == "/":
             self.ans_like_text_file( "html/index.html", "text/html" )
         elif self.path[ -5: ] == ".html":
@@ -77,8 +79,12 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             self.ans_like_text_file( self.path[ 1: ], "image/ico" )
         elif self.path[ -4: ] == ".png":
             self.ans_like_text_file( self.path[ 1: ], "image/png" )
+        elif self.path[ -4: ] == ".svg":
+            self.ans_like_text_file( self.path[ 1: ], "image/svg+xml" )
         elif self.path[ -4: ] == ".xml":
             self.ans_like_text_file( self.path[ 1: ], "text/xml" )
+        elif self.path[ -4: ] == ".otf":
+            self.ans_like_text_file( self.path[ 1: ], "font/opentype" )
         elif self.path[0:9] == "/catalog/":
             html = scg.goods_main_view( self.path, "id" )
             self.ans_like_text( html )
