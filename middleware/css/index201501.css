@@ -1,0 +1,78 @@
+.div-table {
+    display: table;
+}
+.div-table-row {
+    display: table-row;
+}
+.div-table-cell {
+    display: table-cell;
+}
+.width100 {
+    width: 100%;
+}
+html, body {
+    display: block;
+    //border: solid 1px red;
+}
+body {
+    margin-left: 80px;
+    margin-right: 80px;    
+}
+.logo_EA {
+    font-size: 50pt;
+}
+#divblackline {
+    border:solid 4px black;
+    width: 100%;
+}
+
+@font-face {
+font-family: Jaapokki-Regular;
+src: url("/otf/Jaapokki-Regular.otf") format("opentype");
+}
+
+@font-face {
+font-family: INTRO;
+src: url("/otf/INTRO.otf") format("opentype");
+}
+
+.hdlabel {
+    font-size: 20pt;
+    font-weight: bold;
+    font-family: INTRO;
+}
+#EA {
+    font-family: Jaapokki-Regular;
+    //margin-left: 90px;
+}
+#YSHOP {
+    font-family: Jaapokki-Regular;
+    //margin-right: 90px;    
+}
+#ea_Z {
+    text-align: center;
+}
+#Srch {
+    font-family: INTRO;
+    height: 100px;
+    font-size: 14pt;
+    width: 400px;
+    padding-right: 64px;
+}
+#googleVoice {
+    position: relative;
+    background: url(data:image/gif;base64,R0lGODlhHAAmAKIHAKqqqsvLy0hISObm5vf394uLiwAAAP///yH5BAEAAAcALAAAAAAcACYAAAO9eLpMIMYIQJi9DcYtKv6KtnHgB4yoAZSXKAyDy1rjoAzjzOQLrx8+4OanCAZnxiExGSEKmz3lj2lwUq3SZ3WZPbKuXGgxu9t4tLYDTkpIRQILF0x2G4lWipM7gj/oJQUkcXsCDCIFATULBCIcZ2tvB3QLDxETFnR/BgU/gRt9jX0gnpYMkJZpFzEoqQqJKAIBaQOVKHAXr3t7txgBjboSvB8EpLoFZywOAo3LFE5lYs/QW9LT1TRk1V7S2xYJADs=) no-repeat center;
+    background-size: 21px 29px;
+    height: 33px;
+    width: 24px;
+    display: inline-block;
+    left: -62px;
+}
+#clearBt {
+    position: relative;
+    background: url("/png/clear.svg") 50% 50% no-repeat;
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    left: -62px;
+}
