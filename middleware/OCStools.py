@@ -5,6 +5,13 @@ import json
 import sett
 import common as cm
 import codecs
+import urllib
+
+import dbclasses.dbobj
+import dbclasses.dbworker
+import sett
+
+dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 
 headers = {'content-type': 'application/json; charset=utf-8'}
 
@@ -22,6 +29,13 @@ def currency_sync():
     cur.rate = s["d"]["Rate"]
     cur.write()
 
+def getcatalog():
+    payload = {"Login": sett.ocs_login,
+           "Token": sett.ocs_token}
+    r = requests.post(sett.ocs_srv + "GetCatalog", data=json.dumps(payload), headers=headers)
+    f = codecs.open("ocs_catalog.json", "w", "utf-8")
+    f.write(r.text)
+
 def get_price( CategoryIDList ):
     payload = {"Login": sett.ocs_login,
            "Token": sett.ocs_token,
@@ -32,61 +46,96 @@ def get_price( CategoryIDList ):
            "CategoryIDList" : [CategoryIDList],
            "ItemIDList": []}
     r = requests.post(sett.ocs_srv + "GetProductAvailability", data=json.dumps(payload), headers=headers)
-    f = codecs.open("ocs_price.json", "w", "utf-8")
+    f = codecs.open("ocs_price.json", "w", "utf-8" )
     f.write(r.text)
 
-
+crosrate = 62.3649
 def load_to_db( CategoryIDList ):
-    sql = "delete from prices where sync_tag = 'ocs {id}'".format( id = CategoryIDList )
-    cur = cm.currency_sql()
-    cur.find(caption = "USD")
-    crosrate = float(cur.rate.val)
-    cm.ldb.execute(sql)
-    s = json.loads(cm.read_file_to_str("ocs_price.json"))
-    for e in s["d"]["Products"]:
-        p = cm.prices_sql()
-        p.caption = e["ItemName"]
+    sql = "delete from prices where synctag = 'ocs {id}'".format( id = CategoryIDList )
+    db = dbclasses.dbworker.getcon()
+    #cur = cm.currency_sql()
+    #cur.find(caption = "USD")
+    #crosrate = float(cur.rate.val)
+    print( sql )
+    cursor = db.cursor()
+    cursor.execute( sql )
+    db.commit()
+    tf = codecs.open( "ocs_price.json", "r", "utf-8" )
+    sf = tf.read()
+    print( "Try load" )
+    s = json.loads( sf )
+    print( "Get el by el" )
+    #print( crosrate )
+    org = dbclasses.dbobj.objects[ "organization" ]()
+    org.find( caption = "ezsp" )
+    for ( i, e ) in enumerate( s["d"]["Products"] ):
+        newprice = dbclasses.dbobj.objects["prices"]()
+        newprice.caption = e["ItemName"]
+        newprice.fantastic_url = urllib.parse.quote( e["ItemName"] )
+        #print( e["ItemName"] )
+        newprice.organization = org.id
         if e["Currency"] == "USD":
             price = e["Price"] * crosrate * (1 + e["PercentConv"]/100)
         else:
             price = e["Price"]
-        p.price = price_maker(price * 1.15)
+        newprice.price = cm.price_maker(price * 1.15)
         #print price_maker(price * 1.15), price
-        p.price_in = e["Price"]
-        p.currency_in = e["Currency"]
-        p.sync_tag = "ocs " + CategoryIDList
-        p.write()
-        
-        ad =  cm.additionalfields_sql()
+        newprice.price_in = e["Price"]
+        newprice.currency_in = e["Currency"]
+        newprice.synctag = "ocs " + CategoryIDList
+        newprice.insearch = True;
+        newprice.vat = 18        
+        newprice.write()
+        inTyumen = False
+        for lc in e[ "Locations" ]:
+            if lc[ "Location" ] == "Тюмень":
+                addfld = dbclasses.dbobj.objects["properties"]()
+                addfld.priceref = newprice.id
+                addfld.caption = "Срок поставки"
+                addfld.value = "В наличии"
+                addfld.write()
+                inTyumen = True
+        if inTyumen == False:
+            addfld = dbclasses.dbobj.objects["properties"]()
+            addfld.priceref = newprice.id
+            addfld.caption = "Срок поставки"
+            addfld.value = "Две недели"
+            addfld.write()
+        if i % 100 == 0:
+            print( i )
+
+    print( len( s["d"]["Products"] ) )
+"""        ad =  cm.additionalfields_sql()
         ad.caption = "PartNumber"
         ad.price_id = p.id
         ad.value = e["PartNumber"]
         ad.write()
-        
         ad =  cm.additionalfields_sql()
         ad.caption = "Producer"
         ad.price_id = p.id
         ad.value = e["Producer"]
         ad.write()
-        
         ad =  cm.additionalfields_sql()
         ad.caption = "__ItemID__"
         ad.price_id = p.id
         ad.value = e["ItemID"]
-        ad.write()
+        ad.write()"""
+        
 
-    print( len( s["d"]["Products"] ) )
     
 def work_loading():
     currency_sync()
-    l = ["20", "15", "26", "16", "01", "02", "09"]
+    #l = ["20", "15", "26", "16", "01", "02", "09"]
+    l = [ "0901", "20" ]
     for e in l:
         get_price(e)
         load_to_db(e)
-
+#{"CategoryID":"0901","CategoryName":"Ноутбуки","ParentCategoryID":"09","NestingLevel":3},
+#getcatalog()
 #load_to_db("20")
-#work_loading()
+work_loading()
 #currency_sync()
-get_price( "20" )
+#get_price( "0901" )
+#load_to_db( "0901" )
 
 print( "End" )
