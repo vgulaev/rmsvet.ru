@@ -3,13 +3,16 @@ import common as cm
 import pystache
 import urllib
 import dbclasses.dbobj
+import dbclasses.dbworker
 
 def _h(s):
     return str(s).replace("<", "").replace(">", "")
 
 def html_view_for_addfld( id ):
-    sql = "select * from properties where priceref = %s"
-    cursor = cm.ldb.execute(sql, [ id ])
+    sql = "select * from properties where priceref = %(id)s"
+    db = dbclasses.dbworker.getcon()
+    cursor = db.cursor()
+    cursor.execute( sql, { "id" : id } )
     row = cursor.fetchone()
     res = []
     while (row is not None):
@@ -39,7 +42,7 @@ def  goods_main_view(url, url_type = None):
         img_url = img.url.val
     #html_view_for_addfld( obj.id )
     if res == True:
-        res = pystache.render(_templ_res, {"gd" :  obj.__dict__ , "addfld" : {}, "img_url" : img_url})
+        res = pystache.render(_templ_res, {"gd" :  obj.__dict__ , "addfld" : html_view_for_addfld( obj.id ), "img_url" : img_url})
     return res
 
 def make_map( count ):
@@ -112,7 +115,6 @@ def fetch_to_row_dict( cursor ):
         row = cursor.fetchone()
     return res
 
-import dbclasses.dbworker
 def orders( url ):
     _templ_res = cm.read_file_to_str("html/orders.html")
     order = dbclasses.dbobj.objects[ "order" ]()

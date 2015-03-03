@@ -11,10 +11,6 @@ dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 common.detect_common_env()
 org = common.env["organization"]
 
-newprice = dbclasses.dbobj.objects["prices"]()
-f = newprice.find( caption = """1С:Предприятие 8. Конфигурация "ERP управление предприятием 2.0". 6-е издание (в трех частях)""" )
-print( f )
-
 newpartners = dbclasses.dbobj.objects["partners"]()
 
 if newpartners.find( caption = "Частное лицо" ) == False:
@@ -30,25 +26,29 @@ dt_for_db = dt_now.strftime( '%Y-%m-%d %H:%M:%S' )
 neworder = dbclasses.dbobj.objects["order"]()
 neworder.organization = org.id
 neworder.date = dt_for_db
-neworder.number = dt_now.strftime( '%Y%m%d' ) + "-001"
+neworder.number = dt_now.strftime( '%Y%m%d' ) + "-003"
 neworder.partner = newpartners.id
 
+#newprice = dbclasses.dbobj.objects["prices"]()
+#newprice.find( caption = """1С:Предприятие 8. Конфигурация "ERP управление предприятием 2.0". 6-е издание (в трех частях)""" )
+
 newpos = neworder.goods.add()
-newpos["good"] = newprice.caption
+newpos["good"] = """1С:Предприятие 8. Конфигурация "ERP управление предприятием 2.0". 6-е издание (в трех частях)"""
 newpos["quantity"] = 1
 newpos["price"] = 900
 newpos["sum"] = 900
 
-if newprice.find( caption = """Доставка Тюмень - Москва""" ) == False:
-    newprice.caption = "Доставка Тюмень - Москва"
+newprice = dbclasses.dbobj.objects["prices"]()
+if newprice.find( caption = """Доставка Тюмень - Москва (почта России)""" ) == False:
+    newprice.caption = "Доставка Тюмень - Москва (почта России)"
     newprice.price = 960
     newprice.write()
 
 newpos = neworder.goods.add()
 newpos["good"] = newprice.caption
 newpos["quantity"] = 1
-newpos["price"] = 960
-newpos["sum"] = 960
+newpos["price"] = 350
+newpos["sum"] = 350
 
 neworder.write()
 print( neworder.id )
