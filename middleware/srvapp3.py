@@ -21,6 +21,7 @@ projectorium.reloader.watch_file( "projectorium/rerender.py" )
 projectorium.reloader.watch_file( "myhttpd/HTTPRequestHandler.py" )
 projectorium.reloader.watch_file( "wsservers.py" )
 projectorium.reloader.watch_file( "staticcontentgenerator.py" )
+projectorium.reloader.watch_file( "statistics.py" )
 
 projectorium.reloader.watch_file( "html/templates/index.mako" )
 projectorium.reloader.watch_file( "html/templates/orders.mako" )

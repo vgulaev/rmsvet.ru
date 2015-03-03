@@ -15,7 +15,6 @@ def currency_sync():
     s = json.loads(r.text)
     ocs = cm.partners_sql()
     ocs.find(caption = "ocs")
-    
     cur = cm.currency_sql()
     cur.find(partner = ocs.id)
     cur.partner = ocs.id

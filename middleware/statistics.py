@@ -12,6 +12,10 @@ def getrootdir():
 	return rootdir
 
 def stat_info():
+	if (platform.system() == "Windows"):
+		dirsym = "\\"
+	else:
+		dirsym = "/"
 	rootdir = getrootdir()
 	stat = {".css" : {}, ".js" : {}, ".py" : {}, ".html" : {}}
 	for e in stat:
