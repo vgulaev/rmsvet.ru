@@ -124,7 +124,7 @@ def load_to_db( CategoryIDList ):
 
     
 def work_loading():
-    currency_sync()
+    #currency_sync()
     #l = ["20", "15", "26", "16", "01", "02", "09"]
     l = [ "0901", "20" ]
     for e in l:
