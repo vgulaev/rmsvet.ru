@@ -46,7 +46,8 @@ def load_from_1c():
                     newprice.vat = 18
                 else:
                     newprice.vat = 0
-                #newprice.price_date = dt_for_db
+                newprice.pricedate = dt_for_db
+                newprice.partner = "софт"
                 newprice.insearch = True;
                 newprice.price_in = 0
                 if isinstance(pr, str):

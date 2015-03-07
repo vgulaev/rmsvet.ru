@@ -24,13 +24,28 @@ def make_cond_from_filter( filter ):
     """.format( org_id = org.id )
     return sql
 
-def auto_complate( filter ):
+def try_int( one ):
+    try:
+        res = int( one )
+    except:
+        res = 0
+    return res
+
+def auto_complate( filter, params ):
     sql = """SELECT id, fantastic_url, caption, price FROM vg_site_db.prices
     where
     """
+    if "price_from" in params:
+        if try_int( params[ "price_from" ] ) > 0:
+            sql += " price >=  {price_from} and ".format( price_from = params[ "price_from" ] )
+    if "price_to" in params:
+        if try_int( params[ "price_to" ] ) > 0:
+            sql += " price <=  {price_to} and ".format( price_to = params[ "price_to" ] )
+    if "supplier" in params:
+        if params[ "supplier" ] != "":
+            sql += " partner =  '{supplier}' and ".format( supplier = params[ "supplier" ] )
     sql += make_cond_from_filter( filter )
     sql += "\n limit 7;" 
-    #print sql
     con = dbclasses.dbworker.getcon()
     cursor = con.cursor()
     cursor.execute( sql )
@@ -73,9 +88,12 @@ def getfilters( filter ):
     return res
 
 def process( eq ):
-    goods = auto_complate( eq["q"] )
+    #import time
+    #time.sleep( 1 )
+    goods = auto_complate( eq["q"], eq["p"] )
+    #print( type( eq["p"] ) )
     filters = getfilters( eq["q"] )
-    ans = { "q" : eq["q"],
+    ans = { "q_id" : eq["id"],
             "r" : goods, 
             "f" : filters }
     return ans
