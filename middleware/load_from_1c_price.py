@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-#import sitedb
 
 import xlrd
 import common
-#import MySQLdb
+
 import urllib
 import datetime
 
@@ -11,9 +10,11 @@ import dbclasses.dbobj
 import dbclasses.dbworker
 import sett
 
+import sys
+print( sys.version )
+
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 
-#common.ldb.create_table();
 def load_from_1c():
     rb = xlrd.open_workbook('PRICE_1C.XLS',formatting_info=True)
     sheet = rb.sheet_by_index(0)
@@ -34,8 +35,6 @@ def load_from_1c():
             pr = sheet.cell(i,3).value;
             if not((pr == "*") or (pr == "-") or (pr == "")):
                 pos = pos + 1
-                
-                #newprice = common.prices_sql()
                 newprice = dbclasses.dbobj.objects["prices"]()
                 newprice.caption = sheet.cell(i,1).value
                 #print( type( sheet.cell(i,1).value ) )
