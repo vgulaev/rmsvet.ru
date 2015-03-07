@@ -58,9 +58,9 @@
 				<tr>
 					<td colspan="2">			
 						<div class="adr">
-						625026, Тюменская обл.,
+						625048, Тюменская обл.,
 						<span class="locality">г. Тюмень</span>,
-						<span class="street-address">ул Мельникайте 106, оф 201</span>
+						<span class="street-address">ул 50 лет Октября 8Б, <a href = "http://petrstol.ru/">ДД Петр Столыпин</a>, 1 этаж, территория EAZYSHOP</span>
 						</div>
 					</td>
 				</tr>
@@ -75,7 +75,7 @@
 				<tr>
 					<td>Телефоны:</td>
 					<td>
-						<div>+7-3452-680-700</div>
+						<div>+7-3452-52-06-06</div>
 						<div><span class="tel">+7-961-209-1778</span></div>
 					</td>
 				</tr>
