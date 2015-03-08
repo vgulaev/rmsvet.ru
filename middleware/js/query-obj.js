@@ -109,12 +109,33 @@ var filters_manager = {
     }
 };
 
+function rand_id() {
+    return Math.floor( Math.random() * 10000 );
+}
+
+function link_input_prices_range( ) {
+    $( "#price_from" ).on( "input", function () {
+        ezsp_query.query.p.price_from = $( "#price_from" ).val();
+        ezsp_query.query_to_server();
+    } );
+    $( "#price_to" ).on( "input", function () {
+        ezsp_query.query.p.price_to = $( "#price_to" ).val();
+        ezsp_query.query_to_server();
+    } );
+    $( "#supplier" ).on( "input", function () {
+        ezsp_query.query.p.supplier = $( "#supplier" ).val();
+        ezsp_query.query_to_server();
+    } );
+}
+
 var ezsp_query = {
     na : 0,
     np : 0,
     query : {
+        id : 0,
         q : "",
-        f : []
+        f : [],
+        p : {}
     },
     ans : {
         r : [],
@@ -125,6 +146,7 @@ var ezsp_query = {
     ajaxing : false,
     render_init : function () {
         $( "#output" ).html( _templ.main );
+        link_input_prices_range();
     },
     addfilter : function () {
         filters_manager.init();
@@ -144,42 +166,44 @@ var ezsp_query = {
         cont.html(rendered);
     },
     query_to_server : function () {
-        $.ajax(
-            {
-                url: "/ws/ezsp-query",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    "ezsp-query" : JSON.stringify(ezsp_query.query)
-                },
-                beforeSend: function () {
-                    var res = false;
-                    if (ezsp_query.ajaxing === false) {
+        if ( ezsp_query.ajaxing === false ) {
+            $.ajax(
+                {
+                    url: "/ws/ezsp-query",
+                    type: "POST",
+                    dataType: "json",
+                    data: {
+                        "ezsp-query" : JSON.stringify( ezsp_query.query )
+                    },
+                    beforeSend: function () {
                         ezsp_query.ajaxing = true;
-                        res = true;
+                        return true;
                     }
-                    return res;
+                })
+            .done(function ( data ) {
+                if ( data.q_id != ezsp_query.query.id ) {
+                    ezsp_query.ajaxing = false;
+                    ezsp_query.query_to_server( );
+                }
+                else {
+                    ezsp_query.render(data);
                 }
             })
-        .done(function ( data ) {
-            if ( data.q != ezsp_query.query.q ) {
-                ezsp_query.query_to_server();
-            }
-            else {
-                ezsp_query.render(data);
-            }
-            //console.log( ezsp_query.na++ );
-            })
-        .always(function () {
-            ezsp_query.ajaxing = false;
-            //alert( "always" );
-        });
+            .always(function () {
+                ezsp_query.ajaxing = false;
+            });
+        }
+        else {
+            ezsp_query.query.id = rand_id();
+        }
         //alert($(ezsp_query.input_id).val());
     },
     link_input : function ( id ) {
         ezsp_query.input_id = id;
         $( id ).on( "input", function () {
-                ezsp_query.query.q = $( ezsp_query.input_id ).val();
+                var qs = $( ezsp_query.input_id ).val();
+                location.hash = "q=" + qs;
+                ezsp_query.query.q = qs;
                 ezsp_query.query_to_server();
                 //console.log( ezsp_query.np++ );
             });

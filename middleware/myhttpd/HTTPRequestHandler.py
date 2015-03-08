@@ -60,6 +60,8 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             bs = bytes( ans, "utf-8" )
             self.wfile.write( bs )
     def do_GET( self ):
+        o = urllib.parse.urlparse( self.path )
+        path = o.path
         ms = self.headers[ "If-Modified-Since" ]
         if sett.server_dep != "windows dev":
             if ms is not None:
@@ -67,43 +69,43 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
                 if tm >= common.env[ "Modified-Since" ]:
                     self.ans_like_304( )
                     return
-        if self.path == "/":
+        if path == "/":
             self.ans_like_text_file( "html/index.html", "text/html" )
-        elif self.path[ -5: ] == ".html":
-            self.ans_like_text_file( "html/" + self.path[ 1: ], "text/html" )
-        elif self.path[ -3: ] == ".js":
-            self.ans_like_text_file( self.path[ 1: ], "text/javascript" )
-        elif self.path[ -4: ] == ".css":
-            self.ans_like_text_file( self.path[ 1: ], "text/css" )
-        elif self.path[ -4: ] == ".ico":
-            self.ans_like_text_file( self.path[ 1: ], "image/ico" )
-        elif self.path[ -4: ] == ".png":
-            self.ans_like_text_file( self.path[ 1: ], "image/png" )
-        elif self.path[ -4: ] == ".svg":
-            self.ans_like_text_file( self.path[ 1: ], "image/svg+xml" )
-        elif self.path[ -4: ] == ".xml":
-            self.ans_like_text_file( self.path[ 1: ], "text/xml" )
-        elif self.path[ -4: ] == ".otf":
-            self.ans_like_text_file( self.path[ 1: ], "font/opentype" )
-        elif self.path[0:9] == "/catalog/":
-            html = scg.goods_main_view( self.path, "id" )
+        elif path[ -5: ] == ".html":
+            self.ans_like_text_file( "html/" + path[ 1: ], "text/html" )
+        elif path[ -3: ] == ".js":
+            self.ans_like_text_file( path[ 1: ], "text/javascript" )
+        elif path[ -4: ] == ".css":
+            self.ans_like_text_file( path[ 1: ], "text/css" )
+        elif path[ -4: ] == ".ico":
+            self.ans_like_text_file( path[ 1: ], "image/ico" )
+        elif path[ -4: ] == ".png":
+            self.ans_like_text_file( path[ 1: ], "image/png" )
+        elif path[ -4: ] == ".svg":
+            self.ans_like_text_file( path[ 1: ], "image/svg+xml" )
+        elif path[ -4: ] == ".xml":
+            self.ans_like_text_file( path[ 1: ], "text/xml" )
+        elif path[ -4: ] == ".otf":
+            self.ans_like_text_file( path[ 1: ], "font/opentype" )
+        elif path[0:9] == "/catalog/":
+            html = scg.goods_main_view( path, "id" )
             self.ans_like_text( html )
-        elif self.path[ -6: ] == "/goods":
-            html = scg.goods_main_view( self.path )
+        elif path[ -6: ] == "/goods":
+            html = scg.goods_main_view( path )
             if html == False:
                 self.ans_like_404()
             else:
                 self.ans_like_text( html )
-        elif self.path[ 0 : 8 ] == "/orders/":
-            html = scg.orders( self.path[8:] )
+        elif path[ 0 : 8 ] == "/orders/":
+            html = scg.orders( path[8:] )
             self.ans_like_text( html )
-        elif self.path[0:10] == "/site-map/":
-            html = scg.make_map( self.path[10:] )
+        elif path[0:10] == "/site-map/":
+            html = scg.make_map( path[10:] )
             if html == False:
                 self.ans_like_404()
             else:
                 self.ans_like_text( html )
-        elif self.path == "/stat":
+        elif path == "/stat":
             html = scg.stat()
             self.ans_like_text( html )
         else:

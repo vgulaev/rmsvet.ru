@@ -40,6 +40,7 @@ schema = { "objects" : [
 		pprop = [ 
 			propdict( pname = "caption", ptype = "CHAR(250) COLLATE utf8_general_ci" ),
 			propdict( pname = "fantastic_url", ptype = "TEXT" ),
+			propdict( pname = "pricedate", ptype = "DATETIME" ),
 			propdict( pname = "good", ptype = "own:goods" ),
 			propdict( pname = "price", ptype = "DECIMAL(10, 2)" ),
 			propdict( pname = "vat", ptype = "INT" ),
@@ -47,7 +48,7 @@ schema = { "objects" : [
 			propdict( pname = "currency_in", ptype = "CHAR(50)" ),
 			propdict( pname = "organization", ptype = "own:organization" ),
 			propdict( pname = "synctag", ptype = "CHAR(50)" ),
-			propdict( pname = "item_partner_id", ptype = "CHAR(50)" ),
+			propdict( pname = "partner", ptype = "CHAR(50)" ),
 			propdict( pname = "insearch", ptype = "BOOL" )
 		] ),
 	objsql( pname = "currency",
