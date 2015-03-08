@@ -15,35 +15,7 @@
 		<link rel="stylesheet" type="text/css" href="css/cart.css">
 	</head>
 	<body>
-	<!-- Yandex.Metrika counter -->
-	<script type="text/javascript">
-	    if ( (location.hostname == "eazyshop.ru") || (location.hostname == "ezsp.ru") ) {
-	(function (d, w, c) {
-	    (w[c] = w[c] || []).push(function() {
-	        try {
-	            w.yaCounter22538122 = new Ya.Metrika({id:22538122,
-	                    webvisor:true,
-	                    clickmap:true,
-	                    trackLinks:true,
-	                    accurateTrackBounce:true});
-	        } catch(e) { }
-	    });
-
-	    var n = d.getElementsByTagName("script")[0],
-	        s = d.createElement("script"),
-	        f = function () { n.parentNode.insertBefore(s, n); };
-	    s.type = "text/javascript";
-	    s.async = true;
-	    s.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//mc.yandex.ru/metrika/watch.js";
-
-	    if (w.opera == "[object Opera]") {
-	        d.addEventListener("DOMContentLoaded", f, false);
-	    } else { f(); }
-	})(document, window, "yandex_metrika_callbacks");
-	}
-	</script>
-	<noscript><div><img src="//mc.yandex.ru/watch/22538122" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-	<!-- /Yandex.Metrika counter -->
+	<%include file="yandex-metrika.tmpl"/>
 	<div id = "core">
 		<span class = "fc">Ваш запрос:</span><input id = "SearchStr">
 	</div>
@@ -81,7 +53,7 @@
 						<button onclick = "cart.deleterow({{ i }})">Удалить</button>
 						</div>
 					</td>
-					<td class = "qty">{{ count }}</td>
+					<td class = "qty"><input class = "in_price" value = {{ count }} name = "{{ i }}" /></td>
 					<td class = "num">{{ price }} </td>
 					<td class = "num">{{ sum }} </td>
 				</tr>

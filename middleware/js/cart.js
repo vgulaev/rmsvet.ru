@@ -49,7 +49,17 @@ cart = {
 		var template = $("#goods_tmpl").html();
   		Mustache.parse(template);
 		var rendered = Mustache.render(template, {"el" : el["rows"], "totalsum" : el["totalsum"].toFixed(2), "length" : el["length"]});
-		$("#goods").html(rendered);
+		$( "#goods" ).html( rendered );
+        $( ".in_price" ).on( "input", function () {
+            if (this.value > 0) {
+                localStorage["cart." + this.name + ".count"] = this.value;
+                cart.render();
+                var SearchInput = $( "input[name='" + this.name + "']" );
+                var strLength= SearchInput.val().length * 2;
+                SearchInput.focus();
+                SearchInput[0].setSelectionRange(strLength, strLength);
+            }
+        });
 	},
 	create_order : function () {
         var el = this.getjson();
@@ -69,8 +79,6 @@ cart = {
                 window.location.href = "/orders/" + data[ "id" ];
             }
             })
-		//alert("Hey!!!");
-        //window.location.href = "/"
 	} 
 };
 
@@ -79,5 +87,3 @@ $(function ()
 	cart.render();
 }
 );
-
-
