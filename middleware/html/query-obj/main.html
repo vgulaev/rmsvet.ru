@@ -1,22 +1,23 @@
 <div id = "result-list" class="row left100 width430 mart10">
 </div>
 <div class = "row col2">
-<div>Цена: от <input id = "price_from" class = "in_price"/> до <input id = "price_to" class = "in_price"/> </div>
-<div>
-<div class="row">Сортировка: </div><div class="row">
-	<select>
-	<option>По наименованию А-Я</option>
-	<option>По наименованию Я-А</option>
-	<option>Самые дешевые вверху</option>
-	<option>Самые дорогие вверху</option>
-	</select>
-</div> 
-</div>
-<div>
-    <span>Spr:</span><input id = "supplier"/>
-</div>
-<div>
-	<button id = "add_filter_button" onclick="ezsp_query.addfilter()">Добавить фильт</button>
-</div>
+    <div class = "flt-box">
+        Сортировка:
+        <div>
+        <span>Цена:</span><input id = "order_asc" type = "checkbox" />0-9<input id = "order_desc" type = "checkbox" />9-0
+        </div>
+    </div>
+    <div class = "flt-box">
+        Цена, руб
+        <div>
+        от <input id = "price_from" class = "in_price"/> до <input id = "price_to" class = "in_price"/>
+        </div>
+    </div>
+    <div  class = "flt-box">
+        <span>Spr:</span><input id = "supplier"/>
+    </div>
+    <!--div>
+    	<button id = "add_filter_button" onclick="ezsp_query.addfilter()">Добавить фильт</button>
+    </div-->
 <!--div id = "filters">Hello!!!</div-->
 </div>

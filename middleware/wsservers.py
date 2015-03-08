@@ -45,6 +45,11 @@ def auto_complate( filter, params ):
         if params[ "supplier" ] != "":
             sql += " partner =  '{supplier}' and ".format( supplier = params[ "supplier" ] )
     sql += make_cond_from_filter( filter )
+    if "order_price" in params:
+        if params[ "order_price" ] == "asc":
+            sql += "order by price asc\n"
+        elif params[ "order_price" ] == "desc":
+            sql += "order by price desc\n"
     sql += "\n limit 7;" 
     con = dbclasses.dbworker.getcon()
     cursor = con.cursor()

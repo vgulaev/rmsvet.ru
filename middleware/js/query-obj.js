@@ -126,6 +126,24 @@ function link_input_prices_range( ) {
         ezsp_query.query.p.supplier = $( "#supplier" ).val();
         ezsp_query.query_to_server();
     } );
+    $( "#order_asc" ).change( function () {
+        if ( this.checked ) {
+            $( "#order_desc" ).prop( "checked", false )
+            ezsp_query.query.p.order_price = "asc";
+            ezsp_query.query_to_server();
+        }
+        //ezsp_query.query.p.supplier = $( "#supplier" ).val();
+        //
+    } );
+    $( "#order_desc" ).change( function () {
+        if ( this.checked ) {
+            $( "#order_asc" ).prop( "checked", false )
+            ezsp_query.query.p.order_price = "desc";
+            ezsp_query.query_to_server();
+        }
+        //ezsp_query.query.p.supplier = $( "#supplier" ).val();
+        //ezsp_query.query_to_server();
+    } );
 }
 
 var ezsp_query = {

@@ -67,3 +67,7 @@ a:visited {
 .vs-mc-a {
 	text-decoration: none;
 }
+.flt-box {
+	border: solid 1px rgb(239, 239, 239);
+	padding: 10px;
+}
