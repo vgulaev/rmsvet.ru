@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 # import sitedb
 import xlrd
-import urllib
+import urllib.parse
+import math
 import datetime
 import dbclasses.dbobj
 import dbclasses.dbworker
@@ -38,14 +39,17 @@ def load_from_ars():
                     newprice.fantastic_url = urllib.parse.quote(sheet.cell(i, 1).value)
                     newprice.synctag = "from ars"
                     newprice.organization = org.id
+                    newprice.pricedate = dt_for_db
+                    newprice.partner = "арс"
                     newprice.vat = 18
                     newprice.insearch = True
                     newprice.price_in = pr
-                    newprice.price = round((currency-pr)*0.75+pr, 2)
+                    newprice.price_in = pr
+                    newprice.price = math.ceil( ( currency-pr ) * 0.75 + pr )
                     newprice.write()
                     addfld = dbclasses.dbobj.objects["properties"]()
                     addfld.priceref = newprice.id
-                    addfld.caption = "код прайса Арсенал+"
+                    addfld.caption = "артикул партнера"
                     addfld.value = sheet.cell(i, 0).value
                     addfld.write()
                     if (pos % 200) == 0:
