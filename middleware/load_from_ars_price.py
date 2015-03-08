@@ -9,7 +9,6 @@ import sett
 
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential(sett)
 
-
 def load_from_ars():
     rb = xlrd.open_workbook('PRICE_ARS.XLS', formatting_info=True)
     sheet = rb.sheet_by_index(0)
@@ -52,6 +51,5 @@ def load_from_ars():
                     if (pos % 200) == 0:
                         print("Complate {p}".format(p=pos))
     print("Loading {p} complate, from {lines}".format(p=pos, lines=sheet.nrows))
-
 
 load_from_ars()
