@@ -16,9 +16,7 @@
     </head>
     <body>
     <%include file="yandex-metrika.tmpl"/>
-    <div id = "core">
-        <span class = "fc">Ваш запрос:</span><input id = "SearchStr">
-    </div>
+    <%include file="core.tmpl"/>
     <%include file="secondline.tmpl"/>
     <div id = "output" class="main">
         <div class = "left100">

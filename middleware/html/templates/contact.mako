@@ -99,6 +99,9 @@
 			<div>
 				<a href="/shipment.html">Правила доставки</a>
 			</div>
+			<div>
+				<a href="/bible.html">Наши принципы</a>
+			</div>
 	</div>
 	</body>
 </html>

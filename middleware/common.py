@@ -28,15 +28,12 @@ def detect_common_env( domain = "ezsp.ru" ):
     row = cursor.fetchone()
     if row is not None:
         env[ "price_count" ] = row[ 0 ]
-    print( "count:", env[ "price_count" ] )
-    #env[]
 
 def _D( s ):
     ret = dict( s )
     for ( key, val ) in s.items():
         if isinstance( val, unicode ):
             ret[ key ] = s[ key ].encode("utf-8")
-            #print type(val), " ",type(ret[ key ])
     return ret
 
 def _U(s):
