@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-#import sitedb
 import codecs
 import time
 import os
