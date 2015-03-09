@@ -16,7 +16,7 @@ for ( e, r ) in zip( eng_sym, rus_sym ):
     print( e )
 
 f.write( """</rules>    
-  </collation>""")
+</collation>""")
 
 print( ord( "х" ) )
 import sys
