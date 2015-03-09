@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 #import sitedb
 import codecs
-import dbclasses.dbobj
 import time
 import os
+
+import dbclasses.dbobj
+import dbclasses.dbworker
 
 def detect_common_env( domain = "ezsp.ru" ):
     d = dbclasses.dbobj.objects[ "domains" ]()
@@ -18,6 +20,16 @@ def detect_common_env( domain = "ezsp.ru" ):
         tm = time.gmtime( time.time() )
     env[ "Modified-Since" ] = time.mktime( tm )
     env[ "HTTP-Modified-Since" ] = time.strftime('%a, %d %b %Y %H:%M:%S GMT', tm )
+    env[ "price_count" ] = 0
+    con = dbclasses.dbworker.getcon()
+    cursor = con.cursor()
+    sql = "select count(*) from prices"
+    cursor.execute( sql )
+    row = cursor.fetchone()
+    if row is not None:
+        env[ "price_count" ] = row[ 0 ]
+    print( "count:", env[ "price_count" ] )
+    #env[]
 
 def _D( s ):
     ret = dict( s )

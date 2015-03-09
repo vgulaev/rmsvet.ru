@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import common as cm
 import pystache
+import statistics
 import urllib
 import dbclasses.dbobj
 import dbclasses.dbworker
@@ -66,8 +67,10 @@ def make_map( count ):
             end = "{start}-{end}".format( start = index, end = index + 39 )
             hrefs += [ { "caption": end , "url" : "/site-map/" + end } ]
             index += 40
+            if index > cm.env[ "price_count" ]:
+                break
         se += str( index - 1 )
-        if index < 6000:
+        if index < cm.env[ "price_count" ]:
             nexthref = index
         else:
             nexthref = False
@@ -89,7 +92,6 @@ def make_map( count ):
     res = pystache.render( _templ_res, { "hrefs" : hrefs, "nexthref" : nexthref, "title" : title.format( se = se ) } )
     return res
 
-import statistics
 def stat():
     _templ_res = cm.read_file_to_str("html/stat.html")
     s = statistics.stat_info()

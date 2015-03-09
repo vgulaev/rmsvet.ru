@@ -12,7 +12,7 @@
 		<script src="/js/my.js"></script>
 		<script src="/js/index.js"></script>
 		<link rel="stylesheet" type="text/css" href="/css/main.css">
-	</head>
+		<link rel="search" href="/opensearch.xml" title="ezsp" type="application/opensearchdescription+xml">	</head>
 	<body>
 	<%include file="yandex-metrika.tmpl"/>
 	<div id = "core">
