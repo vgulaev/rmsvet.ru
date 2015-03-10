@@ -13,7 +13,7 @@ schema = { "objects" : [
 		ptables = [
 			objsql( pname = "goods", powner = "order", pprop = [
 				#propdict( pname = "good", ptype = "own:prices" ),
-				propdict( pname = "good", ptype = "CHAR(200) COLLATE utf8_general_ci" ),
+				propdict( pname = "good", ptype = "VARCHAR(500) COLLATE utf8_general_ci" ),
 				propdict( pname = "quantity", ptype = "DECIMAL(10, 4)" ),
 				propdict( pname = "price", ptype = "DECIMAL(10, 2)" ),
 				propdict( pname = "sum", ptype = "DECIMAL(10, 2)" )
