@@ -38,7 +38,7 @@ schema = { "objects" : [
 		] ),
 	objsql( pname = "prices",
 		pprop = [ 
-			propdict( pname = "caption", ptype = "CHAR(250) COLLATE utf8_general_ci_eng_cy" ),
+			propdict( pname = "caption", ptype = "VARCHAR(500) COLLATE utf8_general_ci_eng_cy" ),
 			propdict( pname = "fantastic_url", ptype = "TEXT" ),
 			propdict( pname = "pricedate", ptype = "DATETIME" ),
 			propdict( pname = "good", ptype = "own:goods" ),
