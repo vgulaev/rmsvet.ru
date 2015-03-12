@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
-# import sitedb
 import xlrd
 import urllib.parse
 import math
 import datetime
+import poplib
+import email
+import zipfile
+
 import dbclasses.dbobj
 import dbclasses.dbworker
 import sett
 
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential(sett)
 
-def load_from_ars():
-    rb = xlrd.open_workbook('PRICE_ARS.XLS', formatting_info=True)
+def load_from_ars( filename ):
+    rb = xlrd.open_workbook( filename, formatting_info=True)
     sheet = rb.sheet_by_index(0)
     sql = "delete from prices where synctag = 'from ars' and id <> ''"
     db = dbclasses.dbworker.getcon()
@@ -56,4 +59,43 @@ def load_from_ars():
                         print("Complate {p}".format(p=pos))
     print("Loading {p} complate, from {lines}".format(p=pos, lines=sheet.nrows))
 
-load_from_ars()
+def check_subject( index ):
+    res = False
+    response = mb.top( index, 0 )
+    message = email.message_from_bytes( b'\n'.join( response[ 1 ] ) )
+    hd = email.header.decode_header( message[ "subject" ] )[ 0 ]
+    subject = hd[ 0 ].decode( hd[ 1 ] )
+    if "Арсенал" in subject:
+        res = index
+    return res
+
+def save_attached_file_from_msg( index ):
+    res = False
+    response = mb.retr( index )
+    print( "Start download email" )
+    message = email.message_from_bytes( b'\n'.join( response[ 1 ] ) )
+    for part in message.walk():
+        ct = part.get_content_type()
+        print( ct )
+        if ct == "application/zip":
+            filename = part.get_filename()
+            print( "Find {s}".format( s = filename ) )
+            fp = open( filename, 'wb')
+            fp.write( part.get_payload( decode = 1 ) )
+            fp.close
+            zp = zipfile.ZipFile( filename, "r" )
+            zp.extractall( )
+            res = filename[ : -3 ] + "xls"
+    return res
+
+mb = poplib.POP3_SSL( sett.bpa[ "popserver" ], sett.bpa[ "port" ] )
+mb.user( sett.bpa[ "user" ] ) 
+mb.pass_( sett.bpa[ "pswd" ] )
+
+( mbcount, mbsize ) = mb.stat()
+
+for i in range( min( 10, mbcount ) ):
+    if check_subject( i + 1 ) != False:
+        filename = save_attached_file_from_msg( i + 1 )
+        print( filename )
+        load_from_ars( filename )
