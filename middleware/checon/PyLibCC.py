@@ -47,7 +47,8 @@ def FindModF( file ):
             if line != "":
                 if length >= 8:
                     if line[ 0: 6 ].lower() == "import":
-                        for i in range( 6, length ):
+                        mods.add(line)
+                        """for i in range( 6, length ):
                             if cont > 0:
                                 cont -= 1
                                 continue
@@ -59,9 +60,10 @@ def FindModF( file ):
                                     mods.add( res.strip( "\n" ) )
                                 else:
                                     mods.add( res.strip( "\n" ) )
-                                    break
+                                    break"""
                     elif line[ 0: 4 ].lower() == "from":
-                        for i in range( 4, length ):
+                        mods.add(line)
+                        """for i in range( 4, length ):
                             if cont > 0:
                                 cont -= 1
                                 continue
@@ -73,10 +75,11 @@ def FindModF( file ):
                                     cont = len( res )
                                 else:
                                     mods.add( res.strip( "\n" ) )
-                                    break
+                                    break"""
                 elif length >= 6:
                     if line[ 0: 4 ].lower() == "from":
-                        for i in range( 4, length ):
+                        mods.add(line)
+                        """for i in range( 4, length ):
                             if line[ i ] !=" ":
                                 res = FirstWord( line[i:] )
                                 if res[ len(res)-1 ] == ",":
@@ -85,7 +88,7 @@ def FindModF( file ):
                                     mods.add( res.strip( "\n" ) )
                                 else:
                                     mods.add( res.strip( "\n" ) )
-                                    break
+                                    break"""
         for i in mods:
             print ( i )
         return mods
@@ -102,8 +105,9 @@ def FindModF( file ):
 def CheckInstMod( mods ):
     for i in mods:
         try:
-            str ='import {0}'.format( i )
-            exec( str )
-            print("+++Модуль {0} - присутствует+++".format( i ))
+            #str ='import {0}'.format( i )
+            #exec( str )
+            exec( i )
+            print("Строка {0} может быть исполнена".format( i ))
         except:
-            print("---Модуль {0} - отсутствует---".format( i ))
+            print("В строке {0} присутствуют неподдерживаемые библиотеки".format( i ))
