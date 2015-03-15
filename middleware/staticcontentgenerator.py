@@ -5,6 +5,7 @@ import statistics
 import urllib
 import dbclasses.dbobj
 import dbclasses.dbworker
+import sett
 
 def _h(s):
     return str(s).replace("<", "").replace(">", "")
@@ -43,7 +44,10 @@ def  goods_main_view(url, url_type = None):
         img_url = img.url.val
     #html_view_for_addfld( obj.id )
     if res == True:
-        res = pystache.render(_templ_res, {"gd" :  obj.__dict__ , "addfld" : html_view_for_addfld( obj.id ), "img_url" : img_url})
+        debug = False
+        if sett.server_dep == "windows dev":
+            debug = True
+        res = pystache.render( _templ_res, { "gd" :  obj.__dict__ , "addfld" : html_view_for_addfld( obj.id ), "img_url" : img_url, "debug": debug } )
     return res
 
 def make_map( count ):
