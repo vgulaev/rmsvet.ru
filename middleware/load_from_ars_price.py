@@ -88,14 +88,16 @@ def save_attached_file_from_msg( index ):
             res = filename[ : -3 ] + "xls"
     return res
 
+def analyse_ms():
+    for i in range( min( 10, mbcount ) ):
+        if check_subject( i + 1 ) != False:
+            filename = save_attached_file_from_msg( i + 1 )
+            load_from_ars( filename )
+            print( filename )
+
 mb = poplib.POP3_SSL( sett.bpa[ "popserver" ], sett.bpa[ "port" ] )
 mb.user( sett.bpa[ "user" ] ) 
 mb.pass_( sett.bpa[ "pswd" ] )
 
 ( mbcount, mbsize ) = mb.stat()
-
-for i in range( min( 10, mbcount ) ):
-    if check_subject( i + 1 ) != False:
-        filename = save_attached_file_from_msg( i + 1 )
-        print( filename )
-        load_from_ars( filename )
+analyse_ms()
