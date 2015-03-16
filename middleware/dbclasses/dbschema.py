@@ -17,7 +17,7 @@ schema = { "objects" : [
 				propdict( pname = "quantity", ptype = "DECIMAL(10, 4)" ),
 				propdict( pname = "vat", ptype = "TINYINT" ),
 				propdict( pname = "price", ptype = "DECIMAL(10, 2)" ),
-				propdict( pname = "vatsum", ptype = "DECIMAL(10, 2)" )
+				propdict( pname = "vatsum", ptype = "DECIMAL(10, 2)" ),
 				propdict( pname = "sum", ptype = "DECIMAL(10, 2)" )
 			] )
 		] ),
