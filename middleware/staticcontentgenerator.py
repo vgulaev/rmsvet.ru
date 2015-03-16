@@ -108,19 +108,6 @@ def stat():
     res = pystache.render(_templ_res, {"stats": ls, "total": total, "dol": total * 12})
     return res
 
-def fetch_to_row_dict( cursor ):
-    res = []
-    row = cursor.fetchone()
-
-    while row is not None:
-        r = {}
-        for (i, e) in enumerate(row):
-            r[ cursor.description[i][0] ] = e
-            pass
-        res += [ r ]
-        row = cursor.fetchone()
-    return res
-
 def orders( url ):
     _templ_res = cm.read_file_to_str("html/orders.html")
     order = dbclasses.dbobj.objects[ "order" ]()
@@ -135,7 +122,7 @@ def orders( url ):
     cursor = db.cursor()
     ds = { "id" : url }
     cursor.execute( sql, ds )
-    rows = fetch_to_row_dict( cursor )
+    rows = cm.fetch_to_row_dict( cursor )
     totalsum = 0
     for e in rows:
         totalsum += e[ "sum" ]

@@ -64,14 +64,18 @@ def price_maker( val ):
     
     return "{0:.2f}".format(ret)
 
-"""
-ldb = sitedb.dbworker()
+def fetch_to_row_dict( cursor ):
+    res = []
+    row = cursor.fetchone()
+    row_index = 1
+    while row is not None:
+        r = {}
+        for (i, e) in enumerate( row ):
+            r[ cursor.description[i][0] ] = e
+        r[ "index" ] = row_index
+        row_index += 1
+        res += [ r ]
+        row = cursor.fetchone()
+    return res
 
-prices_sql = ldb.class_from_table("prices")
-properties_sql = ldb.class_from_table("properties")
-partners_sql = ldb.class_from_table("partners")
-currency_sql = ldb.class_from_table("currency")
-images_sql = ldb.class_from_table("images")
-domains_sql = ldb.class_from_table("domains")
-organization_sql = ldb.class_from_table("organization")"""
 env = { "organization" : None, "Modified-Since" : None }
