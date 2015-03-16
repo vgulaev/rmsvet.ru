@@ -46,8 +46,8 @@ def FindModF( file ):
             length = len( line )
             if line != "":
                 if length >= 8:
-                    if line[ 0: 6 ].lower() == "import":
-                        mods.add(line)
+                    if FirstWord(line.lower()) == "import":
+                        mods.add(line.replace('\n',''))
                         """for i in range( 6, length ):
                             if cont > 0:
                                 cont -= 1
@@ -61,8 +61,8 @@ def FindModF( file ):
                                 else:
                                     mods.add( res.strip( "\n" ) )
                                     break"""
-                    elif line[ 0: 4 ].lower() == "from":
-                        mods.add(line)
+                    elif FirstWord(line.lower()) == "from":
+                        mods.add(line.replace('\n',''))
                         """for i in range( 4, length ):
                             if cont > 0:
                                 cont -= 1
@@ -77,8 +77,8 @@ def FindModF( file ):
                                     mods.add( res.strip( "\n" ) )
                                     break"""
                 elif length >= 6:
-                    if line[ 0: 4 ].lower() == "from":
-                        mods.add(line)
+                    if FirstWord(line.lower()) == "from":
+                        mods.add(line.replace('\n',''))
                         """for i in range( 4, length ):
                             if line[ i ] !=" ":
                                 res = FirstWord( line[i:] )
@@ -108,6 +108,6 @@ def CheckInstMod( mods ):
             #str ='import {0}'.format( i )
             #exec( str )
             exec( i )
-            print("Строка {0} может быть исполнена".format( i ))
+            print("Строка '{0}' может быть исполнена".format( i ))
         except:
-            print("В строке {0} присутствуют неподдерживаемые библиотеки".format( i ))
+            print("В строке '{0}' присутствуют неподдерживаемые библиотеки".format( i ))
