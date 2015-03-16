@@ -1,16 +1,16 @@
 """
-Модуль проверки используемых библиотек Python3.4
+Checking module connection libraries and modules Python 3.4
 """
 
 import os.path as path
 
 """
-Функции необходимые для упрощения написания основных функций
+Function to simplify.
 """
 
 """
-Функция для нахождения первого слова в строке. Словом считается набор символов заключенный в
-каких - либо следующих сущьностях (Начало строки, Конец строки, пробел)
+Function to find the first word in the line.
+A word is a set of characters enclosed in any - any of the following suschnosti (start line, end of line, space).
 """
 def FirstWord(str):
     length = len(str)
@@ -19,24 +19,19 @@ def FirstWord(str):
         if str[i] != " ":
             for j in range(i, length):
                 if str[j] != " ":
-                    res += str[j]
+                    res += str[j].replace('\n','')
                 else: break
             break
     return res
 
 """
-Основные функции
+Basic functions.
 """
 
 """
-Функция просмотра используемых библиотек, для файлов *.py которые подаются при
-вызове этой функции.
+Finding function libraries and module in "*.py" files.
 """
 
-"""
-Пока что не работает в таких случаях:
-1) Если присутствует "as" и после него идет еще какая-нибудь библиотека
-"""
 def FindModF( file ):
     if file[ len(file)-3: ].lower() == ".py":
         f = open( path.abspath( file ), encoding = "utf-8" )
@@ -47,60 +42,26 @@ def FindModF( file ):
             if line != "":
                 if length >= 8:
                     if FirstWord(line.lower()) == "import":
-                        mods.add(line.replace('\n',''))
-                        """for i in range( 6, length ):
-                            if cont > 0:
-                                cont -= 1
-                                continue
-                            if line[ i ] !=" ":
-                                res = FirstWord( line[i:] )
-                                if res[ len(res)-1 ] == ",":
-                                    cont = len( res )
-                                    res = res[ :-1 ]
-                                    mods.add( res.strip( "\n" ) )
-                                else:
-                                    mods.add( res.strip( "\n" ) )
-                                    break"""
+                        mods.add(line)
                     elif FirstWord(line.lower()) == "from":
-                        mods.add(line.replace('\n',''))
-                        """for i in range( 4, length ):
-                            if cont > 0:
-                                cont -= 1
-                                continue
-                            if line[ i ] !=" ":
-                                res = FirstWord( line[i:] )
-                                if res[ len(res)-1 ] == ",":
-                                    res = res[ :-1 ]
-                                    mods.add( res.strip( "\n" ) )
-                                    cont = len( res )
-                                else:
-                                    mods.add( res.strip( "\n" ) )
-                                    break"""
+                        mods.add(line)
                 elif length >= 6:
                     if FirstWord(line.lower()) == "from":
-                        mods.add(line.replace('\n',''))
-                        """for i in range( 4, length ):
-                            if line[ i ] !=" ":
-                                res = FirstWord( line[i:] )
-                                if res[ len(res)-1 ] == ",":
-                                    i += len( res )
-                                    res = res[ :-1 ]
-                                    mods.add( res.strip( "\n" ) )
-                                else:
-                                    mods.add( res.strip( "\n" ) )
-                                    break"""
+                        mods.add(line)
         for i in mods:
             print ( i )
         return mods
-    else: print("Этот файл не является файлом Python 3.4")
+    else: print("It is no Python 3.4 files")
 
 """
-Функция просмотра используемых библиотек, для файлов *.py которые находятся в
-папке адрес которой подается при вызове этой функции.
+Finding function libraries and module in all "*.py" files for this folder.
 """
 
+#def FindModD():
+#    pass
+
 """
-Функция проверки работоспособности библиотек (вывод функций: FindModD, FindModF)
+Check function using libraries and modules for operation.
 """
 def CheckInstMod( mods ):
     for i in mods:
@@ -108,6 +69,6 @@ def CheckInstMod( mods ):
             #str ='import {0}'.format( i )
             #exec( str )
             exec( i )
-            print("Строка '{0}' может быть исполнена".format( i ))
+            print("Line '{0}' can be used".format( i ))
         except:
-            print("В строке '{0}' присутствуют неподдерживаемые библиотеки".format( i ))
+            print("The line '{0}' contains unsupported library".format( i ))
