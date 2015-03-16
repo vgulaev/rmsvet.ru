@@ -1,5 +1,5 @@
 """
-checon-Check Connection-Проверка подключений
-Модуль проверки наличия подключенных библиотек
+checon - Check Connection.
+Checking module connected libraries and modules.
 """
 __author__ = 'movis08'
