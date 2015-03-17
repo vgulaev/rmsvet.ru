@@ -7,7 +7,7 @@ import sett
 import dbclasses.dbobj
 import checon.PyLibCC as check
 
-check.FindModD("..\\middleware")
+check.CheckInstModD("..\\middleware")
 
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 
