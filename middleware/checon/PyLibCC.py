@@ -21,7 +21,7 @@ def FilePath(dir):
 
 """
 Function to find the first word in the line.
-A word is a set of characters enclosed in any - any of the following suschnosti (start line, end of line, space).
+A word is a set of characters enclosed in any - any of the following entities (start line, end of line, space).
 """
 def FirstWord(str):
     length = len(str)
