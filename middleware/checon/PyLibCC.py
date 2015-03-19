@@ -47,7 +47,6 @@ def FindModF( file ):
     mods = set()
     if file[ len(file)-3: ].lower() == ".py":
         f = open( path.abspath( file ), encoding = "utf-8" )
-        cont = 0
         for line in f:
             length = len( line )
             if line != "":
