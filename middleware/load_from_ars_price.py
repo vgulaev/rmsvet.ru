@@ -26,7 +26,7 @@ def load_from_ars( filename ):
     org = dbclasses.dbobj.objects["organization"]()
     org.find(caption="ezsp")
     pos = 0
-    for i in range(31, sheet.nrows - 30):
+    for i in range( 31, sheet.nrows ):
         currency = sheet.cell(i, 2).value
         if not (currency == ''):
             if type(currency) != float:
