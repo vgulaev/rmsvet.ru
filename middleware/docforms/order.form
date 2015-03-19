@@ -973,7 +973,7 @@ td { padding: 0px; padding-left: 2px; overflow:hidden; }
 <TD>&nbsp;</TD>
 </TR>
 </TABLE>
-<div style="position:absolute;left:9px; top:0px;"><IMG SRC = "order_files\image000.png" ALT = "" width = 173 height = 121></div>
+<div style="position:absolute;left:9px; top:0px;"><IMG SRC = "docforms/order_files/image000.png" ALT = "" width = 173 height = 121></div>
 <!--div style="position:absolute;left:86px; top:576px;">
 <IMG SRC = "счет_files\image001.png" ALT = "" width = 294 height = 141>
 </div><div style="position:absolute;left:35px; top:624px;">
