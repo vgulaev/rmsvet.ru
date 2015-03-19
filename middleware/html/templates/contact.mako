@@ -1,3 +1,4 @@
+<%namespace name="globalv" file="global-vals.tmpl"/>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -75,7 +76,7 @@
 				<tr>
 					<td>Телефоны:</td>
 					<td>
-						<div>+7-3452-52-06-06</div>
+						<div>${globalv.attr.office_phone}</div>
 						<div><span class="tel">+7-961-209-1778</span></div>
 					</td>
 				</tr>
