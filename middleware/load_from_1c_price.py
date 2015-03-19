@@ -2,10 +2,9 @@
 
 import xlrd
 import common
-
 import urllib
 import datetime
-
+from os import remove as rem
 import dbclasses.dbobj
 import dbclasses.dbworker
 import sett
@@ -80,3 +79,4 @@ def get_price_from_web():
 
 get_price_from_web()
 load_from_1c()
+rem("price_1c.zip")
