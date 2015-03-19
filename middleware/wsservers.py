@@ -160,6 +160,8 @@ def create_order( jsonstr ):
         newpos["quantity"] = e[ "count" ]
         newpos["price"] = e[ "price" ]
         newpos["sum"] = e[ "sum" ]
+        newpos["vat"] = 0
+        newpos["vatsum"] = 0
     ds.write()
     ans = { "r" : False }
     if ds.id != "":
