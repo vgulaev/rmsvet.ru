@@ -16,7 +16,7 @@ def FilePath(dir):
     m = set()
     for i,j,k in walk(dir):
         for a in k:
-            m.add("{0}\\{1}".format(i,a))
+            m.add("{0}//{1}".format(i,a))
     return m
 
 """
