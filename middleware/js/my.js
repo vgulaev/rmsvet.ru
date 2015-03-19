@@ -14,6 +14,7 @@ class_cart_label = {
         localStorage["cart." + this.count + ".count"] = 1;
         localStorage["cart." + this.count + ".caption"] = $("#caption").html();
         localStorage["cart." + this.count + ".price"] = $("#price").html();
+        localStorage["cart." + this.count + ".vat"] = $("#vat").html();
         this.count++;
         localStorage["cart.count"] = this.count;
         this.cart_label_count.html(this.count);

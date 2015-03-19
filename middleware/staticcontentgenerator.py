@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import pdfkit
 import common as cm
 import pystache
 import statistics
@@ -129,3 +130,32 @@ def orders( url ):
     #res = pystache.render(_templ_res, { "order" :  , "partner" : partner.__dict__ , "el" : rows, "totalsum" : totalsum , "length" : len(rows) })
     res = pystache.render(_templ_res, { "order" : order.__dict__ , "partner" : partner.__dict__ , "el" : rows, "totalsum" : totalsum , "length" : len(rows) })
     return res
+
+def getorderspdf( url ):
+    order = dbclasses.dbobj.objects[ "order" ]()
+    order.find( id = url )
+    sql = """
+    SELECT * from order_goods where id = %(id)s
+    order by count
+    """
+    db = dbclasses.dbworker.getcon()
+    cursor = db.cursor()
+    ds = { "id" : order.id }
+    cursor.execute( sql, ds )
+    rows = cm.fetch_to_row_dict( cursor )
+    totalsum = 0
+    vatsum = 0
+    for e in rows:
+        #print( e[ "index" ] )
+        if e[ "vat" ] > 0:
+            vatsum += round( e[ "sum" ] * 18 / 118, 2 )
+        totalsum += e[ "sum" ]
+    def intformat( ones ):
+        return "{:10,.2f}".format( ones ).replace( ",", " ").replace( ".", "," )
+    _templ_res = cm.read_file_to_str("docforms//order.form")
+    res = pystache.render(_templ_res, { "order" : order.__dict__ , "el" : rows, "totalsum" : intformat( totalsum ) , "vatsum" : intformat( vatsum ), "length" : len(rows) })
+
+    f = open( "tmp.html", "w", encoding = "utf-8" )
+    f.write( res )
+    pdfkit.from_file( 'tmp.html', "out.pdf" )
+    return "out.pdf"

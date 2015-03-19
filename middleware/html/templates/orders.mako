@@ -96,6 +96,7 @@
               
             <input type="submit" value="Оплать Яндекс.Деньги"/> 
             </form>
+            <a href = "/getorderspdf/{{order.id}}">Скачать счет в pdf</a>
         </div>
         </div>
     </div>

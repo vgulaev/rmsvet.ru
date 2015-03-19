@@ -97,10 +97,14 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             else:
                 self.ans_like_text( html )
         elif path[ 0 : 8 ] == "/orders/":
-            html = scg.orders( path[8:] )
+            html = scg.orders( path[ 8: ] )
             self.ans_like_text( html )
+        elif path[ 0 : 14 ] == "/getorderspdf/":
+            filename = scg.getorderspdf( path[ 14: ] )
+            self.ans_like_text_file( "out.pdf", """application/pdf;filename="out.pdf" """)
+            #self.ans_like_text( html )
         elif path[0:10] == "/site-map/":
-            html = scg.make_map( path[10:] )
+            html = scg.make_map( path[ 10: ] )
             if html == False:
                 self.ans_like_404()
             else:

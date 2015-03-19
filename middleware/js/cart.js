@@ -11,11 +11,13 @@ cart = {
 			localStorage["cart." + i + ".count"]	= localStorage["cart." + (i + 1) + ".count"];
 			localStorage["cart." + i + ".price"]	= localStorage["cart." + (i + 1) + ".price"];
 			localStorage["cart." + i + ".caption"]	= localStorage["cart." + (i + 1) + ".caption"];
+            localStorage["cart." + i + ".vat"]      = localStorage["cart." + (i + 1) + ".vat"];
 		};
 		localStorage.removeItem("cart." + i + ".id");
 		localStorage.removeItem("cart." + i + ".count");
 		localStorage.removeItem("cart." + i + ".price");
 		localStorage.removeItem("cart." + i + ".caption");
+        localStorage.removeItem("cart." + i + ".vat");
 		localStorage["cart.count"] = length - 1;
 		this.render();
 	},
@@ -35,7 +37,8 @@ cart = {
 			"caption"	: localStorage["cart." + i + ".caption"],
 			"count"		: count,
 			"price"		: price.toFixed(2),
-			"sum"		: sum.toFixed(2)
+			"sum"		: sum.toFixed(2),
+            "vat"       : localStorage["cart." + i + ".vat"]
 			};
 			el.push(newel);
 		};
