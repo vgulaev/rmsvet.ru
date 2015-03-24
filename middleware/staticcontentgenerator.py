@@ -98,16 +98,27 @@ def make_map( count ):
     return res
 
 def stat():
-    _templ_res = cm.read_file_to_str("html/stat.html")
-    s = statistics.stat_info()
-    ls = []
-    total = 0
-    for e in s:
-        s[e]["name"] = e
-        ls += [s[e]]
-        total += s[e]["lines"]
-    res = pystache.render(_templ_res, {"stats": ls, "total": total, "dol": total * 12})
-    return res
+	_templ_res = cm.read_file_to_str("html/stat.html")
+	s = statistics.stat_info()
+	ls = []
+	total = 0
+	All = []
+	All.append({})
+	All.append({})
+	All.append({})
+	All[0]["name3"]="ROOT"
+	All[1]["name3"]="Valentin"
+	All[2]["name3"]="MoViS08"
+	allitems = s[".py"]["items3"]
+	for i in range(3):
+		All[i]["dol3"]=s[".py"]["avtor"][i]["dol3"]
+		All[i]["lines3"]=s[".py"]["avtor"][i]["lines3"]
+	for e in s:
+		lf = {}
+		ls += [s[e]]
+		total += s[e]["lines1"]
+	res = pystache.render(_templ_res, {"stats1": ls, "total": total, "dol": total * 12, "all" : All, "allitems" : allitems})
+	return res
 
 def orders( url ):
     _templ_res = cm.read_file_to_str("html/orders.html")
