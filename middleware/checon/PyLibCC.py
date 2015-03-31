@@ -25,13 +25,16 @@ A word is a set of characters enclosed in any - any of the following entities (s
 """
 def FirstWord(str):
     length = len(str)
-    res = ""
+    res = []
+    res.append("")
     for i in range(length):
         if str[i] != " ":
             for j in range(i, length):
                 if str[j] != " ":
-                    res += str[j].replace('\n','')
-                else: break
+                    res[0] += str[j].replace('\n','')
+                else:
+                    res.append(j+1)
+                    break
             break
     return res
 
@@ -51,12 +54,12 @@ def FindModF( file ):
             length = len( line )
             if line != "":
                 if length >= 8:
-                    if FirstWord(line.lower()) == "import":
+                    if FirstWord(line.lower())[0] == "import":
                         mods.add((line.replace('\n',''), file))
-                    elif FirstWord(line.lower()) == "from":
+                    elif FirstWord(line.lower())[0] == "from":
                         mods.add((line.replace('\n',''), file))
                 elif length >= 6:
-                    if FirstWord(line.lower()) == "from":
+                    if FirstWord(line.lower())[0] == "from":
                         mods.add((line.replace('\n',''), file))
         return mods
     else:
