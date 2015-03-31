@@ -11,7 +11,7 @@ Basic function
 """
 
 """
-Finding function libraries and module in "*.py" files.
+Finding function JavaScript libraries and module in "*.html" and "*.mako" files.
 """
 
 def FindModF( file ):
@@ -25,8 +25,10 @@ def FindModF( file ):
             length = len( line1 )
             if line1 != "":
                 if length >= 22:
-                    if fw(line1.lower()) == "<script":
-                        mods.add((line1, file))
+                    word = fw(line1.lower())
+                    if word[0] == "<script":
+                        if fw(line1.lower()[word[1]:])[0][:4] == "src=":
+                            mods.add((line1, file))
         return mods
     else:
         return mods
@@ -34,7 +36,7 @@ def FindModF( file ):
 """
 Check function using libraries and modules for operation. Return mods in string, massive used and unused mods and libraries.
 """
-def CheckInstMod( mods ):
+def CheckInstMod( mods, dir ):
     used = set()
     unused = set()
     for str in mods:
@@ -51,11 +53,13 @@ def CheckInstMod( mods ):
                     else:
                         b = True
                         break
-        if compile("""import execjs
-execjs.eval(import {0})""".format(mod[1:]),str[1],'exec'):
-            used.add(mod)
+        if path.exists(path.normpath(dir+mod)):
+            used.add((mod, str[1]))
+        elif path.exists(path.normpath(path.join(path.dirname(str[1]), mod))):
+            used.add((mod, str[1]))
         else:
-            unused.add(mod)
+            unused.add((mod, str[1]))
+            print("The line '{0}' have unsupported library".format( str ))
     use = []
     use.append(mods)
     use.append(used)
@@ -63,7 +67,7 @@ execjs.eval(import {0})""".format(mod[1:]),str[1],'exec'):
     return use
 
 """
-Finding function libraries and module in all "*.py" files for this folder.
+Finding function libraries and module in all "*.html" and "*.mako' files for this folder.
 """
 
 def CheckInstModD(dir):
@@ -71,7 +75,9 @@ def CheckInstModD(dir):
     files = fp(dir)
     for i in files:
         m.update(FindModF(i))
-    k=CheckInstMod(m)
-#   for i in m:
-#       print(i)
+    k=CheckInstMod(m, path.abspath(dir))
+#    for i in m:
+#        print(i)
     print(len(m))
+    print(len(k[1]))
+    print(len(k[2]))
