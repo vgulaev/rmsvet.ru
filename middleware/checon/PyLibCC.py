@@ -48,7 +48,8 @@ Finding function libraries and module in "*.py" files.
 
 def FindModF( file ):
     mods = set()
-    if file[ len(file)-3: ].lower() == ".py":
+    nameF, ext = path.splitext( file )
+    if ext.lower() == ".py":
         f = open( path.abspath( file ), encoding = "utf-8" )
         for line in f:
             length = len( line )
