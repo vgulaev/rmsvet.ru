@@ -5,11 +5,13 @@ import dbclasses.dbmaintenance
 import dbclasses.dbworker
 import sett
 import dbclasses.dbobj
-import checon
+from checon import PyLibCC
+from checon import JSLibCC
+from checon import CheColl
 
-checon.PyLibCC.CheckInstModD(r"..//middleware")
-checon.JSLibCC.CheckInstModD(r"..//middleware")
-#checon.CheColl(r"/usr/share/mysql/charsets/Index.xml")
+PyLibCC.CheckInstModD(r"..//middleware")
+JSLibCC.CheckInstModD(r"..//middleware")
+#CheColl.CheColl(r"/usr/share/mysql/charsets/Index.xml")
 
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 
