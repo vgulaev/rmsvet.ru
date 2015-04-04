@@ -17,7 +17,7 @@ Finding function JavaScript libraries and module in "*.html" and "*.mako" files.
 def FindModF( file ):
     mods = set()
     nameF, ext = path.splitext( file )
-    ras = ext( file ).lower()
+    ras = ext.lower()
     if ras == ".html" or ras == ".mako":
         f = open( path.abspath( file ), encoding = "utf-8" )
         for line in f:
