@@ -14,12 +14,13 @@ def getrootdir():
 	return rootdir
 
 def stat_info():
-	pr = r'C:\Users\MoViS\Desktop\rmsvetCLONE'
+	#pr = r'C:\Users\MoViS\Desktop\rmsvetCLONE'
+	pr = getrootdir()
 	repo = git.Repo( pr )
 	assert not repo.bare
 	head = repo.head
 	mater = head.reference
-	allFile = FP( r"C:\Users\MoViS\Desktop\rmsvetCLONE\middleware" )
+	allFile = FP( pr + "//middleware" )
 	stat = {".css" : {}, ".js" : {}, ".py" : {}, ".html" : {}}
 	for e in stat:
 		stat[e]["ext"] = e
