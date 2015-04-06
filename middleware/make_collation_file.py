@@ -19,6 +19,6 @@ f.write( """</rules>
 </collation>""")
 f.close()
 
-print( ord( "х" ) )
-import sys
-print( sys.version )
+#print( ord( "х" ) )
+#import sys
+#print( sys.version )
