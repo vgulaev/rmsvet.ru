@@ -4,6 +4,7 @@ import mysql.connector as MySQLdb
 import dbclasses.dbmaintenance
 import dbclasses.dbworker
 import sett
+import platform
 import dbclasses.dbobj
 from checon import PyLibCC
 from checon import JSLibCC
@@ -11,7 +12,10 @@ from checon import CheColl
 
 PyLibCC.CheckInstModD(r"..//middleware")
 JSLibCC.CheckInstModD(r"..//middleware")
-#CheColl.CheColl(r"/usr/share/mysql/charsets/Index.xml")
+if (platform.system() == "Windows"):
+    CheColl.CheColl(r"C:\\Program Files (x86)\\MySQL\\MySQL Server 5.6\\share\\charsets\\Index.xml")
+else:
+    CheColl.CheColl(r"/usr/share/mysql/charsets/Index.xml")
 
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 
