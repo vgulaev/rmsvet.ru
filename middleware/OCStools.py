@@ -6,7 +6,6 @@ import sett
 import common as cm
 import codecs
 import urllib
-
 import dbclasses.dbobj
 import dbclasses.dbworker
 import sett
@@ -120,7 +119,6 @@ def load_to_db( CategoryIDList ):
         ad.price_id = p.id
         ad.value = e["ItemID"]
         ad.write()"""
-        
 
     
 def work_loading():
@@ -131,9 +129,9 @@ def work_loading():
         get_price(e)
         load_to_db(e)
 #{"CategoryID":"0901","CategoryName":"Ноутбуки","ParentCategoryID":"09","NestingLevel":3},
-#getcatalog()
+getcatalog()
 #load_to_db("20")
-work_loading()
+#work_loading()
 #currency_sync()
 #get_price( "0901" )
 #load_to_db( "0901" )
