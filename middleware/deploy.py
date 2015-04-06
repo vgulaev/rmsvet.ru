@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import mysql.connector as MySQLdb
-#import sitedb
 import dbclasses.dbmaintenance
 import dbclasses.dbworker
 import sett
