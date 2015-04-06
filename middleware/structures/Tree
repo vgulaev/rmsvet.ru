@@ -1,0 +1,50 @@
+class CatalogTree():
+    Child = []
+    CategoryID = ""
+    CategoryName = ""
+    ParentCategoryID = ""
+    NestingLevel = 0
+    """
+    Class constructor
+    """
+    def __init__(self, Parent = "", CID = "", CN = "", Level = 0):
+        self.ParentCategoryID = Parent
+        self.CategoryID = CID
+        self.CategoryName = CN
+        self.NestingLevel = Level
+    """
+    Class destructor
+    """
+    def __del__(self, variant):
+        if variant == 0:
+            if len(self.Child) != 0:
+                for i in range(len(self.Child)):
+                    self.Child[i].__del__(0)
+            else:
+                self.__del__()
+        elif variant == 1:
+            if self.ParentCategoryID == "":
+                self.__del__(0)
+            else:
+                self.ParentCategoryID.Child += self.Child
+                self.__del__(0)
+    """
+    Work with childs
+    """
+    def addChild(self, Parent = CategoryID, CID = "", CN = "", Level = NestingLevel + 1):
+        child = CatalogTree(Parent, CID, CN, Level)
+        self.Child.append(child)
+    def delChild(self, string = "", variant = 0):
+        for i in range(len (self.Child)):
+            if variant == 0:
+                if self.Child[i].CategoryID == string:
+                    self.Child[i].__del__(0)
+                    break
+            elif variant == 1:
+                if self.Child[i].CategoryName == string:
+                    self.Child[i].__del__(0)
+                    break
+
+a = CatalogTree()
+a.addChild(CID=1, CN = "asd")
+b=3+3
