@@ -9,8 +9,6 @@ def create_class_for_table( schema_class ):
             for e in self.__mtdata__.prop:
                 setattr( self, e["name"], "" )
             for e in self.__mtdata__.tables:
-                #pass
-                #print e.name
                 setattr( self, e.attname, tablemgr( powner = self, pmtdata = e ) )
     retclass.__mtdata__ = schema_class
     return retclass

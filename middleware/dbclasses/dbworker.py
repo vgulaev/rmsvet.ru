@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-#import MySQLdb
-#import mysql.connector as MySQLdb
 import pymysql as MySQLdb
 
 cred = {
@@ -10,10 +8,8 @@ cred = {
         }
 
 def loadmysqlcredential( psett ):
-    passwd = ""
     r = {   "host" : 'localhost',
             "user" : 'root',
-            #"passwd" : psett["mysql_pass"]}
             "passwd" : psett.mysql_pass
             }
     return r

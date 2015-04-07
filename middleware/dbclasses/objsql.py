@@ -14,7 +14,7 @@ class objsql():
         else:
             self.name = pname
         self.attname = pname
-        self.addprop( pdict = propdict( pname = "id", ptype = "CHAR(36)" ) )
+        self.addprop( pdict = propdict( pname = "id", ptype = "VARCHAR(36)" ) )
         for e in pprop:
             self.addprop( pdict = e )
         for e in ptables:
@@ -39,7 +39,7 @@ class objsql():
         for e in self.prop:
             tp = e["type"]
             if tp[0:4] == "own:":
-                tp = "CHAR(36)"
+                tp = "VARCHAR(36)"
             sqll = "{name} {type}".format( name = e["name"], type = tp )            
             #if e["name"] == "id":
                 #sqll += " PRIMARY KEY"
