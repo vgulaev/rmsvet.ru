@@ -36,7 +36,6 @@ def load_from_1c():
                 pos = pos + 1
                 newprice = dbclasses.dbobj.objects["prices"]()
                 newprice.caption = sheet.cell(i,1).value
-                #print( type( sheet.cell(i,1).value ) )
                 newprice.fantastic_url = urllib.parse.quote( sheet.cell(i,1).value )
                 newprice.synctag = "from 1c"
                 newprice.organization = org.id
@@ -53,7 +52,6 @@ def load_from_1c():
                     newprice.price = float( pr.replace( chr(160), "" ).replace(",", ".") )
                 else:
                     newprice.price = pr
-                #try:
                 newprice.write()
                 
                 addfld = dbclasses.dbobj.objects["properties"]()

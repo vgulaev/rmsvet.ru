@@ -21,31 +21,28 @@ dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 try:
     print( "try DB droping" )
     dbclasses.dbworker.getcon()
-    
     cred = dbclasses.dbworker.cred
     db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], charset = 'utf8')
     cursor = db.cursor()
-    
+
     sql = "DROP DATABASE IF EXISTS vg_site_db"
     cursor.execute(sql)
     db.commit()
-    
+
     print( "DB droped" )
 except:
     cred = dbclasses.dbworker.cred
     db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], charset = 'utf8')
     cursor = db.cursor()
-    
+
     sql = "CREATE DATABASE IF NOT EXISTS vg_site_db"
     cursor.execute(sql)
     db.commit()
-        
+
     dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
     dbclasses.dbmaintenance.createtable()
     #t.create_table()
     print( "DB preparation complate" )
-    
-    #import common as cm
 
     p = dbclasses.dbobj.objects[ "partners" ]()
     p.caption = "OCS"
@@ -69,7 +66,6 @@ except:
     p.organization = o.id
     p.caption = "127.0.0.1:8080"
     p.write()
-
 
     o = dbclasses.dbobj.objects[ "organization" ]()
     o.caption = "rmsvet"

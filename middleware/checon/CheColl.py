@@ -1,4 +1,5 @@
 from os import path
+import codecs
 
 def CheColl(index):
     if path.exists(index):
@@ -6,7 +7,7 @@ def CheColl(index):
         a = []
         a.append(0)
         flag = '0'
-        file = open(index, encoding = "utf-8", mode = "r" )
+        file = codecs.open(index, "r", "utf-8" )
         linesA = file.readlines()
         for nStr in range(len(linesA)):
             madeStr = ((linesA[nStr].strip(" ")).strip('\t')).strip('\n')
@@ -32,11 +33,11 @@ def CheColl(index):
         if flag == '1':
             middleware = path.normpath(path.join(path.dirname(__file__), r'../'))
             exec(compile(open(middleware + r'/make_collation_file.py', "rb").read(), middleware + r'/make_collation_file.py', 'exec'))
-            b = open( middleware + r'/collation.xml', encoding = "utf-8", mode = "r" )
+            b = codecs.open( middleware + r'/collation.xml', "r", "utf-8" )
             linesB = b.readlines()
             for nStr in range(len(linesB)):
                 linesA.insert(a[2]+nStr, linesB[nStr])
-            file = open(index, encoding = "utf-8", mode = "w" )
+            file = codecs.open(index, "w", "utf-8" )
             file.writelines(linesA)
     else:
         print(r"file {0} is not exist".format(index))

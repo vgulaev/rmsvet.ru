@@ -129,11 +129,11 @@ def work_loading():
         get_price(e)
         load_to_db(e)
 #{"CategoryID":"0901","CategoryName":"Ноутбуки","ParentCategoryID":"09","NestingLevel":3},
-getcatalog()
+#getcatalog()
 #load_to_db("20")
 #work_loading()
 #currency_sync()
-#get_price( "0901" )
+get_price( "2003" )
 #load_to_db( "0901" )
 
 print( "End" )
