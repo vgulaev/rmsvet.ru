@@ -22,4 +22,3 @@ def rerenderall():
             fileName, fileExtension = os.path.splitext( fl )
             if fileExtension == ".mako":
                 rerender( fl )
-
