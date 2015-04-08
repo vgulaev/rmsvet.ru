@@ -3,6 +3,13 @@ from .objsql import objsql
 from .propdict import propdict
 
 schema = { "objects" : [
+    objsql( pname = "catalog",
+		pprop = [
+            propdict( pname = "cat_name", ptype = "VARCHAR(250)" ),
+			propdict( pname = "c_id", ptype = "VARCHAR(50)" ),
+			propdict( pname = "nesting_level", ptype = "INT" ),
+			propdict( pname = "parent_c_id", ptype = "VARCHAR(50)" )
+        ] ),
 	objsql( pname = "order",
 		pprop = [ 
 			propdict( pname = "number", ptype = "VARCHAR(36)" ),
@@ -44,7 +51,7 @@ schema = { "objects" : [
 			propdict( pname = "pricedate", ptype = "DATETIME" ),
 			propdict( pname = "good", ptype = "own:goods" ),
 			propdict( pname = "price", ptype = "DECIMAL(10, 2)" ),
-            propdict( pname = "categoryId", ptype = "VARCHAR(50)" ),
+            propdict( pname = "category", ptype = "own:catalog" ),
 			propdict( pname = "vat", ptype = "INT" ),
 			propdict( pname = "price_in", ptype = "DECIMAL(10, 2)" ),
 			propdict( pname = "currency_in", ptype = "VARCHAR(50)" ),
@@ -66,14 +73,6 @@ schema = { "objects" : [
 			propdict( pname = "caption", ptype = "VARCHAR(250)" ),
 			propdict( pname = "value", ptype = "VARCHAR(250)" )
 		] ),
-    objsql( pname = "catalog",
-		pprop = [
-			propdict( pname = "id", ptype = "VARCHAR(50)" ),
-            propdict( pname = "categoryName", ptype = "VARCHAR(250)" ),
-			propdict( pname = "categoryId", ptype = "VARCHAR(50)" ),
-			propdict( pname = "nestingLevel", ptype = "INT" ),
-			propdict( pname = "parentCategoryId", ptype = "VARCHAR(50)" )
-        ] ),
 	objsql( pname = "images",
 		pprop = [
 			propdict( pname = "caption", ptype = "VARCHAR(250)" ),
