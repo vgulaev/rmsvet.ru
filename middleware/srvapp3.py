@@ -38,7 +38,6 @@ projectorium.reloader.watch_file( "html/templates/ezsp_for_everybody/content.tmp
 projectorium.reloader.start_watch()
 
 projectorium.rerender.rerenderall()
-#projectori
 
 def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
     server_address = ( sett.host, sett.port )
@@ -47,5 +46,5 @@ def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
 
 if __name__ == '__main__':
     common.detect_common_env()
-    print( "Start at {date}".format(date = datetime.datetime.now()) )
+    print( "Start at {date}".format( date = datetime.datetime.now()) )
     run()
