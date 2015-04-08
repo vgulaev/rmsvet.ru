@@ -89,19 +89,31 @@ def CheckInstMod( mods ):
     unused = set()
     for str in mods:
         try:
-            compile(str[0], str[1], 'exec')
+#            compile(str[0], str[1], 'exec')
+            exec(str[0])
             used.add(str)
 #            print("Line '{0}' can be used".format( str ))
         except:
             try:
-                compile(str[0], str[1], 'eval')
+#                compile(str[0], str[1], 'eval')
+                eval(str[0])
                 used.add(str)
 #               print("Line '{0}' can be used".format( str ))
             except:
-                unused.add(str)
-                print("The line '{0}' contains unsupported library".format( str ))
+#                try:
+#                    pass
+#                    """
+#                    Если мы пришли сюда значит модуля не существует или этот модуль находится в папке с программой.
+#                    Значит нужно проверить существование этого файла или дирректории.
+#                    """
+#                except:
+                    unused.add(str)
+                    print(r"The line '{0}' contains unsupported library".format( str ))
     use = []
     use.append(mods)
     use.append(used)
     use.append(unused)
     return use
+
+#qwe = FindModF(r"C:\Users\movis08\Desktop\rmsvet.ru\middleware\load_from_1c_price.py")
+#CheckInstMod(qwe)
