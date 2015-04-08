@@ -10,7 +10,7 @@ def CheColl(index):
         file = codecs.open(index, "r", "utf-8" )
         linesA = file.readlines()
         for nStr in range(len(linesA)):
-            madeStr = ((linesA[nStr].strip(" ")).strip('\t')).strip('\n')
+            madeStr = (((linesA[nStr].strip(" ")).strip('\t')).strip('\n')).strip('\r')
             if bool1:
                 if madeStr == r'<charset name="utf8">':
                     bool1 = False
@@ -37,6 +37,7 @@ def CheColl(index):
             linesB = b.readlines()
             for nStr in range(len(linesB)):
                 linesA.insert(a[2]+nStr, linesB[nStr])
+            linesA.insert(a[2]+len(linesB), "\n")
             file = codecs.open(index, "w", "utf-8" )
             file.writelines(linesA)
     else:
