@@ -42,7 +42,7 @@ def  goods_main_view(url, url_type = None):
     #res = _templ_res.format(gd = obj, addfld = html_view_for_addfld(id))
     img_url = "/png/nophoto.png"
     if img.find( priceref = obj.id ):
-        img_url = img.url.val
+        img_url = img.url
     #html_view_for_addfld( obj.id )
     if res == True:
         debug = False
