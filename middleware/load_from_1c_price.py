@@ -20,6 +20,8 @@ def load_from_1c():
     db = dbclasses.dbworker.getcon()
     cursor = db.cursor()
     cursor.execute( sql )
+    sql = "delete from properties where caption = 'код прайса 1с' and id <> ''"
+    cursor.execute( sql )
     db.commit()
     dt_now = datetime.datetime.now()
     dt_for_db = dt_now.strftime('%Y-%m-%d %H:%M:%S')
@@ -49,7 +51,7 @@ def load_from_1c():
                 if isinstance(pr, str):
                     newprice.price = float( pr.replace( chr(160), "" ).replace(",", ".") )
                 else:
-                    newprice.price = pr
+                    newprice.price = float(pr)
                 newprice.write()
                 addfld = dbclasses.dbobj.objects["properties"]()
                 addfld.priceref = newprice.id
