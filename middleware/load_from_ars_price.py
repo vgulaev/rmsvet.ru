@@ -20,6 +20,8 @@ def load_from_ars( filename ):
     db = dbclasses.dbworker.getcon()
     cursor = db.cursor()
     cursor.execute(sql)
+    sql = "delete from properties where caption = 'артикул партнера 1' and id <> ''"
+    cursor.execute( sql )
     db.commit()
     dt_now = datetime.datetime.now()
     dt_for_db = dt_now.strftime('%Y-%m-%d %H:%M:%S')
@@ -47,12 +49,11 @@ def load_from_ars( filename ):
                     newprice.vat = 18
                     newprice.insearch = True
                     newprice.price_in = pr
-                    newprice.price_in = pr
                     newprice.price = math.ceil( ( currency-pr ) * 0.75 + pr )
                     newprice.write()
                     addfld = dbclasses.dbobj.objects["properties"]()
                     addfld.priceref = newprice.id
-                    addfld.caption = "артикул партнера"
+                    addfld.caption = "артикул партнера 1"
                     addfld.value = sheet.cell(i, 0).value
                     addfld.write()
                     if (pos % 200) == 0:
