@@ -6,6 +6,7 @@ import sett
 import common as cm
 import codecs
 import urllib
+import datetime
 import dbclasses.dbobj
 import dbclasses.dbworker
 import sett
@@ -67,6 +68,10 @@ def load_to_db( CategoryIDList ):
     #print( crosrate )
     org = dbclasses.dbobj.objects[ "organization" ]()
     org.find( caption = "ezsp" )
+    cat = dbclasses.dbobj.objects[ "catalog_ocs" ]()
+    cat.find( c_id = "{0}".format( CategoryIDList ) )
+    dt_now = datetime.datetime.now()
+    dt_for_db = dt_now.strftime('%Y-%m-%d %H:%M:%S')
     for ( i, e ) in enumerate( s["d"]["Products"] ):
         newprice = dbclasses.dbobj.objects["prices"]()
         newprice.caption = e["ItemName"]
@@ -82,8 +87,11 @@ def load_to_db( CategoryIDList ):
         newprice.price_in = e["Price"]
         newprice.currency_in = e["Currency"]
         newprice.synctag = "ocs " + CategoryIDList
-        newprice.insearch = True;
-        newprice.vat = 18        
+        newprice.insearch = True
+        newprice.category = cat
+        newprice.partner = "ocs"
+        newprice.pricedate = dt_for_db
+        newprice.vat = 18
         newprice.write()
         inTyumen = False
         for lc in e[ "Locations" ]:
@@ -100,9 +108,8 @@ def load_to_db( CategoryIDList ):
             addfld.caption = "Срок поставки"
             addfld.value = "Две недели"
             addfld.write()
-        if i % 100 == 0:
+        if i % 200 == 0:
             print( i )
-
     print( len( s["d"]["Products"] ) )
 """        ad =  cm.additionalfields_sql()
         ad.caption = "PartNumber"
