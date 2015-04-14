@@ -40,7 +40,7 @@ class objsql():
             tp = e["type"]
             if tp[0:4] == "own:":
                 tp = "VARCHAR(36)"
-            sqll = "{name} {type}".format( name = e["name"], type = tp )            
+            sqll = "{name} {type}".format( name = e["name"], type = tp )
             #if e["name"] == "id":
                 #sqll += " PRIMARY KEY"
             sqllines += [sqll]
