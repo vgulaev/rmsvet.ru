@@ -82,13 +82,13 @@ def load_to_db( CategoryIDList ):
             price = e["Price"] * crosrate * (1 + e["PercentConv"]/100)
         else:
             price = e["Price"]
-        newprice.price = cm.price_maker(price * 1.15)
+        newprice.price = float(cm.price_maker(price * 1.15))
         #print price_maker(price * 1.15), price
         newprice.price_in = e["Price"]
         newprice.currency_in = e["Currency"]
         newprice.synctag = "ocs " + CategoryIDList
         newprice.insearch = True
-        newprice.category = cat
+        newprice.category = cat.id
         newprice.partner = "ocs"
         newprice.pricedate = dt_for_db
         newprice.vat = 18
