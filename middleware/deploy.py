@@ -46,6 +46,7 @@ except:
 
     p = dbclasses.dbobj.objects[ "partners" ]()
     p.caption = "OCS"
+    p.catalog_name = "catalog_ocs"
     p.write()
 
     o = dbclasses.dbobj.objects[ "organization" ]()
