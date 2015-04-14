@@ -42,7 +42,8 @@ schema = { "objects" : [
 		] ),
 	objsql( pname = "partners",
 		pprop = [
-			propdict( pname = "caption", ptype = "VARCHAR(250) COLLATE utf8_general_ci" )
+			propdict( pname = "caption", ptype = "VARCHAR(250) COLLATE utf8_general_ci" ),
+            propdict( pname = "catalog_name", ptype = "VARCHAR(100)" )
 		] ),
 	objsql( pname = "prices",
 		pprop = [
@@ -51,9 +52,9 @@ schema = { "objects" : [
 			propdict( pname = "pricedate", ptype = "DATETIME" ),
 			propdict( pname = "good", ptype = "own:goods" ),
 			propdict( pname = "price", ptype = "DECIMAL(10, 2)" ),
+            propdict( pname = "price_in", ptype = "DECIMAL(10, 2)" ),
             propdict( pname = "category", ptype = "own:catalog" ),
 			propdict( pname = "vat", ptype = "INT" ),
-			propdict( pname = "price_in", ptype = "DECIMAL(10, 2)" ),
 			propdict( pname = "currency_in", ptype = "VARCHAR(50)" ),
 			propdict( pname = "organization", ptype = "own:organization" ),
 			propdict( pname = "synctag", ptype = "VARCHAR(50)" ),
