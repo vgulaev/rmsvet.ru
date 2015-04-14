@@ -8,7 +8,6 @@ from os import remove as rem
 import dbclasses.dbobj
 import dbclasses.dbworker
 import sett
-
 import sys
 print( sys.version )
 
@@ -17,7 +16,6 @@ dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 def load_from_1c():
     rb = xlrd.open_workbook('PRICE_1C.XLS',formatting_info=True)
     sheet = rb.sheet_by_index(0)
-
     sql = "delete from prices where synctag = 'from 1c' and id <> ''"
     db = dbclasses.dbworker.getcon()
     cursor = db.cursor()
@@ -46,23 +44,20 @@ def load_from_1c():
                     newprice.vat = 0
                 newprice.pricedate = dt_for_db
                 newprice.partner = "софт"
-                newprice.insearch = True;
+                newprice.insearch = True
                 newprice.price_in = 0
                 if isinstance(pr, str):
                     newprice.price = float( pr.replace( chr(160), "" ).replace(",", ".") )
                 else:
                     newprice.price = pr
                 newprice.write()
-                
                 addfld = dbclasses.dbobj.objects["properties"]()
                 addfld.priceref = newprice.id
                 addfld.caption = "код прайса 1с"
                 addfld.value = sheet.cell(i,0).value
                 addfld.write()
-
                 if (pos % 200) == 0:
                     print( "Complate {p}".format( p = pos ) )
-
     print( "Loading {p} complate, from {lines}".format( p = pos, lines = sheet.nrows ) )
 
 import wget
