@@ -3,7 +3,7 @@ from .objsql import objsql
 from .propdict import propdict
 
 schema = { "objects" : [
-    objsql( pname = "catalog",
+    objsql( pname = "catalog_ocs",
 		pprop = [
             propdict( pname = "cat_name", ptype = "VARCHAR(250)" ),
 			propdict( pname = "c_id", ptype = "VARCHAR(50)" ),
@@ -11,7 +11,7 @@ schema = { "objects" : [
 			propdict( pname = "parent_c_id", ptype = "VARCHAR(50)" )
         ] ),
 	objsql( pname = "order",
-		pprop = [ 
+		pprop = [
 			propdict( pname = "number", ptype = "VARCHAR(36)" ),
 			propdict( pname = "date", ptype = "DATETIME" ),
 			propdict( pname = "organization", ptype = "own:organization" ),
@@ -28,20 +28,20 @@ schema = { "objects" : [
 			] )
 		] ),
 	objsql( pname = "goods", 
-		pprop = [ 
+		pprop = [
 			propdict( pname = "caption", ptype = "VARCHAR(250)" )
 		] ),
 	objsql( pname = "organization",
-		pprop = [ 
+		pprop = [
 			propdict( pname = "caption", ptype = "VARCHAR(250)" )
 		] ),
 	objsql( pname = "domains",
-		pprop = [ 
+		pprop = [
 			propdict( pname = "caption", ptype = "VARCHAR(250)" ),
 			propdict( pname = "organization", ptype = "own:organization" )
 		] ),
 	objsql( pname = "partners",
-		pprop = [ 
+		pprop = [
 			propdict( pname = "caption", ptype = "VARCHAR(250) COLLATE utf8_general_ci" )
 		] ),
 	objsql( pname = "prices",
