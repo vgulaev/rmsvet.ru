@@ -14,7 +14,7 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             if os.path.isfile( filename ):
                 self.send_response(200)
                 self.send_header( "Content-type", contenttype )
-                exptime = time.strftime('%a, %d %b %Y %H:%M:%S GMT', time.gmtime( time.time() + 60 * 60 ) )
+                exptime = time.strftime( '%a, %d %b %Y %H:%M:%S GMT', time.gmtime( time.time() + 60 * 60 ) )
                 self.send_header( "expires", exptime )
                 self.send_header( "cache-control", "public, max-age=86400" )
                 self.send_header( "Last-Modified", common.env[ "HTTP-Modified-Since" ] )
