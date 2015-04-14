@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import xlrd
-import common
 import urllib
 import datetime
 from os import remove as rem
