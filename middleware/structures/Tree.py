@@ -17,6 +17,7 @@ class CatalogTree():
         self.CategoryID = CID
         self.CategoryName = CN
         self.NestingLevel = Level
+        self.flag1 = True
     """
     Work with childs
     """
@@ -40,11 +41,12 @@ class CatalogTree():
                     self.Child.pop(i)
                     break
 
-a = CatalogTree()
-a.addChild(CID="1", CN = "asd")
-a.addChild(CID="2", CN = "asf")
-a.addChild(CID="3", CN = "asg")
-b=a.Child[2]
-b.addChild(CID="5", CN="qwe")
-a.delChild("3",2)
-b=3+3
+if __name__ == '__main__':
+    a = CatalogTree()
+    a.addChild(CID="1", CN = "asd")
+    a.addChild(CID="2", CN = "asf")
+    a.addChild(CID="3", CN = "asg")
+    b=a.Child[2]
+    b.addChild(CID="5", CN="qwe")
+    a.delChild("3",2)
+    b=3+3
