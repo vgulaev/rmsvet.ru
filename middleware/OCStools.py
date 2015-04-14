@@ -20,13 +20,16 @@ def currency_sync():
            "Token": sett.ocs_token}
     r = requests.post(sett.ocs_srv + "GetCurrentCurrencyRate", data=json.dumps(payload), headers=headers)
     s = json.loads(r.text)
-    ocs = cm.partners_sql()
+    ocs = dbclasses.dbobj.objects[ "partners" ]()
     ocs.find(caption = "ocs")
-    cur = cm.currency_sql()
+    cur = dbclasses.dbobj.objects[ "currency" ]()
     cur.find(partner = ocs.id)
     cur.partner = ocs.id
     cur.caption = "USD"
     cur.rate = s["d"]["Rate"]
+    dt_now = datetime.datetime.now()
+    dt_for_db = dt_now.strftime('%Y-%m-%d %H:%M:%S')
+    cur.ratedate = dt_for_db
     cur.write()
 
 def getcatalog():
@@ -49,7 +52,6 @@ def get_price( CategoryIDList ):
     f = codecs.open("ocs_price.json", "w", "utf-8" )
     f.write(r.text)
 
-crosrate = 62.3649
 def load_to_db( CategoryIDList ):
     sql = "delete from prices where synctag = 'ocs {id}'".format( id = CategoryIDList )
     db = dbclasses.dbworker.getcon()
@@ -59,6 +61,10 @@ def load_to_db( CategoryIDList ):
     print( sql )
     cursor = db.cursor()
     cursor.execute( sql )
+    currency_sync()
+    sql = "SELECT rate FROM currency WHERE partner = (SELECT id FROM partners WHERE caption = 'OCS');"
+    cursor.execute( sql )
+    crosrate = float(cursor._rows[0][0])
     db.commit()
     tf = codecs.open( "ocs_price.json", "r", "utf-8" )
     sf = tf.read()
@@ -135,12 +141,14 @@ def work_loading():
     for e in l:
         get_price(e)
         load_to_db(e)
-#{"CategoryID":"0901","CategoryName":"Ноутбуки","ParentCategoryID":"09","NestingLevel":3},
-#getcatalog()
-#load_to_db("20")
-#work_loading()
-#currency_sync()
-get_price( "2003" )
-#load_to_db( "0901" )
+
+if __name__ == '__main__':
+    #{"CategoryID":"0901","CategoryName":"Ноутбуки","ParentCategoryID":"09","NestingLevel":3},
+    #getcatalog()
+    #load_to_db("20")
+    #work_loading()
+    #currency_sync()
+    get_price( "2003" )
+    #load_to_db( "0901" )
 
 print( "End" )
