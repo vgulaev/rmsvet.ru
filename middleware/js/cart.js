@@ -2,8 +2,14 @@ function al(){
 	alert("Hello!!!");
 }
 cart = {
-	deleterow : function ( di ) {
-		var length = localStorage["cart.count"];
+	deleterow : function ( di, render) {
+		if (render == null){
+            render = true;
+        }
+        else{
+            render = false;
+        }
+        var length = localStorage["cart.count"];
 		if (length == undefined) length = 0;
 		var i;
 		for (i = di; i <= length - 2; i++) {
@@ -18,9 +24,22 @@ cart = {
 		localStorage.removeItem("cart." + i + ".price");
 		localStorage.removeItem("cart." + i + ".caption");
         localStorage.removeItem("cart." + i + ".vat");
-		localStorage["cart.count"] = length - 1;
-		this.render();
+		if (localStorage["cart.count"] > 0){
+            localStorage["cart.count"] = length - 1;
+        }
+        else{
+            localStorage["cart.count"] = 0;
+        }
+        if (render){
+        this.render();
+        }
 	},
+    clear : function(){
+        for (var i = localStorage["cart.count"]-1; i>=0; i--){
+            cart.deleterow(0, false);
+        this.render()
+        }
+        },
 	getjson : function () {
 		var sum = 0;
 		var totalsum = 0;
