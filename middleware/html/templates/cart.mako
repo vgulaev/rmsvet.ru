@@ -67,10 +67,20 @@
 			</tbody>
 		</table>
 		<div>
-			<button onclick="cart.create_order()" >Купить</button>
-			<!--button onclick = "">Выписать счет</button>
-			<button>Указать НДС</button-->
+            <table class="cart_table">
+                <tr>
+                    <td>
+            			<button onclick="cart.create_order()" >Купить</button>
+	            		<!--button onclick = "">Выписать счет</button>
+			            <button>Указать НДС</button-->
+                    </td>
+                    <td align="right">
+                        <button onclick="cart.clear()" >Очистить корзину</button>
+                    </td>
+                </tr>
+            </table>
 		</div>
+
 		<!--div>
 			<span>Контрагент: </span><input id = "partner" class="partner" />
 		</div>
