@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert( 0, os.path.dirname(os.path.abspath( __file__ ) ) )
 
 import datetime
 from http.server import HTTPServer
@@ -40,6 +40,8 @@ projectorium.reloader.start_watch()
 projectorium.rerender.rerenderall()
 
 def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
+    handler_class.server_version = "EWS"
+    handler_class.sys_version = "0.1 beta"
     server_address = ( sett.host, sett.port )
     httpd = server_class( server_address, handler_class )
     httpd.serve_forever()
