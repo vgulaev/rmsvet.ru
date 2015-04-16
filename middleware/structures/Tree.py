@@ -7,6 +7,7 @@ class CatalogTree():
     ParentCategoryID = ""
     ParentLink = ""
     NestingLevel = 0
+    flag1 = True
     """
     Class constructor
     """
