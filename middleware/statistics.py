@@ -21,7 +21,7 @@ def stat_info():
 	head = repo.head
 	mater = head.reference
 	allFile = FP( pr + "//middleware" )
-	stat = {".css" : {}, ".js" : {}, ".py" : {}, ".html" : {}}
+	stat = {".css" : {}, ".js" : {}, ".py" : {}, ".mako" : {}}
 	for e in stat:
 		stat[e]["ext"] = e
 		stat[e]["lines1"] = 0
