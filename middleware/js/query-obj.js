@@ -55,7 +55,6 @@ var ezsp_query_com = {
 var filters_manager = {
     query_to_server : function () {
         ezsp_query_com.r = [];
-        ezsp_query_com.f = [];
         $.ajax(
             {
                 url: "/ws/ezsp-query-filters-value",
@@ -160,7 +159,7 @@ var ezsp_query = {
         f : {
         items : []
     }
-    }, 
+    },
     ajaxing : false,
     render_init : function () {
         $( "#output" ).html( _templ.main );
