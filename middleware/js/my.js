@@ -18,7 +18,22 @@ class_cart_label = {
         this.count++;
         localStorage["cart.count"] = this.count;
         this.cart_label_count.html(this.count);
+    },
+    add_item_from_list : function ( id, caption, price, vat ) {
+        var clc = $(this).find("#cart_label_count");
+        localStorage["cart." + this.count + ".id"] = id;
+        localStorage["cart." + this.count + ".count"] = 1;
+        localStorage["cart." + this.count + ".caption"] = caption;
+        localStorage["cart." + this.count + ".price"] = price;
+        localStorage["cart." + this.count + ".vat"] = vat;
+        this.count++;
+        localStorage["cart.count"] = this.count;
+        this.cart_label_count.html(this.count);
     }
+}
+
+function add_item_from_list( id, caption, price, vat ) {
+    class_cart_label.add_item_from_list( id, caption, price, vat );
 }
 
 function add_to_cart( id ) {
