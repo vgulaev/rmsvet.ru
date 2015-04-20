@@ -8,6 +8,7 @@ libs
 helloword.html
 helloword.py
 hwinit.py
+hw.py
 sett.py
 *.xls
 *.XLS
