@@ -10,11 +10,9 @@ import os.path
 
 class HTTPRequestHandler( BaseHTTPRequestHandler ):
     """docstring for HTTPRequestHandler"""
-    servername="EazyWebServer, EWS 0.1beta"
     def ans_like_text_file( self, filename, contenttype ):
             if os.path.isfile( filename ):
                 self.send_response(200)
-                self.send_header( "Server", self.servername )
                 self.send_header( "Content-type", contenttype )
                 exptime = time.strftime( '%a, %d %b %Y %H:%M:%S GMT', time.gmtime( time.time() + 60 * 60 ) )
                 self.send_header( "expires", exptime )
@@ -27,26 +25,22 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
                 self.ans_like_404()
     def ans_like_text( self, html ):
             self.send_response(200)
-            self.send_header( "Server", self.servername )
             self.send_header("Content-type", "text/html")
             self.end_headers()
             bs = bytearray( html, "utf-8" )
             self.wfile.write( bs )
     def ans_like_304( self ):
             self.send_response(304)
-            self.send_header( "Server", self.servername )
             self.send_header( "Last-Modified", common.env[ "HTTP-Modified-Since" ] )
             self.end_headers()
     def ans_like_404( self ):
             self.send_response(404)
-            self.send_header( "Server", self.servername )
             self.send_header("Content-type", "text/html")
             self.end_headers()
             bs = common.read_file_to_str( "html/404.html" )
             self.wfile.write( bs )
     def get_postdata( self ):
         self.send_response(200)
-        self.send_header( "Server", self.servername )
         self.send_header( "Content-type", "application/json" )
         self.end_headers()
         length = int( self.headers[ "Content-Length" ] )
@@ -117,6 +111,9 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
                 self.ans_like_text( html )
         elif path == "/stat":
             html = scg.stat()
+            self.ans_like_text( html )
+        elif path == "/allorders":
+            html = scg.allorders()
             self.ans_like_text( html )
         else:
             self.ans_like_404()
