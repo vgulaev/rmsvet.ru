@@ -97,28 +97,45 @@ def make_map( count ):
     res = pystache.render( _templ_res, { "hrefs" : hrefs, "nexthref" : nexthref, "title" : title.format( se = se ) } )
     return res
 
-def stat():
-	_templ_res = cm.read_file_to_str("html/stat.html")
-	s = statistics.stat_info()
-	ls = []
+def stat( ):
+	_templ_res = cm.read_file_to_str( "html/stat.html" )
+	s = statistics.stat_info( )
+	ls = [ ]
 	total = 0
-	All = []
-	All.append({})
-	All.append({})
-	All.append({})
-	All[0]["name3"]="ROOT"
-	All[1]["name3"]="Valentin"
-	All[2]["name3"]="MoViS08"
-	allitems = s[".py"]["items3"]
+	All = [ ]
+	All.append( { } )
+	All.append( { } )
+	All.append( { } )
+	All[ 0 ][ "name3" ] = "ROOT"
+	All[ 1 ][ "name3" ] = "Valentin"
+	All[ 2 ][ "name3" ] = "MoViS08"
+	allitems = s[ ".py" ][ "items3" ]
 	for i in range(3):
-		All[i]["dol3"]=s[".py"]["avtor"][i]["dol3"]
-		All[i]["lines3"]=s[".py"]["avtor"][i]["lines3"]
+		All[ i ][ "dol3" ] = s[ ".py" ][ "avtor" ][ i ][ "dol3" ]
+		All[ i ][ "lines3" ] = s[ ".py" ][ "avtor" ][ i ][ "lines3" ]
 	for e in s:
-		lf = {}
-		ls += [s[e]]
-		total += s[e]["lines1"]
-	res = pystache.render(_templ_res, {"stats1": ls, "total": total, "dol": total * 12, "all" : All, "allitems" : allitems})
+		lf = { }
+		ls += [ s[ e ] ]
+		total += s[ e ][ "lines1" ]
+	res = pystache.render( _templ_res, { "stats1": ls, "total": total, "dol": total * 12, "all" : All, "allitems" : allitems } )
 	return res
+
+def allorders( ):
+    sql = "SELECT * FROM `order`;"
+    db = dbclasses.dbworker.getcon()
+    cursor = db.cursor()
+    cursor.execute( sql )
+    _templ_res = cm.read_file_to_str("html/allorders.html")
+    allorders = []
+    for i in range(len(cursor._rows)):
+        allorders.append( {} )
+        allorders[i]["id"] = cursor._rows[i][0]
+        allorders[i]["number"] = cursor._rows[i][1]
+        allorders[i]["date"] = cursor._rows[i][2]
+        allorders[i]["organization"] = cursor._rows[i][3]
+        allorders[i]["partner"] = cursor._rows[i][4]
+    res = pystache.render(_templ_res, {"allorders": allorders})
+    return res
 
 def orders( url ):
     _templ_res = cm.read_file_to_str("html/orders.html")
