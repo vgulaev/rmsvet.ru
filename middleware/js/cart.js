@@ -35,8 +35,9 @@ cart = {
         }
 	},
     clear : function(){
-        for (var i = localStorage["cart.count"]-1; i>=0; i--){
-            cart.deleterow(0, false);
+        for (var i = localStorage["cart.count"]; i>=0; i--){
+            cart.deleterow(i, false);
+        localStorage["cart.count"] = 0;
         this.render()
         }
         },
