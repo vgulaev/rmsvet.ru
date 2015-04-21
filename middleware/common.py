@@ -53,7 +53,7 @@ def price_maker( val ):
     ret = 0
     if val != 0:
         newprice = round(val, -2) - 1
-        if (newprice - val) / val < 0.02:
+        if abs(newprice - val) / val < 0.02:
             ret = newprice
         else:
             newprice = round(val, -1) - 0.11

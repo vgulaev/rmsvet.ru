@@ -61,6 +61,18 @@ schema = { "objects" : [
 			propdict( pname = "partner", ptype = "VARCHAR(50)" ),
 			propdict( pname = "insearch", ptype = "BOOL" )
 		] ),
+	objsql( pname = "categoryprices",
+		pprop = [
+			propdict( pname = "price", ptype = "own:prices" ),
+			propdict( pname = "category", ptype = "own:category" ),
+		] ),
+	objsql( pname = "category",
+		pprop = [
+			propdict( pname = "caption", ptype = "VARCHAR(200) COLLATE utf8_general_ci_eng_cy" ),
+			propdict( pname = "partner", ptype = "own:partners" ),
+			propdict( pname = "level", ptype = "INT" ),
+			propdict( pname = "parent", ptype = "own:category" )
+		] ),
 	objsql( pname = "currency",
 		pprop = [
 			propdict( pname = "caption", ptype = "VARCHAR(50)" ),
