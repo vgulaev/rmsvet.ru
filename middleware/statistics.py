@@ -19,7 +19,6 @@ def stat_info():
 	repo = git.Repo( pr )
 	assert not repo.bare
 	head = repo.head
-	mater = head.reference
 	allFile = FP( pr + "//middleware" )
 	stat = {".css" : {}, ".js" : {}, ".py" : {}, ".mako" : {}}
 	for e in stat:
