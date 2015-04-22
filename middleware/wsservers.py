@@ -32,7 +32,7 @@ def try_int( one ):
     return res
 
 def auto_complate( filter, params ):
-    sql = """SELECT id, fantastic_url, caption, price FROM vg_site_db.prices
+    sql = """SELECT id, fantastic_url, caption, price, vat FROM vg_site_db.prices
     where
     """
     if "price_from" in params:
@@ -61,6 +61,7 @@ def auto_complate( filter, params ):
                 "fantastic_url": row[1],
                 "caption": row[2],
                 "price" : str( row[3] ),
+                "vat" : row[4],
                 "currency" : "RUR"
                 }]
         row = cursor.fetchone()
