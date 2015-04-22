@@ -9,7 +9,6 @@ class_cart_label = {
         this.cart_label_count.html(this.count);
     },
     add_item : function ( id ) {
-        var clc = $(this).find("#cart_label_count");
         localStorage["cart." + this.count + ".id"] = id;
         localStorage["cart." + this.count + ".count"] = 1;
         localStorage["cart." + this.count + ".caption"] = $("#caption").html();
@@ -20,7 +19,6 @@ class_cart_label = {
         this.cart_label_count.html(this.count);
     },
     add_item_from_list : function ( id, caption, price, vat ) {
-        var clc = $(this).find("#cart_label_count");
         localStorage["cart." + this.count + ".id"] = id;
         localStorage["cart." + this.count + ".count"] = 1;
         localStorage["cart." + this.count + ".caption"] = caption;
