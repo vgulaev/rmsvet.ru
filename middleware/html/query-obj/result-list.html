@@ -1,12 +1,21 @@
 {{#items}}
 <div class="mart10">
-    <a href="/{{ fantastic_url }}/goods">
-        <div>
+    <div>
+        <a href="/{{ fantastic_url }}/goods">
             <div id = "caption" class = "wp">{{ caption  }}</div>
-        </div>
-        <div>
-            <span>₽ &nbsp;</span><span id = "price">{{ price }}</span> 
-        </div>
-    </a>
+        </a>
+    </div>
+    <div>
+        <table width="100%">
+            <tr>
+                <td>
+                    <span>₽ &nbsp;</span><span id = "price">{{ price }}</span>
+                </td>
+                <td align="right">
+                    <button onclick="add_item_from_list('{{ id }}', '{{ caption }}', '{{ price }}', '{{ vat }}')">В корзину</button>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>
 {{/items}}
