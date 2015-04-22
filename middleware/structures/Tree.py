@@ -1,13 +1,6 @@
 # -*- coding: utf-8 -*-
 
 class CatalogTree():
-    Child = []
-    CategoryID = ""
-    CategoryName = ""
-    ParentCategoryID = ""
-    ParentLink = ""
-    NestingLevel = 0
-    flag1 = True
     """
     Class constructor
     """
