@@ -9,24 +9,44 @@ class_cart_label = {
         this.cart_label_count.html(this.count);
     },
     add_item : function ( id ) {
-        localStorage["cart." + this.count + ".id"] = id;
-        localStorage["cart." + this.count + ".count"] = 1;
-        localStorage["cart." + this.count + ".caption"] = $("#caption").html();
-        localStorage["cart." + this.count + ".price"] = $("#price").html();
-        localStorage["cart." + this.count + ".vat"] = $("#vat").html();
-        this.count++;
-        localStorage["cart.count"] = this.count;
-        this.cart_label_count.html(this.count);
+        var flag = true;
+        for ( var i = 0; i < this.count; i++ ){
+            if (localStorage["cart." + i + ".id"] == id){
+                flag = false;
+                localStorage["cart." + i + ".count"]++;
+                break;
+            }
+        }
+        if ( flag ){
+            localStorage["cart." + this.count + ".id"] = id;
+            localStorage["cart." + this.count + ".count"] = 1;
+            localStorage["cart." + this.count + ".caption"] = $("#caption").html();
+            localStorage["cart." + this.count + ".price"] = $("#price").html();
+            localStorage["cart." + this.count + ".vat"] = $("#vat").html();
+            this.count++;
+            localStorage["cart.count"] = this.count;
+            this.cart_label_count.html(this.count);
+        }
     },
     add_item_from_list : function ( id, caption, price, vat ) {
-        localStorage["cart." + this.count + ".id"] = id;
-        localStorage["cart." + this.count + ".count"] = 1;
-        localStorage["cart." + this.count + ".caption"] = caption;
-        localStorage["cart." + this.count + ".price"] = price;
-        localStorage["cart." + this.count + ".vat"] = vat;
-        this.count++;
-        localStorage["cart.count"] = this.count;
-        this.cart_label_count.html(this.count);
+        var flag = true;
+        for ( var i = 0; i < this.count; i++ ){
+            if (localStorage["cart." + i + ".id"] == id){
+                flag = false;
+                localStorage["cart." + i + ".count"]++;
+                break;
+            }
+        };
+        if ( flag ){
+            localStorage["cart." + this.count + ".id"] = id;
+            localStorage["cart." + this.count + ".count"] = 1;
+            localStorage["cart." + this.count + ".caption"] = caption;
+            localStorage["cart." + this.count + ".price"] = price;
+            localStorage["cart." + this.count + ".vat"] = vat;
+            this.count++;
+            localStorage["cart.count"] = this.count;
+            this.cart_label_count.html(this.count);
+        };
     }
 }
 
