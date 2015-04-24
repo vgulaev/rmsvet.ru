@@ -3,7 +3,6 @@ import pdfkit
 import common as cm
 import pystache
 import statistics
-import urllib
 import dbclasses.dbobj
 import dbclasses.dbworker
 import sett
@@ -24,8 +23,6 @@ def html_view_for_addfld( id ):
             res += [el]
         row = cursor.fetchone()
     cursor.close()
-    #el = {"name" : "organization", "value" : cm.env["organization"]}
-    #res += [el]
     return res
 
 def  goods_main_view(url, url_type = None):
@@ -39,11 +36,9 @@ def  goods_main_view(url, url_type = None):
     else:
         u = url[ 1:-6]
         res = obj.find( fantastic_url = u )
-    #res = _templ_res.format(gd = obj, addfld = html_view_for_addfld(id))
     img_url = "/png/nophoto.png"
     if img.find( priceref = obj.id ):
         img_url = img.url
-    #html_view_for_addfld( obj.id )
     if res == True:
         debug = False
         if sett.server_dep == "windows dev":
@@ -62,7 +57,6 @@ def make_map( count ):
     title = "Карта сайта ( {se} )"
     nexthref = False
     if len( l ) < 2:
-        #sql = "select count(*) FROM vg_site_db.prices where organization = '{org_id}'".format( org_id = cm.env["organization"].id )
         if count == "":
             index = 0
         else:
@@ -157,7 +151,6 @@ def orders( url ):
     totalsum = 0
     for e in rows:
         totalsum += e[ "sum" ]
-    #res = pystache.render(_templ_res, { "order" :  , "partner" : partner.__dict__ , "el" : rows, "totalsum" : totalsum , "length" : len(rows) })
     res = pystache.render(_templ_res, { "order" : order.__dict__ , "partner" : partner.__dict__ , "el" : rows, "totalsum" : totalsum , "length" : len(rows) })
     return res
 
@@ -176,7 +169,6 @@ def getorderspdf( url ):
     totalsum = 0
     vatsum = 0
     for e in rows:
-        #print( e[ "index" ] )
         if e[ "vat" ] > 0:
             vatsum += round( e[ "sum" ] * 18 / 118, 2 )
         totalsum += e[ "sum" ]
