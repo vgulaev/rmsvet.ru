@@ -2,17 +2,17 @@ function al(){
 	alert("Hello!!!");
 }
 cart = {
-	deleterow : function ( di, render) {
-		if (render == null){
+	deleterow : function ( di, render ) {
+		if ( render == null ){
             render = true;
         }
         else{
             render = false;
         }
         var length = localStorage["cart.count"];
-		if (length == undefined) length = 0;
+		if ( length == undefined ) length = 0;
 		var i;
-		for (i = di; i <= length - 2; i++) {
+		for ( i = di; i <= length - 2; i++ ) {
 			localStorage["cart." + i + ".id"]		= localStorage["cart." + (i + 1) + ".id"];
 			localStorage["cart." + i + ".count"]	= localStorage["cart." + (i + 1) + ".count"];
 			localStorage["cart." + i + ".price"]	= localStorage["cart." + (i + 1) + ".price"];
@@ -24,22 +24,24 @@ cart = {
 		localStorage.removeItem("cart." + i + ".price");
 		localStorage.removeItem("cart." + i + ".caption");
         localStorage.removeItem("cart." + i + ".vat");
-		if (localStorage["cart.count"] > 0){
+		if ( localStorage["cart.count"] > 0 ){
             localStorage["cart.count"] = length - 1;
         }
         else{
             localStorage["cart.count"] = 0;
         }
-        if (render){
+        if ( render ){
         this.render();
-        }
+        };
 	},
     clear : function(){
-        for (var i = localStorage["cart.count"]; i>=0; i--){
-            cart.deleterow(i, false);
+        for (var i = localStorage["cart.count"]; i >= 0; i--){
+            cart.deleterow( i, false );
         localStorage["cart.count"] = 0;
-        this.render()
-        }
+        this.render();
+        html_element = $("#cart_label")[0];
+        $(html_element).find("#cart_label_count").html(localStorage["cart.count"]);
+        };
         },
 	getjson : function () {
 		var sum = 0;
@@ -56,8 +58,8 @@ cart = {
 			"i"			: i,
 			"caption"	: localStorage["cart." + i + ".caption"],
 			"count"		: count,
-			"price"		: price.toFixed(2),
-			"sum"		: sum.toFixed(2),
+			"price"		: price.toFixed( 2 ),
+			"sum"		: sum.toFixed( 2 ),
             "vat"       : localStorage["cart." + i + ".vat"]
 			};
 			el.push(newel);
