@@ -14,7 +14,7 @@
         <th>Partner</th>
     </tr>
 	{{#allorders}}
-		<tr>
+		<tr align="center">
             <td>{{id}}</td>
             <td>{{number}}</td>
             <td>{{date}}</td>
