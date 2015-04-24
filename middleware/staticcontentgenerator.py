@@ -121,7 +121,9 @@ def stat( ):
 	return res
 
 def allorders( ):
-    sql = "SELECT * FROM `order`;"
+    sql = """SELECT `order`.id,`order`.number,`order`.date,
+    `organization`.caption,`order`.partner FROM `order`,
+    `organization` WHERE (`order`.organization=`organization`.id);"""
     db = dbclasses.dbworker.getcon()
     cursor = db.cursor()
     cursor.execute( sql )
