@@ -1,8 +1,6 @@
-import sys
 import threading
 import os.path
 import os
-import sys
 
 class rl(object):
     files = []    
