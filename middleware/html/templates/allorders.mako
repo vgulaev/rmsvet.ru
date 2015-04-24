@@ -15,7 +15,7 @@
     </tr>
 	{{#allorders}}
 		<tr align="center">
-            <td>{{id}}</td>
+            <td><a href="orders/{{id}}">{{id}}</a></td>
             <td>{{number}}</td>
             <td>{{date}}</td>
             <td>{{organization}}</td>
