@@ -75,8 +75,6 @@ def CheckInstModD(dir):
     for i in FilePath(dir):
         m.update(FindModF(i))
     k=CheckInstMod(m)
-#   for i in m:
-#       print(i)
     print(len(m))
     print(len(k[1]))
     print(len(k[2]))
@@ -89,24 +87,27 @@ def CheckInstMod( mods ):
     unused = set()
     for str in mods:
         try:
-#            compile(str[0], str[1], 'exec')
             exec(str[0])
             used.add(str)
-#            print("Line '{0}' can be used".format( str ))
         except:
             try:
-#                compile(str[0], str[1], 'eval')
                 eval(str[0])
                 used.add(str)
-#               print("Line '{0}' can be used".format( str ))
             except:
-#                try:
-#                    pass
-#                    """
-#                    Если мы пришли сюда значит модуля не существует или этот модуль находится в папке с программой.
-#                    Значит нужно проверить существование этого файла или дирректории.
-#                    """
-#                except:
+                if str[0].find("from") >= 0: #Это строка с from?
+                    if (str[0][5:str[0].find("import")]).find(".") > 0: #Модуль формата чтото.чтото?
+                        module = (str[0][5:str[0].find("import")])[:(str[0][5:str[0].find("import")]).find(".")]
+                    else: #Модуль формата чтото
+                        module = (str[0][5:str[0].find("import")].strip(".")).strip(" ")
+                        #Не работает в случае когда модуль находится в той же папке что и файл который его использует.
+                else: #Значит с import
+                    if str[0][7:].find(".") > 0: #Модуль формата чтото.чтото?
+                        module = (str[0][7:])[:str[0][7:].find(".")]
+                    else: #Модуль формата чтото
+                        module = (str[0][7:])
+                if path.exists(path.normpath(path.join(path.dirname(str[1]), module))) or path.exists(path.normpath(path.join(path.dirname(str[1]), module + '.py'))): #Файл или папка существуют?
+                    used.add(str)
+                else:
                     unused.add(str)
                     print(r"The line '{0}' contains unsupported library".format( str ))
     use = []
@@ -114,6 +115,3 @@ def CheckInstMod( mods ):
     use.append(used)
     use.append(unused)
     return use
-
-#qwe = FindModF(r"C:\Users\movis08\Desktop\rmsvet.ru\middleware\load_from_1c_price.py")
-#CheckInstMod(qwe)
