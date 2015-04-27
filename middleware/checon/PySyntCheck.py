@@ -1,5 +1,5 @@
 from os import path
-from checon import FilePath
+from .PyLibCC import FilePath
 import codecs
 
 def OpenFile( pathD, set, center = {"+", "-", "*", "/", "<", ">", "="}, left = {"(","[","{"}, right = {")","]","}"}, warning = {"+=","-=","/=","*=",">=","<=","<>","><","=="}):#подаем директорию и множество форматов файлов
