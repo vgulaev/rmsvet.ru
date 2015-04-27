@@ -60,7 +60,7 @@ def CheckInstMod( mods, dir ):
             used.add((mod, str[1]))
         else:
             unused.add((mod, str[1]))
-            print("The line '{0}' have unsupported library".format( str ))
+            print(r"The line '{0}' have unsupported library".format( str ))
     use = []
     use.append(mods)
     use.append(used)
@@ -77,8 +77,6 @@ def CheckInstModD(dir):
     for i in files:
         m.update(FindModF(i))
     k=CheckInstMod(m, path.abspath(dir))
-#    for i in m:
-#        print(i)
     print(len(m))
     print(len(k[1]))
     print(len(k[2]))
