@@ -15,7 +15,7 @@ class CatalogTree():
     """
     Work with childs
     """
-    def addChild(self, ParentID = CategoryID, CID = "", CN = ""):
+    def addChild(self, ParentID, CID = "", CN = ""):
         child = CatalogTree(ParentID, CID, CN, self.NestingLevel +1)
         child.ParentLink = self
         self.Child.append(child)
