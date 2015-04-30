@@ -3,22 +3,19 @@ import mysql.connector as MySQLdb
 import dbclasses.dbmaintenance
 import dbclasses.dbworker
 import sett
-import platform
 import dbclasses.dbobj
-from os import path
 from checon import PyLibCC
 from checon import JSLibCC
 from checon import CheColl
 
 PyLibCC.CheckInstModD(r"..//middleware")
 JSLibCC.CheckInstModD(r"..//middleware")
-if (platform.system() == "Windows"):
-    if path.exists(r"C:\\Program Files (x86)\\MySQL\\MySQL Server 5.6\\share\\charsets\\Index.xml"):
-        CheColl.CheColl(r"C:\\Program Files (x86)\\MySQL\\MySQL Server 5.6\\share\\charsets\\Index.xml")
-    else:
-        CheColl.CheColl(r"C:\\Program Files\\MySQL\\MySQL Server 5.6\\share\\charsets\\Index.xml")
-else:
-    CheColl.CheColl(r"/usr/share/mysql/charsets/Index.xml")
+sql = """SHOW VARIABLES LIKE 'character_sets_dir';"""
+db = dbclasses.dbworker.getcon()
+cursor = db.cursor()
+cursor.execute( sql )
+print(cursor._rows[0][1])
+CheColl.CheColl(r"{0}".format(cursor._rows[0][1])+"Index.xml")
 
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
 
