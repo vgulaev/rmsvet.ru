@@ -83,16 +83,16 @@ def CheckInstModD(dir):
 Check function using libraries and modules for operation. Return mods in string, massive used and unused mods and libraries.
 """
 def CheckInstMod( mods ):
-    used = set()
-    unused = set()
+    used = set( )
+    unused = set( )
     for str in mods:
         try:
-            exec(str[0])
-            used.add(str)
+            exec( str[0] )
+            used.add( str )
         except:
             try:
-                eval(str[0])
-                used.add(str)
+                eval( str[0] )
+                used.add( str )
             except:
                 if str[0].find("from") >= 0: #Это строка с from?
                     if (str[0][5:str[0].find("import")]).find(".") > 0: #Модуль формата чтото.чтото?
@@ -104,14 +104,14 @@ def CheckInstMod( mods ):
                     if str[0][7:].find(".") > 0: #Модуль формата чтото.чтото?
                         module = (str[0][7:])[:str[0][7:].find(".")]
                     else: #Модуль формата чтото
-                        module = (str[0][7:])
+                        module = ( str[0][7:] )
                 if path.exists(path.normpath(path.join(path.dirname(str[1]), module))) or path.exists(path.normpath(path.join(path.dirname(str[1]), module + '.py'))): #Файл или папка существуют?
-                    used.add(str)
+                    used.add( str )
                 else:
-                    unused.add(str)
-                    print(r"The line '{0}' contains unsupported library".format( str ))
-    use = []
-    use.append(mods)
-    use.append(used)
-    use.append(unused)
+                    unused.add( str )
+                    print( r"The line '{0}' contains unsupported library".format( str ) )
+    use = [ ]
+    use.append( mods )
+    use.append( used )
+    use.append( unused )
     return use
