@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import mysql.connector as MySQLdb
+import pymysql as MySQLdb
 import dbclasses.dbmaintenance
 import dbclasses.dbworker
 import sett
@@ -8,33 +8,32 @@ from checon import PyLibCC
 from checon import JSLibCC
 from checon import CheColl
 
-def get_cursor_without_db():
+dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
+def get_db_connection():
     cred = dbclasses.dbworker.cred
     db = MySQLdb.connect(host = cred["host"], user = cred["user"], passwd = cred["passwd"], charset = 'utf8')
-    return db.cursor()
+    return db
 
 PyLibCC.CheckInstModD(r"..//middleware")
 JSLibCC.CheckInstModD(r"..//middleware")
 sql = """SHOW VARIABLES LIKE 'character_sets_dir';"""
-cursor = get_cursor_without_db()
+db = get_db_connection()
+cursor = db.cursor()
 cursor.execute( sql )
 print(cursor._rows[0][1])
 CheColl.CheColl(r"{0}".format(cursor._rows[0][1])+"Index.xml")
 
-dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
-
 try:
     print( "try DB droping" )
     dbclasses.dbworker.getcon()
-    cursor = get_cursor_without_db()
-
+    db = get_db_connection()
+    cursor = db.cursor()
     sql = "DROP DATABASE IF EXISTS vg_site_db"
-    cursor.execute(sql)
+    cursor.execute( sql )
     db.commit()
-
     print( "DB droped" )
 except:
-    cursor = get_cursor_without_db()
+    cursor = db.cursor()
 
     sql = "CREATE DATABASE IF NOT EXISTS vg_site_db"
     cursor.execute(sql)
