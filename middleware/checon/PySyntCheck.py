@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from os import path
 from .PyLibCC import FilePath
 import codecs

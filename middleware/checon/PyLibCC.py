@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Checking module connection libraries and modules Python 3.4
 """
