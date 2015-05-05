@@ -18,8 +18,13 @@ def file_modify():
             print( "Modify : {fn}".format( fn = e[ "name" ] ), " call: ", e[ "callback" ] )
             e[ "callback" ]( filename = e[ "name" ] )
     return res
+
 def start_watch():
     if file_modify():
         pass
     else:
         threading.Timer( 2.0, start_watch ).start()
+
+def watch_all_in_set(set):
+    for i in set:
+        watch_file(i)
