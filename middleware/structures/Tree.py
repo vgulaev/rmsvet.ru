@@ -19,9 +19,9 @@ class CatalogTree():
         child = CatalogTree(ParentID, CID, CN, self.NestingLevel +1)
         child.ParentLink = self
         self.Child.append(child)
-    def delChild(self, string = "", variant = 0):
+    def delChild(self, CID = "", variant = 0):
         for i in range(len (self.Child)):
-            if self.Child[i].CategoryID == string:
+            if self.Child[i].CategoryID == CID:
                 if variant == 0:
                     self.Child.clear()
                 elif variant == 1:
