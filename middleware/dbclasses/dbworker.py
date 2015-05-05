@@ -4,7 +4,7 @@ import pymysql as MySQLdb
 cred = {
         "host" : "",
         "user" : "",
-        "pass" : ""
+        "passwd" : ""
         }
 
 def loadmysqlcredential( psett ):
