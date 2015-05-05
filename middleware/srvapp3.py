@@ -2,7 +2,6 @@
 import os
 import sys
 sys.path.insert( 0, os.path.dirname(os.path.abspath( __file__ ) ) )
-
 import datetime
 from http.server import HTTPServer
 from myhttpd.HTTPRequestHandler import HTTPRequestHandler
@@ -13,31 +12,31 @@ import projectorium.rerender
 import dbclasses.dbworker
 
 dbclasses.dbworker.cred = dbclasses.dbworker.loadmysqlcredential( sett )
+set = []
+set.append( "srvapp3.py" )
+set.append( "common.py" )
+set.append( "projectorium/reloader.py" )
+set.append( "projectorium/rerender.py" )
+set.append( "myhttpd/HTTPRequestHandler.py" )
+set.append( "wsservers.py" )
+set.append( "staticcontentgenerator.py" )
+set.append( "statistics.py" )
+set.append( "html/templates/index.mako" )
+set.append( "html/templates/orders.mako" )
+set.append( "html/templates/contact.mako" )
+set.append( "html/templates/cart.mako" )
+set.append( "html/templates/allorders.mako" )
+set.append( "html/templates/bible.mako" )
+set.append( "html/templates/cardrules.mako" )
+set.append( "html/templates/stat.mako" )
+set.append( "html/templates/global-vals.tmpl" )
+set.append( "../bible.md" )
+set.append( "html/templates/html5-doc.tmpl" )
+set.append( "html/templates/ezsp_for_everybody.mako" )
+set.append( "html/templates/ezsp_for_everybody/content.tmpl" )
 
-projectorium.reloader.watch_file( "srvapp3.py" )
-projectorium.reloader.watch_file( "common.py" )
-projectorium.reloader.watch_file( "projectorium/reloader.py" )
-projectorium.reloader.watch_file( "projectorium/rerender.py" )
-projectorium.reloader.watch_file( "myhttpd/HTTPRequestHandler.py" )
-projectorium.reloader.watch_file( "wsservers.py" )
-projectorium.reloader.watch_file( "staticcontentgenerator.py" )
-projectorium.reloader.watch_file( "statistics.py" )
-projectorium.reloader.watch_file( "html/templates/index.mako" )
-projectorium.reloader.watch_file( "html/templates/orders.mako" )
-projectorium.reloader.watch_file( "html/templates/contact.mako" )
-projectorium.reloader.watch_file( "html/templates/cart.mako" )
-projectorium.reloader.watch_file( "html/templates/allorders.mako" )
-projectorium.reloader.watch_file( "html/templates/bible.mako" )
-projectorium.reloader.watch_file( "html/templates/cardrules.mako" )
-projectorium.reloader.watch_file( "html/templates/stat.mako" )
-projectorium.reloader.watch_file( "html/templates/global-vals.tmpl" )
-projectorium.reloader.watch_file( "../bible.md" )
-projectorium.reloader.watch_file( "html/templates/html5-doc.tmpl" )
-projectorium.reloader.watch_file( "html/templates/ezsp_for_everybody.mako" )
-projectorium.reloader.watch_file( "html/templates/ezsp_for_everybody/content.tmpl" )
-
-#projectorium.reloader.start_watch()
-
+projectorium.reloader.watch_all_in_set(set)
+projectorium.reloader.start_watch()
 projectorium.rerender.rerenderall()
 
 def run( server_class = HTTPServer, handler_class = HTTPRequestHandler ):
