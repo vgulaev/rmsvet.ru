@@ -14,11 +14,9 @@ def getrootdir():
 	return rootdir
 
 def stat_info():
-	#pr = r'C:\Users\MoViS\Desktop\rmsvetCLONE'
 	pr = getrootdir()
 	repo = git.Repo( pr )
 	assert not repo.bare
-	head = repo.head
 	allFile = FP( pr + "//middleware" )
 	stat = {".css" : {}, ".js" : {}, ".py" : {}, ".mako" : {}}
 	for e in stat:
