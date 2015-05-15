@@ -1,31 +1,30 @@
 from http.server import BaseHTTPRequestHandler
 import common
-import json
 import urllib.parse
 import time
 import wsservers as ws
 import sett
 import staticcontentgenerator as scg
 import os.path
+import auth
+import registration
 
 class HTTPRequestHandler( BaseHTTPRequestHandler ):
     """docstring for HTTPRequestHandler"""
     def ans_like_text_file( self, filename, contenttype ):
-            if os.path.isfile( filename ):
-                self.send_response(200)
-                self.send_header( "Content-type", contenttype )
-                exptime = time.strftime( '%a, %d %b %Y %H:%M:%S GMT', time.gmtime( time.time() + 60 * 60 ) )
-                self.send_header( "expires", exptime )
-                self.send_header( "cache-control", "public, max-age=86400" )
-                self.send_header( "Last-Modified", common.env[ "HTTP-Modified-Since" ] )
-                self.end_headers()
-                bs = common.read_file_to_str( filename )
-                self.wfile.write( bs )
-            else:
-                self.ans_like_404()
+        if os.path.isfile( filename ):
+            self.send_response(200)
+            self.send_header( "Content-type", contenttype )
+            exptime = time.strftime( '%a, %d %b %Y %H:%M:%S GMT', time.gmtime( time.time() + 60 * 60 ) )
+            self.send_header( "expires", exptime )
+            self.send_header( "cache-control", "public, max-age=86400" )
+            self.send_header( "Last-Modified", common.env[ "HTTP-Modified-Since" ] )
+            self.end_headers()
+            bs = common.read_file_to_str( filename )
+            self.wfile.write( bs )
     def ans_like_text( self, html ):
             self.send_response(200)
-            self.send_header("Content-type", "text/html")
+            self.send_header( "Content-type", "text/html" )
             self.end_headers()
             bs = bytearray( html, "utf-8" )
             self.wfile.write( bs )
@@ -46,8 +45,11 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
         length = int( self.headers[ "Content-Length" ] )
         res = urllib.parse.parse_qs( self.rfile.read( length ).decode( "utf-8" ) )
         return res
+    def get_postdata2( self ):
+        length = int( self.headers[ "Content-Length" ] )
+        res = urllib.parse.parse_qs( self.rfile.read( length ).decode( "utf-8" ) )
+        return res
     def do_POST( self ):
-        ans = "{}"
         if self.path == "/ws/ezsp-query":
             post_data = self.get_postdata()
             eq = post_data[ "ezsp-query" ]
@@ -59,6 +61,20 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             ans = ws.create_order( post_data[ "data" ][ 0 ] )
             bs = bytes( ans, "utf-8" )
             self.wfile.write( bs )
+        elif self.path == "/auth":
+            post_data = self.get_postdata2()
+            login = post_data[ "username" ]
+            password = post_data[ "userpassrord"]
+            if auth.baseauth(self, login[0], password[0]):
+                pass
+            else:
+                self.ans_like_404()
+        elif self.path == "/registration":
+            post_data = self.get_postdata2()
+            login = post_data[ "username" ]
+            password = post_data[ "userpassrord"]
+            registration.registration(login[0], password[0])
+            self.ans_like_text_file( "html/index.html", "text/html" )
     def do_GET( self ):
         o = urllib.parse.urlparse( self.path )
         path = o.path
@@ -100,9 +116,7 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             html = scg.orders( path[ 8: ] )
             self.ans_like_text( html )
         elif path[ 0 : 14 ] == "/getorderspdf/":
-            filename = scg.getorderspdf( path[ 14: ] )
             self.ans_like_text_file( "out.pdf", """application/pdf;filename="out.pdf" """)
-            #self.ans_like_text( html )
         elif path[0:10] == "/site-map/":
             html = scg.make_map( path[ 10: ] )
             if html == False:
@@ -110,10 +124,16 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             else:
                 self.ans_like_text( html )
         elif path == "/stat":
-            html = scg.stat()
-            self.ans_like_text( html )
+            if auth.auth( self.headers[ "Cookie" ] ):
+                html = scg.stat()
+                self.ans_like_text( html )
+            else:
+                self.ans_like_404()
         elif path == "/allorders":
-            html = scg.allorders()
-            self.ans_like_text( html )
+            if auth.auth( self.headers[ "Cookie" ] ):
+                html = scg.allorders()
+                self.ans_like_text( html )
+            else:
+                self.ans_like_404()
         else:
             self.ans_like_404()
