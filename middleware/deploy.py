@@ -35,6 +35,7 @@ exist = False
 for i in cursor._rows:
     if i[0] == "vg_site_db":
         exist = True
+        break
 
 if exist:
     """

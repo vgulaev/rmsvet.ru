@@ -86,6 +86,16 @@ schema = { "objects" : [
 			propdict( pname = "caption", ptype = "VARCHAR(250)" ),
 			propdict( pname = "value", ptype = "VARCHAR(250)" )
 		] ),
+	objsql( pname = "users",
+		pprop = [
+			propdict( pname = "username", ptype = "VARCHAR(150)" ),
+			propdict( pname = "userpassword", ptype = "VARCHAR(20)" )
+		] ),
+	objsql( pname = "sessions",
+		pprop = [
+			propdict( pname = "session", ptype = "VARCHAR(150)" ),
+			propdict( pname = "username", ptype = "VARCHAR(150)" )
+		] ),
 	objsql( pname = "images",
 		pprop = [
 			propdict( pname = "caption", ptype = "VARCHAR(250)" ),
