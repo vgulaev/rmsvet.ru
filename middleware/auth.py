@@ -1,6 +1,7 @@
 import dbclasses.dbworker
 import common
 import time
+import uuid
 
 def baseauth(self, login, password):
     sql = """SELECT * FROM users WHERE (username = '{0}' and userpassword = '{1}');""".format(login, password)
@@ -8,7 +9,7 @@ def baseauth(self, login, password):
     cursor.execute( sql )
     sql = cursor._rows
     if len( sql ) > 0:
-        s_id = 2398132790147809
+        s_id = str(uuid.uuid1())
         self.send_response(200)
         self.send_header( "Content-type", "text/html" )
         exptime = time.strftime( '%a, %d %b %Y %H:%M:%S GMT', time.gmtime( time.time() + 60 * 60 ) )
