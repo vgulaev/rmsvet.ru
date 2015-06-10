@@ -9,6 +9,8 @@ class_cart_label = {
         this.cart_label_count.html(this.count);
     },
     add_item : function ( id ) {
+        if (localStorage["cart.count"] == null){
+            localStorage["cart.count"] = 0;}
         if (isNaN(localStorage["cart.count"])){
             localStorage["cart.count"] = 0;}
         this.count = localStorage["cart.count"];
@@ -32,6 +34,8 @@ class_cart_label = {
         }
     },
     add_item_from_list : function ( id, caption, price, vat ) {
+        if (localStorage["cart.count"] == null){
+            localStorage["cart.count"] = 0;}
         if (isNaN(localStorage["cart.count"])){
             localStorage["cart.count"] = 0;}
         this.count = localStorage["cart.count"];
