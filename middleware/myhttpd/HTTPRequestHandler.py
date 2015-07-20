@@ -94,7 +94,8 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
                 if tm >= common.env[ "Modified-Since" ]:
                     self.ans_like_304( )
                     return
-        if self.headers._headers[0][1] == 'http://ezsp.ru':
+        #print( self.headers._headers[0][1] )
+        if True:
             if path == "/":
                 self.ans_like_text_file( "html/index.html", "text/html" )
             elif path[ -5: ] == ".html":
