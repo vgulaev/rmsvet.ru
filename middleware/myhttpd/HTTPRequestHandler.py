@@ -8,6 +8,7 @@ import staticcontentgenerator as scg
 import os.path
 import auth
 import registration
+import tam.tam
 
 class HTTPRequestHandler( BaseHTTPRequestHandler ):
     """docstring for HTTPRequestHandler"""
@@ -75,6 +76,14 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
             password = post_data[ "userpassrord"]
             registration.registration(login[0], password[0])
             self.ans_like_text_file( "html/index.html", "text/html" )
+        elif self.path == "/tam":
+            length = int( self.headers[ "Content-Length" ] )
+            rb = self.rfile.read( length )
+            f = open( "tam/report.req", "w", encoding = "utf-8" )
+            f.write( rb.decode( "utf-8" ) )
+            f.close()
+            #print( rb )
+            #print( "Hello!!!", length )
     def do_GET( self ):
         o = urllib.parse.urlparse( self.path )
         path = o.path
@@ -136,6 +145,9 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
 					self.ans_like_text( html )
 				else:
 					self.ans_like_404()
+            elif path == "/tam":
+                html = tam.tam.index()
+                self.ans_like_text( html )
 			else:
 				self.ans_like_404()
         elif self.headers._headers[0][1] == 'http://eztf.ru':
