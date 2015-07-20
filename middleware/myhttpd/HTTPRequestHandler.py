@@ -85,75 +85,55 @@ class HTTPRequestHandler( BaseHTTPRequestHandler ):
                 if tm >= common.env[ "Modified-Since" ]:
                     self.ans_like_304( )
                     return
-        if self.headers._headers[0][1] == 'http://ezsp.ru':
-            if path == "/":
-                self.ans_like_text_file( "html/index.html", "text/html" )
-            elif path[ -5: ] == ".html":
-                self.ans_like_text_file( "html/" + path[ 1: ], "text/html" )
-            elif path[ -3: ] == ".js":
-                self.ans_like_text_file( path[ 1: ], "text/javascript" )
-            elif path[ -4: ] == ".css":
-                self.ans_like_text_file( path[ 1: ], "text/css" )
-            elif path[ -4: ] == ".ico":
-                self.ans_like_text_file( path[ 1: ], "image/ico" )
-            elif path[ -4: ] == ".png":
-                self.ans_like_text_file( path[ 1: ], "image/png" )
-            elif path[ -4: ] == ".svg":
-                self.ans_like_text_file( path[ 1: ], "image/svg+xml" )
-            elif path[ -4: ] == ".xml":
-                self.ans_like_text_file( path[ 1: ], "text/xml" )
-            elif path[ -4: ] == ".otf":
-                self.ans_like_text_file( path[ 1: ], "font/opentype" )
-            elif path[0:9] == "/catalog/":
-                html = scg.goods_main_view( path, "id" )
+        if path == "/":
+            self.ans_like_text_file( "html/index.html", "text/html" )
+        elif path[ -5: ] == ".html":
+            self.ans_like_text_file( "html/" + path[ 1: ], "text/html" )
+        elif path[ -3: ] == ".js":
+            self.ans_like_text_file( path[ 1: ], "text/javascript" )
+        elif path[ -4: ] == ".css":
+            self.ans_like_text_file( path[ 1: ], "text/css" )
+        elif path[ -4: ] == ".ico":
+            self.ans_like_text_file( path[ 1: ], "image/ico" )
+        elif path[ -4: ] == ".png":
+            self.ans_like_text_file( path[ 1: ], "image/png" )
+        elif path[ -4: ] == ".svg":
+            self.ans_like_text_file( path[ 1: ], "image/svg+xml" )
+        elif path[ -4: ] == ".xml":
+            self.ans_like_text_file( path[ 1: ], "text/xml" )
+        elif path[ -4: ] == ".otf":
+            self.ans_like_text_file( path[ 1: ], "font/opentype" )
+        elif path[0:9] == "/catalog/":
+            html = scg.goods_main_view( path, "id" )
+            self.ans_like_text( html )
+        elif path[ -6: ] == "/goods":
+            html = scg.goods_main_view( path )
+            if html == False:
+                self.ans_like_404()
+            else:
                 self.ans_like_text( html )
-            elif path[ -6: ] == "/goods":
-                html = scg.goods_main_view( path )
-                if html == False:
-                    self.ans_like_404()
-                else:
-                    self.ans_like_text( html )
-            elif path[ 0 : 8 ] == "/orders/":
-                html = scg.orders( path[ 8: ] )
+        elif path[ 0 : 8 ] == "/orders/":
+            html = scg.orders( path[ 8: ] )
+            self.ans_like_text( html )
+        elif path[ 0 : 14 ] == "/getorderspdf/":
+            self.ans_like_text_file( "out.pdf", """application/pdf;filename="out.pdf" """)
+        elif path[0:10] == "/site-map/":
+            html = scg.make_map( path[ 10: ] )
+            if html == False:
+                self.ans_like_404()
+            else:
                 self.ans_like_text( html )
-            elif path[ 0 : 14 ] == "/getorderspdf/":
-                self.ans_like_text_file( "out.pdf", """application/pdf;filename="out.pdf" """)
-            elif path[0:10] == "/site-map/":
-                html = scg.make_map( path[ 10: ] )
-                if html == False:
-                    self.ans_like_404()
-                else:
-                    self.ans_like_text( html )
-            elif path == "/stat":
-                if auth.auth( self.headers[ "Cookie" ] ):
-                    html = scg.stat()
-                    self.ans_like_text( html )
-                else:
-                    self.ans_like_404()
-            elif path == "/allorders":
-                if auth.auth( self.headers[ "Cookie" ] ):
-                    html = scg.allorders()
-                    self.ans_like_text( html )
-                else:
-                    self.ans_like_404()
+        elif path == "/stat":
+            if auth.auth( self.headers[ "Cookie" ] ):
+                html = scg.stat()
+                self.ans_like_text( html )
             else:
                 self.ans_like_404()
-        elif self.headers._headers[0][1] == 'http://eztf.ru':
-            if path == "/":
-                self.ans_like_text_file( "eztf/html/index.html", "text/html" )
-            elif path[ -5: ] == ".html":
-                self.ans_like_text_file( "html/" + path[ 1: ], "text/html" )
-            elif path[ -3: ] == ".js":
-                self.ans_like_text_file( path[ 1: ], "text/javascript" )
-            elif path[ -4: ] == ".css":
-                self.ans_like_text_file( path[ 1: ], "text/css" )
-            elif path[ -4: ] == ".ico":
-                self.ans_like_text_file( path[ 1: ], "image/ico" )
-            elif path[ -4: ] == ".png":
-                self.ans_like_text_file( path[ 1: ], "image/png" )
-            elif path[ -4: ] == ".svg":
-                self.ans_like_text_file( path[ 1: ], "image/svg+xml" )
-            elif path[ -4: ] == ".xml":
-                self.ans_like_text_file( path[ 1: ], "text/xml" )
-            elif path[ -4: ] == ".otf":
-                self.ans_like_text_file( path[ 1: ], "font/opentype" )
+        elif path == "/allorders":
+            if auth.auth( self.headers[ "Cookie" ] ):
+                html = scg.allorders()
+                self.ans_like_text( html )
+            else:
+                self.ans_like_404()
+        else:
+            self.ans_like_404()
