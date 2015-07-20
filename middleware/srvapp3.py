@@ -34,6 +34,7 @@ set.append( "../bible.md" )
 set.append( "html/templates/html5-doc.tmpl" )
 set.append( "html/templates/ezsp_for_everybody.mako" )
 set.append( "html/templates/ezsp_for_everybody/content.tmpl" )
+set.append( "tam/tam.py" )
 
 projectorium.reloader.watch_all_in_set(set)
 projectorium.reloader.start_watch()
